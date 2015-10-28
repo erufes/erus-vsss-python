@@ -8,7 +8,7 @@ class Goalkeeper(Player.Player):
     def defende(self, world):
 
         xp, yp = world.get_ball().predict_ball_method(self)
-        adiciona_ponto(int(xp), int(yp), 255, 0, 102, 'bola prevista')
+        #adiciona_ponto(int(xp), int(yp), 255, 0, 102, 'bola prevista')
 
         posx = world.get_team_goal()[0] + 10
 
@@ -34,7 +34,8 @@ class Goalkeeper(Player.Player):
         posy = (bissetriz*3 + yp) /4.0
 
         if(abs(posx - world.get_ball().getx()) < 30):
-            posy = world.get_ball().gety()
+            #posy = world.get_ball().gety()
+            posy = yp
             #print posy
 
         if posy < world.trave_left_upper[1] - 1.8:
@@ -76,7 +77,7 @@ class Goalkeeper(Player.Player):
 
     def controle(self, world):
         xt, yt = self.defende(world)
-        adiciona_ponto(int(xt), int(yt), 0,0,255, 'xt, yt')
+        adiciona_ponto(int(xt), int(yt), 0,0,127, 'xt, yt')
 
         distancia_y = int(yt) - self.gety()
         distancia_x = int(xt) - self.getx()
@@ -105,14 +106,14 @@ class Goalkeeper(Player.Player):
 
         # ni eh a velocidade de avanco do modelo d Lyapunov
 
-        if math.sqrt((self.gety()-world.get_ball().gety())**2 + (self.getx()-world.get_ball().getx())**2) < 12.5: #se a bola esta perto
+        if math.sqrt((self.gety()-world.get_ball().gety())**2 + (self.getx()-world.get_ball().getx())**2) < 10: #se a bola esta perto
             if world.get_ball().gety() > self.gety(): #se a bola esta mais baixo
                 return -250, 250 #gira para um lado
             else:
                 return 250, -250 #gira para o outro lado
         elif ro > 3:
             #return self.lyapunov(ro, alfa, 40.0, 50.0, 60.0) # original
-            return self.lyapunov(ro, alfa, 250.0, 10.0, 15.0) #k_ni,k_alphaomega,fator_freio
+            return self.lyapunov(ro, alfa, 250.0, 0.0, 12.0) #k_ni,k_alphaomega,fator_freio
         elif self.gety() > world.get_team_goal()[1]:
             theta_erro = 270 - theta_pink
 
