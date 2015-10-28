@@ -34,18 +34,18 @@ class PlayerAtaque(Player.Player):
 
         adiciona_ponto(int(xg), int(yg+20),255,255,2555,'xg+20, yg')
         adiciona_ponto(int(xg), int(yg-20),255,255,2555,'xg-20, yg')
+        theta_robo = self.get_theta()
+        #print theta_robo
         
         if self.getx() > world.FIELD_RIGHT and xb < self.getx():
             return self.getx() - 30, self.gety()
 
         if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
-                   
-            if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede:
-                b = world.FIELD_BOTTOM - 15
-                return a,b
-            elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede:
-                b = world.FIELD_TOP + 15
-                return a,b
+            print "aqui"         
+            if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
+                return self.getx(),self.gety() -15
+            elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
+                return self.getx(),self.gety() +15
             if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
                 a = world.FIELD_RIGHT - 15
                 return a,b
@@ -121,7 +121,7 @@ class PlayerAtaque(Player.Player):
         #x_final = (self.getx() + xb)/2 + raio*math.cos(math.pi) 
         #else:
         if(self.gety() > yb):
-            teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm
+            teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
         else:
             teta = math.pi/2 +math.atan2((xb - self.getx()),yb - self.gety()) 
 
@@ -129,17 +129,16 @@ class PlayerAtaque(Player.Player):
         x_final = (self.getx() + xb)/2 + raio*math.cos(teta) 
         if(xb < self.getx()):# and xb > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0  ):
             return x_final , y_final
-        """elif(self.getx() < xb and yb > self.gety()):
-            teta = 2*math.pi - cm
+        elif(self.getx() < xb and yb > self.gety() and yb > yg+20):
+            teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
             x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
             return x_final , y_final
-        elif(self.getx() < xb and yb < self.gety()):
-            teta = math.pi/2 + cm
+        elif(self.getx() < xb and yb < self.gety() and yb < yg -20 ):
+            teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
-            x_final = (self.getx() + xb)/2 + raio*math.cos(teta)"""
-
-
+            x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
+            return x_final , y_final
         return a , b
 
 
@@ -200,7 +199,7 @@ class PlayerAtaque(Player.Player):
         #print "alfa_graus = ", 180*alfa/math.pi
 
         # vr, vl = self.lyapunov(ro, alfa, 200.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
-        vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)
+        vr, vl = self.lyapunov(ro, alfa, 240.0, 20.0, 12.0)
         #vr, vl = self.lyapunov(ro, alfa, 255.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
         
         #melhor ate agora para atacante vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)
