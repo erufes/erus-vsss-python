@@ -27,6 +27,8 @@ MainWindow::MainWindow(PythonThread *pythonThread, ProcessingThread *processingT
 //    fpsLabel->setText("Vá se ferrar");
     ui->statusBar->addWidget(fpsLabel);
 
+    std::cout << QDir::currentPath().toStdString() << std::endl;
+
     Configuracao &conf = Configuracao::getInstance();
     conf.loadFile("config.xml");
     updateBorders();

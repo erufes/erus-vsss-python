@@ -2,16 +2,20 @@
 
 float Utils::pxToCm(int px) {
     Configuracao& conf = Configuracao::getInstance();
-    const float comprimentoCm = conf.comprimentoArena;
-    const float comprimentoPx = Utils::norm(conf.verticeComprimentoArena1, conf.verticeComprimentoArena2);
+    const float comprimentoCm = conf.getComprimentoArena();
+    cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
+    cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
+    const float comprimentoPx = Utils::norm(p1, p2);
 
     return px*(comprimentoCm/comprimentoPx);
 }
 
 float Utils::cmToPx(float cm) {
     Configuracao& conf = Configuracao::getInstance();
-    const float comprimentoCm = conf.comprimentoArena;
-    const float comprimentoPx = Utils::norm(conf.verticeComprimentoArena1, conf.verticeComprimentoArena2);
+    const float comprimentoCm = conf.getComprimentoArena();
+    cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
+    cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
+    const float comprimentoPx = Utils::norm(p1, p2);
 
     return cm*(comprimentoPx/comprimentoCm);
 }

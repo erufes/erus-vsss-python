@@ -12,7 +12,7 @@ PythonAPI::PythonAPI(char* file)
     Py_Initialize();
 
     //Guilherme: Escolhe o caminho dos arquivos Python
-    char dir[] = "C:\\Users\\Erus\\Documents\\Projetos\\VSSS-2015\\vsss\\scripts\\";
+    char dir[] = "C:\\Users\\Erus\\Documents\\verysmall\\scripts";
     PyObject* sysPath = PySys_GetObject("path");
     PyObject* curDir = PyString_FromString(dir);
     PyList_Append(sysPath, curDir);

@@ -18,6 +18,7 @@ bool CaptureThread::connectToCamera() {
 bool CaptureThread::disconnectCamera() {
     if (isCameraConnected()) {
         cap.release();
+
         return true;
     } else {
         return false;
@@ -39,7 +40,7 @@ void CaptureThread::run() {
 
         cv::Mat frame;
         cap.retrieve(frame);
-        cv::flip(frame,frame, -1);
+        cv::flip(frame, frame, -1);
 
         buffer->add(frame, dropFramesIfFull);
     }

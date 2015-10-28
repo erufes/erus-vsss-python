@@ -8,10 +8,15 @@ class PlayerAtaque(Player.Player):
 
 
     def chuta(self, world):
+
+        distancia_pra_sair_da_parede = 3.5
+
         ball = world.get_ball()
         xb,yb = ball.getx(),ball.gety()
-        xb, yb = ball.predict_ball_method(self)
+        xb, yb = ball.predict_ball_method_ofensive(self)
         xg, yg = world.get_enemy_goal()
+
+        adiciona_ponto(int(xb), int(yb), 127, 255, 60, 'bola')
 
         vec_to_ball_x = xb - self.getx()
         vec_to_ball_y = yb - self.gety()
@@ -29,20 +34,45 @@ class PlayerAtaque(Player.Player):
 
         adiciona_ponto(int(xg), int(yg+20),255,255,2555,'xg+20, yg')
         adiciona_ponto(int(xg), int(yg-20),255,255,2555,'xg-20, yg')
+        
         if self.getx() > world.FIELD_RIGHT and xb < self.getx():
             return self.getx() - 30, self.gety()
 
-        if b > world.FIELD_BOTTOM - 4.2 or b < world.FIELD_TOP + 4.2 or a > world.FIELD_RIGHT -4.2 or a < world.FIELD_LEFT + 4.2:
+        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+                   
+            if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede:
+                b = world.FIELD_BOTTOM - 15
+                return a,b
+            elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede:
+                b = world.FIELD_TOP + 15
+                return a,b
+            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+                a = world.FIELD_RIGHT - 15
+                return a,b
+            elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+                a = world.FIELD_LEFT + 15
+                return a,b
+
             return xb, yb
-        a = a -15
-        # if b > world.FIELD_BOTTOM - 4.2:
-        #     b = world.FIELD_BOTTOM - 8.4
-        # elif b < world.FIELD_TOP + 4.2:
-        #     b = world.FIELD_TOP + 8.4
-        # if a > world.FIELD_RIGHT -4.2:
-        #     a = world.FIELD_RIGHT - 8.4
-        # elif a < world.FIELD_LEFT + 4.2:
-        #     a = world.FIELD_LEFT + 8.4
+
+        if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede:
+            b = world.FIELD_BOTTOM - 15
+            a = self.getx()
+            return a,b
+        elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede:
+            b = world.FIELD_TOP + 15
+            a = self.getx()
+            return a,b
+        if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+            a = world.FIELD_RIGHT - 15
+            b = self.gety()
+            return a,b
+        elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+            a = world.FIELD_LEFT + 15
+            b = self.gety()
+            return a,b
+
+        a = a -5
 
         p = world.get_def_player()
         x,y = p.getx(),p.gety()
@@ -52,14 +82,14 @@ class PlayerAtaque(Player.Player):
         distance_to_amiguinho = math.sqrt((x-self.getx())**2 + (y-self.gety())**2)
 
         if distance_to_amiguinho < 20:
-            x,y = x+5,y 
+            x,y = self.getx()+5,self.gety() 
             return int(x),int(y)
 
 
 #        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
 
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
-        if distance_to_ball < 30 and xb > self.getx():
+        if distance_to_ball < 15 and xb > self.getx():
             if(not(yb+ (yb - self.gety()) > yg + 20 or (yb+ (yb - self.gety()) < yg-20))): # so alterar o setpoint caso ajude a fazer gol.
                 return (xb + 2*(xb-self.getx())), (yb+ 2*(yb - self.gety()))
             if(self.getx() - xg and self.gety() - yb): # faz gol na diagonal (sqn)
@@ -97,8 +127,19 @@ class PlayerAtaque(Player.Player):
 
         y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
         x_final = (self.getx() + xb)/2 + raio*math.cos(teta) 
-        if(xb < self.getx() and xb > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0  ):
-            return int(x_final) , int(y_final)
+        if(xb < self.getx()):# and xb > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0  ):
+            return x_final , y_final
+        """elif(self.getx() < xb and yb > self.gety()):
+            teta = 2*math.pi - cm
+            y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
+            x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
+            return x_final , y_final
+        elif(self.getx() < xb and yb < self.gety()):
+            teta = math.pi/2 + cm
+            y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
+            x_final = (self.getx() + xb)/2 + raio*math.cos(teta)"""
+
+
         return a , b
 
 
@@ -159,8 +200,10 @@ class PlayerAtaque(Player.Player):
         #print "alfa_graus = ", 180*alfa/math.pi
 
         # vr, vl = self.lyapunov(ro, alfa, 200.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
-        vr, vl = self.lyapunov(ro, alfa, 240.0, 30.0, 17.0)
+        vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)
         #vr, vl = self.lyapunov(ro, alfa, 255.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
         
+        #melhor ate agora para atacante vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)
+
         #vr, vl =  self.lyapunov(ro, alfa, k_ni, k_alfa_omega, fator_freio) #k_ni,k_alphaomega,fator_freio
         return vr, vl

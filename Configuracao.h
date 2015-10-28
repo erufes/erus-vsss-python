@@ -64,6 +64,11 @@ private:
     cv::Scalar *color3UpperBound;
 
 public:
+
+    double getComprimentoArena() {
+        return 150.0;
+    }
+
     cv::Scalar getPositionUpperLeft() {
         if(arena_left_upper != NULL) {
             return cv::Scalar(arena_left_upper[0], arena_left_upper[1]);

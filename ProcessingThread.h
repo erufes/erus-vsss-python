@@ -37,7 +37,6 @@ public:
 public slots:
     void pause(bool b);
     void escolheCor(bool cor);//true = azul, false = amarelo
-    void updateBorders();
 };
 
 #endif // PROCESSINGTHREAD_H
