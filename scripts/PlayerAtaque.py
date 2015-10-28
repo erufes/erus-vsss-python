@@ -41,7 +41,7 @@ class PlayerAtaque(Player.Player):
             return self.getx() - 30, self.gety()
 
         if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
-            print "aqui"         
+            #print "aqui"         
             if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
                 return self.getx(),self.gety() -15
             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
@@ -55,11 +55,11 @@ class PlayerAtaque(Player.Player):
 
             return xb, yb
 
-        if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede:
+        if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150):
             b = world.FIELD_BOTTOM - 15
             a = self.getx()
             return a,b
-        elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede:
+        elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
             b = world.FIELD_TOP + 15
             a = self.getx()
             return a,b
@@ -128,17 +128,33 @@ class PlayerAtaque(Player.Player):
         y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
         x_final = (self.getx() + xb)/2 + raio*math.cos(teta) 
         if(xb < self.getx()):# and xb > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0  ):
-            return x_final , y_final
+            if(y_final > world.FIELD_BOTTOM):
+                return x_final , world.FIELD_BOTTOM -7
+            if(y_final < world.FIELD_TOP):
+                return x_final , world.FIELD_BOTTOM +7
+            else:
+                return x_final , y_final
         elif(self.getx() < xb and yb > self.gety() and yb > yg+20):
             teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
             x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
-            return x_final , y_final
+            if(y_final > world.FIELD_BOTTOM):
+                return x_final , world.FIELD_BOTTOM -7
+            if(y_final < world.FIELD_TOP):
+                return x_final , world.FIELD_BOTTOM +7
+            else:
+                return x_final , y_final
         elif(self.getx() < xb and yb < self.gety() and yb < yg -20 ):
             teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
             x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
-            return x_final , y_final
+            if(y_final > world.FIELD_BOTTOM):
+                return x_final , world.FIELD_BOTTOM -7
+            if(y_final < world.FIELD_TOP):
+                return x_final , world.FIELD_BOTTOM +7
+            else:
+                return x_final , y_final
+                
         return a , b
 
 

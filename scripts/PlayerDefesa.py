@@ -6,6 +6,9 @@ from lista_marcacoes import *
 class PlayerDefesa(Player.Player):
 
     def chuta(self, world):
+
+        distancia_pra_sair_da_parede = 3.5
+
         ball = world.get_ball()
         xb,yb = ball.getx(),ball.gety()
         xb, yb = ball.predict_ball_method(self)
@@ -36,7 +39,7 @@ class PlayerDefesa(Player.Player):
         elif a < world.FIELD_LEFT + 12:
             a = world.FIELD_LEFT + 24
         """
-
+        """
         if b > world.FIELD_BOTTOM:
             b = world.FIELD_BOTTOM - 3
         elif b < world.FIELD_TOP:
@@ -44,30 +47,86 @@ class PlayerDefesa(Player.Player):
         if a > world.FIELD_RIGHT - 4:
             a = world.FIELD_RIGHT - 8
         elif a < world.FIELD_LEFT + 4:
-            a = world.FIELD_LEFT + 8
+            a = world.FIELD_LEFT + 8"""
 
-        #p = world.get_def_player()
-        p = world.get_atk_player()
+
+        p = world.get_goalkeeper()
         x,y = p.getx(),p.gety()
 
-        distance_to_amiguinho = math.sqrt((x-a)**2 + (y-b)**2)
-        if distance_to_amiguinho < 25:
-             x,y = x,y+ 15
-             return int(x),int(y)
+        theta_robo = self.get_theta()
+        distance_to_amiguinho = math.sqrt((x-self.getx())**2 + (y-self.gety())**2)
+        if distance_to_amiguinho < 15.0 and self.gety() > y:
+            x,y = self.getx() , self.gety()+20
+            return x , y
+        elif distance_to_amiguinho < 15.0 and self.gety() < y:
+            x,y = self.getx() , self.gety()-20
+            return x , y
+
+        if self.getx() > world.FIELD_RIGHT and xb < self.getx():
+            return self.getx() - 30, self.gety()
+
+        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+            #print "aqui"         
+            if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
+                return self.getx(),self.gety() -15
+            elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
+                return self.getx(),self.gety() +15
+            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+                a = world.FIELD_RIGHT - 15
+                return a,b
+            elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+                a = world.FIELD_LEFT + 15
+                return a,b
+
+            return xb, yb
+
+        if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150):
+            b = world.FIELD_BOTTOM - 15
+            a = self.getx()
+            return a,b
+        elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
+            b = world.FIELD_TOP + 15
+            a = self.getx()
+            return a,b
+        if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+            a = world.FIELD_RIGHT - 15
+            b = self.gety()
+            return a,b
+        elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+            a = world.FIELD_LEFT + 15
+            b = self.gety()
+            return a,b
+
+
+        #p = world.get_def_player()
+
+
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
         ###########################################################################
         if distance_to_ball < 20 and xb > self.getx(): #chuta a bola pro campo inimigo
             return (xb + 2*(xb-self.getx())), (yb + 2*(yb - self.gety()))
         if(not(yb+ (yb - self.gety()) > yg +20 or (yb+ (yb - self.gety()) < yg-20)) and xb < self.getx()): # caso esteja na do gol dar a volta
             if(yb < yg + 20 and yb < self.gety()): # dando a volta por cima (bjs recalque)
-                return a-5 , b+20
+                if(b+20 > world.FIELD_BOTTOM):
+                    return a-5 , world.FIELD_BOTTOM -15
+                if(b+20 < world.FIELD_TOP):
+                    return a-5 , world.FIELD_BOTTOM +15
+                else:
+                    return a-5 , b+20
             else: # dando a volta por baixo
-                return a-5 , b-20
+                if(b-20 > world.FIELD_BOTTOM):
+                    return a-5 , world.FIELD_BOTTOM -15
+                if(b-20 < world.FIELD_TOP):
+                    return a-5 , world.FIELD_BOTTOM +15
+                else:
+                    return a-5 , b-20
         return a,b
 
 
     def controle(self, world):
-        
+
+        pd = world.get_def_player()
+        pd_x , pd_y = pd.getx() , pd.gety()
         (xt, yt) = self.chuta(world)
         if xt > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0:
             xt = (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0
@@ -82,8 +141,11 @@ class PlayerDefesa(Player.Player):
         dy = yb - world.left_goal[1]
         ro = math.sqrt(dx**2+dy**2)
         if ro < 30: #se a bola esta dentro da area
-            xt, yt = (world.FIELD_LEFT+world.FIELD_RIGHT)*0.5, (world.FIELD_TOP + world.FIELD_BOTTOM) * 0.5
-
+            #xt, yt = (world.FIELD_LEFT+world.FIELD_RIGHT)*0.5, (world.FIELD_TOP + world.FIELD_BOTTOM) * 0.5
+            if(pd.gety() > world.left_goal[1]):
+                xt , yt = world.FIELD_LEFT + 37.5 , world.FIELD_BOTTOM -25
+            else:
+                xt , yt = world.FIELD_LEFT + 37.5 ,  world.FIELD_TOP +25.0
         adiciona_ponto(int(xt), int(yt), 255,0,255, 'xt, yt')
 
         distancia_y = int(yt) - self.gety()

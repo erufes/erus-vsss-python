@@ -195,7 +195,7 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
 
     # Controls each robot individually
     # msg = Message()
-    for i in [2]:  # [0] = atk , [1] defesa e [2] goleiro
+    for i in [1,2]:  # [0] = atk , [1] defesa e [2] goleiro
         p = world.get_teammate(i)
         vr, vl = p.controle(world) #xt, yt = posicao retornada pela funcao chuta
         """

@@ -51,6 +51,9 @@ class World:
     def get_atk_player(self):
         return self.team[0] # TODO cuidado! Se mudar acima muda aki!!!
 
+    def get_goalkeeper(self):
+        return self.team[2] # TODO cuidado! Se mudar acima muda aki!!!
+
     def get_teammate(self, n):
         return self.team[n]
 
