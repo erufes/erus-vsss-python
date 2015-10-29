@@ -50,6 +50,9 @@ class PlayerDefesa(Player.Player):
             a = world.FIELD_LEFT + 8"""
 
 
+
+
+
         p = world.get_goalkeeper()
         x,y = p.getx(),p.gety()
 
@@ -108,19 +111,40 @@ class PlayerDefesa(Player.Player):
         if(not(yb+ (yb - self.gety()) > yg +20 or (yb+ (yb - self.gety()) < yg-20)) and xb < self.getx()): # caso esteja na do gol dar a volta
             if(yb < yg + 20 and yb < self.gety()): # dando a volta por cima (bjs recalque)
                 if(b+20 > world.FIELD_BOTTOM):
-                    return a-5 , world.FIELD_BOTTOM -15
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
+                    else:
+                        return a-5 , world.FIELD_BOTTOM -15
                 if(b+20 < world.FIELD_TOP):
-                    return a-5 , world.FIELD_BOTTOM +15
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM +15
+                    else:
+                        return a-5 , world.FIELD_BOTTOM +15
                 else:
-                    return a-5 , b+20
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , b+20
+                    else:
+                        return a-5 , b+20
             else: # dando a volta por baixo
                 if(b-20 > world.FIELD_BOTTOM):
-                    return a-5 , world.FIELD_BOTTOM -15
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
+                    else:
+                        return a-5 , world.FIELD_BOTTOM -15
                 if(b-20 < world.FIELD_TOP):
-                    return a-5 , world.FIELD_BOTTOM +15
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM +15
+                    else:
+                        return a-5 , world.FIELD_BOTTOM +15
                 else:
-                    return a-5 , b-20
-        return a,b
+                    if(a -5 < world.FIELD_LEFT +15):
+                        return world.FIELD_LEFT +20 , b-20
+                    else:
+                        return a-5 , b-20
+        if(a -5 < world.FIELD_LEFT +15):
+            return world.FIELD_LEFT +20 , b
+        else:
+            return a,b
 
 
     def controle(self, world):

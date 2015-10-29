@@ -72,7 +72,7 @@ class Ball(Agent.Agent):
 
         c_magic = self.predicao_adaptativa(self.x)
         #k_pred = c_magic*ro_aux/80.0
-        k_pred = c_magic*ro_aux/100.0
+        k_pred = c_magic*ro_aux/110.0
 
         cx_ball_predic = self.getx() + vx_ball * k_pred * norm_v_ball
         cy_ball_predic = self.gety() + vy_ball * k_pred * norm_v_ball

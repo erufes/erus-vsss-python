@@ -46,10 +46,10 @@ class PlayerAtaque(Player.Player):
                 return self.getx(),self.gety() -15
             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
                 return self.getx(),self.gety() +15
-            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
-                a = world.FIELD_RIGHT - 15
-                return a,b
-            elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+            #if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+                #a = world.FIELD_RIGHT - 15
+                #return a,b
+            if self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
                 a = world.FIELD_LEFT + 15
                 return a,b
 
@@ -63,16 +63,16 @@ class PlayerAtaque(Player.Player):
             b = world.FIELD_TOP + 15
             a = self.getx()
             return a,b
-        if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
-            a = world.FIELD_RIGHT - 15
-            b = self.gety()
-            return a,b
-        elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+        #if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
+            #a = world.FIELD_RIGHT - 15
+            #b = self.gety()
+            #return a,b
+        if self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
             a = world.FIELD_LEFT + 15
             b = self.gety()
             return a,b
 
-        a = a -5
+        #a = a -5
 
         p = world.get_def_player()
         x,y = p.getx(),p.gety()
@@ -85,7 +85,7 @@ class PlayerAtaque(Player.Player):
             x,y = self.getx()+5,self.gety() 
             return int(x),int(y)
 
-
+        return a,b
 #        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
 
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
@@ -103,6 +103,7 @@ class PlayerAtaque(Player.Player):
                 #return a , b-15
             #if(yb > yg +20 and yb > self.gety()):
                 #return a, b+15
+        return a, b
 
         """cm = (self.getx() + 5) 
         raio = ((self.getx() - xb)**2 + (self.gety() - yb)**2)/2
@@ -114,7 +115,7 @@ class PlayerAtaque(Player.Player):
         else:
             y_final = y0 - (abs(y0**2 - c))**0.5"""
         #return a, b
-        cm = math.pi/6
+        '''cm = math.pi/6
         raio = ((abs((self.getx() - xb)**2 + (self.gety() - yb)**2))**0.5)/2
         #if(not(self.gety() > yb)):
         #y_final = (self.gety() + yb)/2 + raio*math.sin(math.pi)
@@ -135,7 +136,8 @@ class PlayerAtaque(Player.Player):
             else:
                 return x_final , y_final
         elif(self.getx() < xb and yb > self.gety() and yb > yg+20):
-            teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
+            teta = math.pi/2 +math.atan2((xb - self.getx()),yb - self.gety()) 
+            #teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
             x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
             if(y_final > world.FIELD_BOTTOM):
@@ -153,8 +155,7 @@ class PlayerAtaque(Player.Player):
             if(y_final < world.FIELD_TOP):
                 return x_final , world.FIELD_BOTTOM +7
             else:
-                return x_final , y_final
-                
+                return x_final , y_final'''    
         return a , b
 
 
