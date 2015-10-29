@@ -52,42 +52,76 @@ void ProcessingThread::run() {
         ballColorBlobProcessor.processBall(1);
 
         BlobProcessor color1BlobProcessor(frameHsv, *conf.getColor1LowerBound(), *conf.getColor1UpperBound());
-        color1BlobProcessor.process(1);
+        color1BlobProcessor.process(2);
 
         BlobProcessor color2BlobProcessor(frameHsv, *conf.getColor2LowerBound(), *conf.getColor2UpperBound());
-        color2BlobProcessor.process(1);
+        color2BlobProcessor.process(2);
 
         BlobProcessor color3BlobProcessor(frameHsv, *conf.getColor3LowerBound(), *conf.getColor3UpperBound());
-        color3BlobProcessor.process(1);
+        color3BlobProcessor.process(2);
 
-        // mostra azul
-//        for(list<Scalar>::iterator it = teamColorBlobProcessor.getResults().begin(); it != teamColorBlobProcessor.getResults().end(); it++) {
-//            Scalar centro = *it;
-//            Point point(centro[0], centro[1]);
-//            cv::circle(frame, point, 4, Scalar(168., 165., 122.), 4);
-//        }
-
-        // mostra jogador azul
-        //Scalar centro1 = teamColorBlobProcessor.getResults().front();
-//        Point point1(centro1[0], centro1[1]);
-//        cv::circle(frame, point1, 4, Scalar(112, 160, 128), 4);
+        list<Scalar> listaTime = teamColorBlobProcessor->getResults();
 
 //        // mostra jogador cor 1
-        Scalar centro1_aux = color1BlobProcessor.getResults().front();
-//        Point point1(centro1[0], centro1[1]);
-//        cv::circle(frame, point1, 4, Scalar(112, 160, 128), 4);
+        list<Scalar> listaCor1 = color1BlobProcessor.getResults();
+        double menorDist1 = 500000000;
+        Scalar menorDist1ob;
+//        cout << listaTime.size() << endl;
+        for(list<Scalar>::iterator it = listaCor1.begin(); it != listaCor1.end(); it++) {
+            Scalar blobColorido = *it;
+            for(list<Scalar>::iterator it2 = listaTime.begin(); it2 != listaTime.end(); it2++) {
+                Scalar blobTime = *it2;
+
+                if(norma2(blobColorido, blobTime) < menorDist1) {
+                    menorDist1ob = blobColorido;
+                    menorDist1 = norma2(blobColorido, blobTime);
+                }
+            }
+        }
+        Scalar centro1_aux = menorDist1ob;
+
 
         // mostra jogador cor 2
-        Scalar centro2_aux = color2BlobProcessor.getResults().front();
-        //Point point2(centro1[0], centro1[1]);
-        //cv::circle(frame, point2, 4, Scalar(112, 160, 128), 4);
+        list<Scalar> listaCor2 = color2BlobProcessor.getResults();
+        double menorDist2 = 500000000;
+        Scalar menorDist2ob;
+//        cout << listaTime.size() << endl;
+        for(list<Scalar>::iterator it = listaCor2.begin(); it != listaCor2.end(); it++) {
+            Scalar blobColorido = *it;
+            for(list<Scalar>::iterator it2 = listaTime.begin(); it2 != listaTime.end(); it2++) {
+                Scalar blobTime = *it2;
+
+                if(norma2(blobColorido, blobTime) < menorDist2) {
+                    menorDist2ob = blobColorido;
+                    menorDist2 = norma2(blobColorido, blobTime);
+                }
+            }
+        }
+
+        Scalar centro2_aux = menorDist2ob;
+
 
         // mostra jogador cor 3
-        Scalar centro3_aux = color3BlobProcessor.getResults().front();
-//        Point point3(centro3[0], centro3[1]);
-//        cv::circle(frame, point3, 4, Scalar(255, 0, 0), 4);
-        list<Scalar> listaTime = teamColorBlobProcessor->getResults();
+
+        list<Scalar> listaCor3 = color3BlobProcessor.getResults();
+        double menorDist3 = 500000000;
+        Scalar menorDist3ob;
 //        cout << listaTime.size() << endl;
+        for(list<Scalar>::iterator it = listaCor3.begin(); it != listaCor3.end(); it++) {
+            Scalar blobColorido = *it;
+            for(list<Scalar>::iterator it2 = listaTime.begin(); it2 != listaTime.end(); it2++) {
+                Scalar blobTime = *it2;
+
+                if(norma2(blobColorido, blobTime) < menorDist3) {
+                    menorDist3ob = blobColorido;
+                    menorDist3 = norma2(blobColorido, blobTime);
+                }
+            }
+        }
+
+        Scalar centro3_aux = menorDist3ob;
+
+
 
         Scalar centro1 = Scalar(0,0,0);
         double menorDist = 100000;
@@ -142,6 +176,10 @@ void ProcessingThread::run() {
         bufferImagemProcessada->add(frame);
         delete(teamColorBlobProcessor);
     }
+}
+
+double ProcessingThread::norma2(Scalar a, Scalar b) {
+    return Utils::pxToCm((a[0]-b[0])*(a[0]-b[0])+(a[1]-b[1])*(a[1]-b[1]));
 }
 
 void ProcessingThread::pause(bool b) {

@@ -231,23 +231,28 @@ void BlobProcessor::process(unsigned int n) {
     for(vector<Contour>::iterator it = contours.begin(); it != contours.end(); it++) {
        double cntArea = contourArea(*it);
 
-       //if(worstArea <= cntArea) {
+//       if(cntArea > ) {
            worstArea = orderedInsertion(bestCountours, *it, cntArea, n);
-       //}
+//       }
     }
 
+    Contour *primeiro = NULL;
     for (list<Contour>::iterator it = bestCountours.begin(); it != bestCountours.end(); it++) {
         Moments m = moments(*it);
         Scalar pos(m.m10/m.m00, m.m01/m.m00);
 
         if(isnan(pos[0]) || isnan(pos[1])) {
-            pos[0] = pos[1] = 0;
+            //pos[0] = pos[1] = 0;
+            continue;
         }
 
-        results.insert(results.begin(), pos);
+        if(primeiro == NULL) {
+            primeiro = &(*it);
+            results.insert(results.begin(), pos);
+        } else if(contourArea(*it) / contourArea(*primeiro) > 0.5) {
+            results.insert(results.begin(), pos);
+        }
     }
-
-    //cout << n << " " << contours.size() << " " << bestCountours.size() << endl;
 }
 
 double BlobProcessor::orderedInsertion(list<Contour> &ls, Contour cnt, double area, unsigned int maxSize) {

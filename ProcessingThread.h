@@ -33,6 +33,7 @@ protected:
 
 public:
     ProcessingThread(Buffer<cv::Mat> *buffer, Buffer<World> *bufferWorld, Buffer<cv::Mat> *bufferImagemProcessada);
+    double norma2(Scalar a, Scalar b);
 
 public slots:
     void pause(bool b);
