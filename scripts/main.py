@@ -1,22 +1,15 @@
 #import cv2
 #from VideoManager import *
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
-#As rodas estão invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
+#As rodas estao invertidas
 from Communication import *
 from time import *
 from World import *
@@ -230,7 +223,6 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
             if cobrando_penalidade == 1:
                 cobrando_penalidade = False
                 rodando = True
-                #As rodas estão invertidas
 
                 com.set_pwm_right('3', 95)
                 com.set_pwm_left('3', 250)
@@ -245,7 +237,7 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 com.stop('1')
                 com.stop('2')
 
-                sleep(2)
+                sleep(1.5)
 
             if cobrando_penalidade == 2:
                 cobrando_penalidade = False
@@ -258,7 +250,7 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 com.set_pwm_left('2', 250)
                 com.stop('1')
                 com.stop('3')
-                sleep(2)
+                sleep(1.5)
 
             com.set_speed_right(p.get_id(), vr)
             com.set_speed_left(p.get_id(), vl)

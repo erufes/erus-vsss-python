@@ -63,6 +63,8 @@ class Ball(Agent.Agent):
             cx_ball_predic = self.getx()
             cy_ball_predic = self.gety()
         else:"""
+        if(norm_v_ball == 0):
+            norm_v_ball = 1
         vx_ball /= norm_v_ball
         vy_ball /= norm_v_ball
 

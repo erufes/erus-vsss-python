@@ -46,9 +46,9 @@ class PlayerAtaque(Player.Player):
                 return self.getx(),self.gety() -15
             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
                 return self.getx(),self.gety() +15
-            #if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
-                #a = world.FIELD_RIGHT - 15
-                #return a,b
+            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede +1 and (yb > yg-20 and yb < yg+20):
+                a = world.FIELD_RIGHT - 15
+                return a,b
             if self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
                 a = world.FIELD_LEFT + 15
                 return a,b
