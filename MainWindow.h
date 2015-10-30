@@ -52,6 +52,8 @@ private slots:
 
     void on_actionBordas_da_arena_triggered();
 
+    void on_actionPenalty_defesa_triggered();
+
 private:
     Ui::MainWindow *ui;
     QLabel label;
@@ -70,7 +72,7 @@ private:
 
 signals:
     void pauseGame(bool ativa);
-    void penalty();
+    void penalty(int tipo);// 1 para ataque e 2 para defesa
     void escolheCor(bool cor);
     void updateBorders();
 };

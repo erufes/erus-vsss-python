@@ -77,6 +77,7 @@
     <addaction name="actionIniciar"/>
     <addaction name="actionParar"/>
     <addaction name="actionPenault"/>
+    <addaction name="actionPenalty_defesa"/>
    </widget>
    <addaction name="menuArquivo"/>
    <addaction name="menuCalibrar"/>
@@ -133,15 +134,24 @@
    <property name="text">
     <string>Iniciar</string>
    </property>
+   <property name="shortcut">
+    <string>I</string>
+   </property>
   </action>
   <action name="actionParar">
    <property name="text">
     <string>Parar</string>
    </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
   </action>
   <action name="actionPenault">
    <property name="text">
-    <string>Penalty</string>
+    <string>Penalty ataque</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
    </property>
   </action>
   <action name="actionTIme_Amarelo">
@@ -152,6 +162,14 @@
   <action name="actionTime_Azul">
    <property name="text">
     <string>Time Azul</string>
+   </property>
+  </action>
+  <action name="actionPenalty_defesa">
+   <property name="text">
+    <string>Penalty defesa</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
    </property>
   </action>
  </widget>

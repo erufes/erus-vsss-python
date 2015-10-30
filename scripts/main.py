@@ -1,5 +1,22 @@
 #import cv2
 #from VideoManager import *
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
+#As rodas estão invertidas
 from Communication import *
 from time import *
 from World import *
@@ -7,7 +24,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM7')
+com = Communication('COM12')
 fps = 0
 time_start = time()
 
@@ -210,13 +227,37 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
         #Bloco criado na competicao, modularizar ele...
         #cobrando_penalidade = True;
         if not(pausado):
-            if cobrando_penalidade:
+            if cobrando_penalidade == 1:
                 cobrando_penalidade = False
                 rodando = True
-                com.set_speed_right('3', 200)
-                com.set_speed_left('3', 200)
+                #As rodas estão invertidas
+
+                com.set_pwm_right('3', 95)
+                com.set_pwm_left('3', 250)
                 com.stop('1')
                 com.stop('2')
+                com.set_pwm_right('3', 95)
+                com.set_pwm_left('3', 250)
+                com.stop('1')
+                com.stop('2')
+                com.set_pwm_right('3', 95)
+                com.set_pwm_left('3', 250)
+                com.stop('1')
+                com.stop('2')
+
+                sleep(2)
+
+            if cobrando_penalidade == 2:
+                cobrando_penalidade = False
+                rodando = True
+                com.set_pwm_right('2', 90)
+                com.set_pwm_left('2', 250)
+                com.stop('1')
+                com.stop('3')
+                com.set_pwm_right('2', 90)
+                com.set_pwm_left('2', 250)
+                com.stop('1')
+                com.stop('3')
                 sleep(2)
 
             com.set_speed_right(p.get_id(), vr)

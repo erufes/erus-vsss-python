@@ -30,7 +30,7 @@ protected:
 
 public slots:
     void pauseGame(bool ativa);
-    void inicioPenalty();
+    void inicioPenalty(int tipo);// 1 para ataque, 2 para defesa
     void updateBorders();
 
 public:

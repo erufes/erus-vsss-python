@@ -104,7 +104,7 @@ void MainWindow::on_actionCarregar_triggered() {
 
 void MainWindow::on_actionPenault_triggered()
 {
-    penalty();
+    penalty(1);
 }
 
 void MainWindow::on_actionTime_Azul_triggered()
@@ -125,4 +125,9 @@ void MainWindow::on_actionBordas_da_arena_triggered()
     calibracaoArenaWindow->pauseProcessingThread(true);
     calibracaoArenaWindow->show();
 
+}
+
+void MainWindow::on_actionPenalty_defesa_triggered()
+{
+    penalty(2);
 }

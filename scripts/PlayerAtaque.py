@@ -85,20 +85,20 @@ class PlayerAtaque(Player.Player):
             x,y = self.getx()+5,self.gety() 
             return int(x),int(y)
 
-        return a,b
+        #return a,b
 #        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
 
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
         if distance_to_ball < 15 and xb > self.getx():
             if(not(yb+ (yb - self.gety()) > yg + 20 or (yb+ (yb - self.gety()) < yg-20))): # so alterar o setpoint caso ajude a fazer gol.
-                return (xb + 2*(xb-self.getx())), (yb+ 2*(yb - self.gety()))
+                return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
             if(self.getx() - xg and self.gety() - yb): # faz gol na diagonal (sqn)
                 if(yb > self.gety() and self.gety() < yg-20):#parte de cima do campo
                     if(math.atan2(self.gety() - (yg-20),(self.getx()-xg)) - math.atan2(self.gety() -(yg+20),(self.getx()-xg)) > math.atan2((self.getx() - xb),(self.gety() - yb))):
-                        return (xb + 2*(xb-self.getx())), (yb+ 2*(yb - self.gety()))
+                        return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
                 if(yb < self.gety() and self.gety() > yg+20 ):#parte de baixo do campo
                     if(math.atan2(self.gety() - (yg+20),(self.getx()-xg)) - math.atan2(self.gety() -(yg-20),(self.getx()-xg)) > math.atan2((self.getx() - xb),(self.gety() - yb))):
-                        return (xb + 2*(xb-self.getx())), (yb+ 2*(yb - self.gety()))
+                        return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
             #if(yb < yg -20 and yb < self.gety()):
                 #return a , b-15
             #if(yb > yg +20 and yb > self.gety()):

@@ -5,6 +5,7 @@ using namespace std;
 bool firstPaused = true;
 bool firstRun = false;
 bool atualizaBordas = false;
+int tipoPenalty = 0; //1 para ataque, 0 para defesa
 
 PythonThread::PythonThread(Buffer<World> *bufferWorld, Buffer<cv::Mat> *bufferImagemProcessada)
 {
@@ -101,7 +102,7 @@ void PythonThread::run()
         world.toCm();
 
         if(firstRun){
-            lista = pyAPI->callFunctionRun(&world, 1, paused);
+            lista = pyAPI->callFunctionRun(&world, tipoPenalty, paused);
             firstRun = false;
 
         } else {
@@ -115,10 +116,11 @@ void PythonThread::pauseGame(bool ativa) {
     firstPaused = ativa;
 }
 
-void PythonThread::inicioPenalty() {
+void PythonThread::inicioPenalty(int tipo) {
     if(paused){
         paused = false;
         firstRun = true;
+        tipoPenalty = tipo;
     }
 }
 
