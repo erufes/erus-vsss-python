@@ -46,8 +46,9 @@ class PlayerAtaque(Player.Player):
                 return self.getx(),self.gety() -15
             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
                 return self.getx(),self.gety() +15
-            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede +1 and (yb > yg-20 and yb < yg+20):
+            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede -1 and (yb > yg-20 and yb < yg+20):
                 a = world.FIELD_RIGHT - 15
+                b = self.gety()
                 return a,b
             if self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
                 a = world.FIELD_LEFT + 15
@@ -216,7 +217,7 @@ class PlayerAtaque(Player.Player):
         #print "alfa_graus = ", 180*alfa/math.pi
 
         # vr, vl = self.lyapunov(ro, alfa, 200.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
-        vr, vl = self.lyapunov(ro, alfa, 240.0, 20.0, 12.0)
+        vr, vl = self.lyapunov(ro, alfa, 250.0, 20.0, 13.0)
         #vr, vl = self.lyapunov(ro, alfa, 255.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
         
         #melhor ate agora para atacante vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)

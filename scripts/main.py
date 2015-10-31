@@ -17,7 +17,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM12')
+com = Communication('COM6')
 fps = 0
 time_start = time()
 
@@ -221,9 +221,10 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
         #cobrando_penalidade = True;
         if not(pausado):
             if cobrando_penalidade == 1:
+                print "penalty ataque"
                 cobrando_penalidade = False
                 rodando = True
-
+                
                 com.set_pwm_right('3', 95)
                 com.set_pwm_left('3', 250)
                 com.stop('1')
@@ -240,8 +241,13 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 sleep(1.5)
 
             if cobrando_penalidade == 2:
+                print "penalty defesa"
                 cobrando_penalidade = False
                 rodando = True
+                com.set_pwm_right('2', 90)
+                com.set_pwm_left('2', 250)
+                com.stop('1')
+                com.stop('3')
                 com.set_pwm_right('2', 90)
                 com.set_pwm_left('2', 250)
                 com.stop('1')
@@ -254,6 +260,7 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
 
             com.set_speed_right(p.get_id(), vr)
             com.set_speed_left(p.get_id(), vl)
+        
 
         #if i == 2:
         #    (aa, bb) = p.defende(world)
