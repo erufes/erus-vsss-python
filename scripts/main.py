@@ -224,11 +224,14 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 print "penalty ataque"
                 cobrando_penalidade = False
                 rodando = True
-                
-                com.set_pwm_right('3', 95)
-                com.set_pwm_left('3', 250)
-                com.stop('1')
-                com.stop('2')
+                start_time = time()
+                while(time() - start_time < 1.5):
+                    com.set_pwm_right('3', 95)
+                    com.set_pwm_left('3', 250)
+                    com.stop('1')
+                    com.stop('2')
+                    sleep(0.3)
+                """
                 com.set_pwm_right('3', 95)
                 com.set_pwm_left('3', 250)
                 com.stop('1')
@@ -238,7 +241,7 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 com.stop('1')
                 com.stop('2')
 
-                sleep(1.5)
+                sleep(1.5)"""
 
             if cobrando_penalidade == 2:
                 print "penalty defesa"
