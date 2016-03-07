@@ -52,6 +52,8 @@ private:
     QSemaphore *sem;
     cv::Mat frame;
     int corEditada;
+    bool first_click = true;
+    int old_pos[2];
     bool showFilter;
 
     void setLabels(int n);

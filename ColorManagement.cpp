@@ -39,17 +39,33 @@ void ColorManagement::mousePressEvent(QMouseEvent *ev) {
         if(x > 640 || y > 480) {
             return;
         }
+        if(first_click){
+            std::cout << "dentro" << p.x() << p.y()  << std::endl;
+            old_pos[0] = p.x();
+            old_pos[1] = p.y();
+            first_click = !first_click;
+            return;
+        }
+        first_click = !first_click;
+        std::cout << "fora" << p.x() << p.y()  << std::endl;
+        if(old_pos[0] < x && old_pos[1] < y)
+        {
+            cv::Mat hsvImage;
+            cv::cvtColor(frame, hsvImage, CV_BGR2HSV);
+            for(int i = old_pos[0]; i < x ; i++)
+                for(int j = old_pos[1] ; j < y ; j++)
+                {
 
-        cv::Mat hsvImage;
-        cv::cvtColor(frame, hsvImage, CV_BGR2HSV);
+                    cv::Vec3b color = hsvImage.at<cv::Vec3b>(cv::Point(i, j));
 
-        cv::Vec3b color = hsvImage.at<cv::Vec3b>(cv::Point(p.x(), p.y()));
+                    //std::cout << color << std::endl;
 
-        std::cout << color << std::endl;
-
-        cv::Vec3b oldLower = pegaCorLower(corEditada);
-        cv::Vec3b oldUpper = pegaCorUpper(corEditada);
-        alteraLimitesCor(corEditada, oldLower, oldUpper, color);
+                    cv::Vec3b oldLower = pegaCorLower(corEditada);
+                    cv::Vec3b oldUpper = pegaCorUpper(corEditada);
+                    alteraLimitesCor(corEditada, oldLower, oldUpper, color);
+                }
+        }
+        else return;
     }
 }
 

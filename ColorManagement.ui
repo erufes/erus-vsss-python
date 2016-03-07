@@ -289,12 +289,12 @@
     <rect>
      <x>670</x>
      <y>320</y>
-     <width>81</width>
+     <width>131</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Cor 1:</string>
+    <string>Verde Escuro(Goleiro)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cor1LowerV">
@@ -424,7 +424,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Cor 2:</string>
+    <string>Rosa (Defesa)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cor3LowerV">
@@ -443,14 +443,14 @@
   <widget class="QLabel" name="cor3Label">
    <property name="geometry">
     <rect>
-     <x>670</x>
+     <x>660</x>
      <y>530</y>
-     <width>81</width>
+     <width>111</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Cor 3:</string>
+    <string>Verde Claro(Atacante)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cor3UpperV">
