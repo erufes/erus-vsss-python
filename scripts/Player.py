@@ -202,6 +202,10 @@ class Player(Agent.Agent):
         
         return v_r, v_l
 
+
+
+    def new_lyapunov():
+        return 0,0
     def controle(self, world):
         (xt, yt) = self.chuta(world)
         distancia_y = int(yt) - self.gety()

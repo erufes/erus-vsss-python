@@ -17,7 +17,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM6')
+com = Communication('COM5')
 fps = 0
 time_start = time()
 

@@ -50,7 +50,7 @@ class PlayerDefesa(Player.Player):
             a = world.FIELD_LEFT + 8"""
 
 
-
+        return xb,yb
 
 
         p = world.get_goalkeeper()
@@ -201,7 +201,7 @@ class PlayerDefesa(Player.Player):
 
         #print "alfa_graus = ", 180*alfa/math.pi
 
-        vr, vl = self.lyapunov(ro, alfa, 230.0, 40.0, 12.0)
+        vr, vl = self.lyapunov(ro, alfa, 230.0, 40.0, 0.1)
         #vr, vl = self.lyapunov(ro, alfa, 110.0, 140.0, 30.0) #original
         #print "vr , vl", vr , vl
         return vr, vl

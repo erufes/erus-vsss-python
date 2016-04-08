@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     bool Calibrando_Bordas = false;
+    std::string name_file_load;
 
 public:
     void mousePressEvent(QMouseEvent *ev);
@@ -53,6 +54,10 @@ private slots:
     void on_actionBordas_da_arena_triggered();
 
     void on_actionPenalty_defesa_triggered();
+
+    void on_actionSalvar_como_triggered();
+
+    void on_actionFechar_triggered();
 
 private:
     Ui::MainWindow *ui;

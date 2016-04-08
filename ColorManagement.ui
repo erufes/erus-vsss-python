@@ -38,6 +38,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="toolTipDuration">
+    <number>1</number>
+   </property>
   </widget>
   <widget class="QLineEdit" name="corAzulLowerS">
    <property name="geometry">
@@ -656,6 +659,100 @@
     <string>Voltar as configurações antigas</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="Quadrado">
+   <property name="geometry">
+    <rect>
+     <x>480</x>
+     <y>550</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quadrado</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Click">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>550</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Click(default)</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>520</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Metodos de Calibração</string>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>corAzulLowerS</zorder>
+  <zorder>corAzulLowerV</zorder>
+  <zorder>corAzulUpperH</zorder>
+  <zorder>corAzulUpperS</zorder>
+  <zorder>corAzulUpperV</zorder>
+  <zorder>corAzulLabel</zorder>
+  <zorder>corLaranjaUpperV</zorder>
+  <zorder>corLaranjaLabel</zorder>
+  <zorder>corLaranjaUpperH</zorder>
+  <zorder>corLaranjaLowerV</zorder>
+  <zorder>corLaranjaLowerS</zorder>
+  <zorder>corLaranjaLowerH</zorder>
+  <zorder>corLaranjaUpperS</zorder>
+  <zorder>pushButtonAzul</zorder>
+  <zorder>pushButtonLaranja</zorder>
+  <zorder>cor1UpperV</zorder>
+  <zorder>cor1LowerS</zorder>
+  <zorder>cor1LowerH</zorder>
+  <zorder>pushButtonCor1</zorder>
+  <zorder>cor1UpperH</zorder>
+  <zorder>cor1Label</zorder>
+  <zorder>cor1LowerV</zorder>
+  <zorder>cor1UpperS</zorder>
+  <zorder>cor2LowerV</zorder>
+  <zorder>cor2UpperV</zorder>
+  <zorder>cor2UpperH</zorder>
+  <zorder>cor2LowerS</zorder>
+  <zorder>pushButtonCor2</zorder>
+  <zorder>cor2LowerH</zorder>
+  <zorder>cor2UpperS</zorder>
+  <zorder>cor2Label</zorder>
+  <zorder>cor3LowerV</zorder>
+  <zorder>cor3Label</zorder>
+  <zorder>cor3UpperV</zorder>
+  <zorder>cor3UpperS</zorder>
+  <zorder>cor3UpperH</zorder>
+  <zorder>cor3LowerS</zorder>
+  <zorder>cor3LowerH</zorder>
+  <zorder>pushButtonCor3</zorder>
+  <zorder>corAmareloLowerV</zorder>
+  <zorder>corAmareloUpperV</zorder>
+  <zorder>corAmareloUpperS</zorder>
+  <zorder>corAmareloUpperH</zorder>
+  <zorder>corAmareloLowerS</zorder>
+  <zorder>corAmareloLowerH</zorder>
+  <zorder>pushButtonAmarelo</zorder>
+  <zorder>corAmareloLabel</zorder>
+  <zorder>mostrarFiltroCheckBox</zorder>
+  <zorder>salvar</zorder>
+  <zorder>reset</zorder>
+  <zorder>Quadrado</zorder>
+  <zorder>Click</zorder>
+  <zorder>label_2</zorder>
+  <zorder>corAzulLowerH</zorder>
  </widget>
  <resources/>
  <connections/>

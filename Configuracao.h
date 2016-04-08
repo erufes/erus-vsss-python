@@ -17,6 +17,7 @@ public:
     int arena_left_lower[2];
     int arena_right_upper[2];
     int arena_right_lower[2];
+    bool quadrado[];
 
 private:
     Configuracao() {
@@ -28,6 +29,7 @@ private:
         arena_right_upper[1] = 1;
         arena_right_lower[0] = 1;
         arena_right_lower[1] = 1;
+        *quadrado = false;
 
         blueLowerBound = NULL;
         blueUpperBound = NULL;
@@ -68,6 +70,15 @@ public:
     double getComprimentoArena() {
         return 150.0;
     }
+
+    void setStateCalibracao(bool state){
+        *quadrado = state;
+    }
+
+    bool getStateCalibracao(){
+        return *quadrado;
+    }
+
 
     cv::Scalar getPositionUpperLeft() {
         if(arena_left_upper != NULL) {

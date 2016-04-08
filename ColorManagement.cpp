@@ -39,33 +39,45 @@ void ColorManagement::mousePressEvent(QMouseEvent *ev) {
         if(x > 640 || y > 480) {
             return;
         }
-        if(first_click){
-            std::cout << "dentro" << p.x() << p.y()  << std::endl;
-            old_pos[0] = p.x();
-            old_pos[1] = p.y();
+        Configuracao &conf = Configuracao::getInstance();
+        if(conf.getStateCalibracao()){
+            if(first_click){
+                std::cout << "dentro" << p.x() << p.y()  << std::endl;
+                old_pos[0] = p.x();
+                old_pos[1] = p.y();
+                first_click = !first_click;
+                return;
+            }
             first_click = !first_click;
-            return;
-        }
-        first_click = !first_click;
-        std::cout << "fora" << p.x() << p.y()  << std::endl;
-        if(old_pos[0] < x && old_pos[1] < y)
-        {
+            std::cout << "fora" << p.x() << p.y()  << std::endl;
+            if(old_pos[0] < x && old_pos[1] < y)
+            {
+                cv::Mat hsvImage;
+                cv::cvtColor(frame, hsvImage, CV_BGR2HSV);
+                for(int i = old_pos[0]; i < x ; i++)
+                    for(int j = old_pos[1] ; j < y ; j++)
+                    {
+
+                        cv::Vec3b color = hsvImage.at<cv::Vec3b>(cv::Point(i, j));
+
+                        //std::cout << color << std::endl;
+
+                        cv::Vec3b oldLower = pegaCorLower(corEditada);
+                        cv::Vec3b oldUpper = pegaCorUpper(corEditada);
+                        alteraLimitesCor(corEditada, oldLower, oldUpper, color);
+                    }
+            }
+            else return;
+    }
+    else{
             cv::Mat hsvImage;
             cv::cvtColor(frame, hsvImage, CV_BGR2HSV);
-            for(int i = old_pos[0]; i < x ; i++)
-                for(int j = old_pos[1] ; j < y ; j++)
-                {
-
-                    cv::Vec3b color = hsvImage.at<cv::Vec3b>(cv::Point(i, j));
-
-                    //std::cout << color << std::endl;
-
-                    cv::Vec3b oldLower = pegaCorLower(corEditada);
-                    cv::Vec3b oldUpper = pegaCorUpper(corEditada);
-                    alteraLimitesCor(corEditada, oldLower, oldUpper, color);
-                }
+            cv::Vec3b color = hsvImage.at<cv::Vec3b>(cv::Point(p.x(), p.y()));
+            cv::Vec3b oldLower = pegaCorLower(corEditada);
+            cv::Vec3b oldUpper = pegaCorUpper(corEditada);
+            alteraLimitesCor(corEditada, oldLower, oldUpper, color);
         }
-        else return;
+
     }
 }
 
@@ -612,4 +624,16 @@ void ColorManagement::on_reset_clicked() {
 void ColorManagement::on_label_linkActivated(const QString &link)
 {
 
+}
+
+void ColorManagement::on_Quadrado_clicked()
+{
+    Configuracao &conf = Configuracao::getInstance();
+    conf.setStateCalibracao(true);
+}
+
+void ColorManagement::on_Click_clicked()
+{
+    Configuracao &conf = Configuracao::getInstance();
+    conf.setStateCalibracao(false);
 }

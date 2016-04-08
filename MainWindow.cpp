@@ -86,19 +86,16 @@ void MainWindow::on_actionIniciar_triggered()
 
 void MainWindow::on_actionSalvar_triggered()
 {
-    QString path = QFileDialog::getSaveFileName(0, "Save file", QDir::currentPath());
     Configuracao &conf = Configuracao::getInstance();
-    conf.saveToFile(path.toUtf8().constData());
-    //Configuracao &conf = Configuracao::getInstance();
-    //conf.createColorElementXml();
-//    conf.loadFile("config.xml");
-//    std::cout << "haha";
+    conf.saveToFile(name_file_load.c_str());
 }
 
 void MainWindow::on_actionCarregar_triggered() {
     QString path = QFileDialog::getOpenFileName(0, "Load file", QDir::currentPath());
     Configuracao &conf = Configuracao::getInstance();
     conf.loadFile(path.toUtf8().constData());
+    name_file_load = path.toUtf8().toStdString();
+    std::cout << name_file_load << std::endl;
     updateBorders();
 }
 
@@ -130,4 +127,21 @@ void MainWindow::on_actionBordas_da_arena_triggered()
 void MainWindow::on_actionPenalty_defesa_triggered()
 {
     penalty(2);
+}
+
+void MainWindow::on_actionSalvar_como_triggered()
+{
+    QString path = QFileDialog::getSaveFileName(0, "Save file", QDir::currentPath());
+    Configuracao &conf = Configuracao::getInstance();
+    conf.saveToFile(path.toUtf8().constData());
+    //Configuracao &conf = Configuracao::getInstance();
+    //conf.createColorElementXml();
+//    conf.loadFile("config.xml");
+//    std::cout << "haha";
+}
+
+void MainWindow::on_actionFechar_triggered()
+{
+    std::cout << "foda-se" << std::endl;
+    this->close();
 }
