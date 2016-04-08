@@ -17,7 +17,8 @@ public:
     int arena_left_lower[2];
     int arena_right_upper[2];
     int arena_right_lower[2];
-    bool quadrado[];
+    bool quadrado[1];
+    bool flip[1];
 
 private:
     Configuracao() {
@@ -29,7 +30,8 @@ private:
         arena_right_upper[1] = 1;
         arena_right_lower[0] = 1;
         arena_right_lower[1] = 1;
-        *quadrado = false;
+        quadrado[0] = false;
+        flip[0] = false;
 
         blueLowerBound = NULL;
         blueUpperBound = NULL;
@@ -67,6 +69,15 @@ private:
 
 public:
 
+    void setStateFlip(bool state1)
+    {
+        flip[0] = state1;
+    }
+    bool getStateFlip()
+    {
+        return flip[0];
+    }
+
     float Calcula_Distancia(float x1,float y1,float x2, float y2)
     {
         float x = x1 - x2;
@@ -78,12 +89,12 @@ public:
         return 150.0;
     }
 
-    void setStateCalibracao(bool state){
-        *quadrado = state;
+    void setStateCalibracao(bool state2){
+        quadrado[0] = state2;
     }
 
     bool getStateCalibracao(){
-        return *quadrado;
+        return quadrado[0];
     }
 
 

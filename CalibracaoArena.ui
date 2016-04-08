@@ -109,7 +109,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="Esq_Cima">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -122,7 +122,7 @@
     <string>Em cima (esquerda):</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="Dir_Cima">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -135,7 +135,7 @@
     <string>Em cima (direita):</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="Dir_Baixo">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -148,7 +148,7 @@
     <string>Em baixo (direita):</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="Esq_Baixo">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -233,7 +233,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="Comp_Arena">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -246,7 +246,7 @@
     <string>Comprimento da arena (em cm):</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="Largura_Arena">
    <property name="geometry">
     <rect>
      <x>690</x>
@@ -257,19 +257,6 @@
    </property>
    <property name="text">
     <string>Largura da arena (em cm):</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>690</x>
-     <y>20</y>
-     <width>101</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Virar a arena</string>
    </property>
   </widget>
   <widget class="QPushButton" name="aplicar">

@@ -33,6 +33,32 @@
      <string>Teste</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>14</x>
+      <y>514</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time Amarelo</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_atacando">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>540</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Atacando --&gt;</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -63,6 +89,7 @@
     <addaction name="actionBordas_da_arena"/>
     <addaction name="actionTIme_Amarelo"/>
     <addaction name="actionTime_Azul"/>
+    <addaction name="actionFlip"/>
    </widget>
    <widget class="QMenu" name="menuAjuda">
     <property name="title">
@@ -170,6 +197,11 @@
    </property>
    <property name="shortcut">
     <string>D</string>
+   </property>
+  </action>
+  <action name="actionFlip">
+   <property name="text">
+    <string>Flip (ON)</string>
    </property>
   </action>
  </widget>

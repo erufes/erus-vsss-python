@@ -42,14 +42,6 @@ private slots:
 
     void on_aplicar_clicked();
 
-    void on_pushButton_5_clicked();
-
-    void on_Quadrado_clicked();
-
-    void on_Click_clicked();
-
-    void on_lineEdit_10_cursorPositionChanged(int arg1, int arg2);
-
 private:
     Ui::CalibracaoArena *ui;
     CalibracaoArenaThread *calibracaoArenaThread;

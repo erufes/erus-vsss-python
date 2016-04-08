@@ -1,4 +1,5 @@
 #include "CaptureThread.h"
+#include "Configuracao.h"
 
 CaptureThread::CaptureThread(Buffer<cv::Mat> *buffer, bool dropFramesIfFull) {
     this->buffer = buffer;
@@ -40,8 +41,9 @@ void CaptureThread::run() {
 
         cv::Mat frame;
         cap.retrieve(frame);
-        cv::flip(frame, frame, -1);
-
+        Configuracao &conf = Configuracao::getInstance();
+        if(conf.getStateFlip())
+            cv::flip(frame, frame, -1);
         buffer->add(frame, dropFramesIfFull);
     }
 }

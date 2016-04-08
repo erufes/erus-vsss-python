@@ -137,6 +137,7 @@ void MainWindow::on_actionTime_Azul_triggered()
 {
     ui->actionTIme_Amarelo->setText("Time Amarelo");
     ui->actionTime_Azul->setText("Time Azul (Selecionado)");
+    ui->lineEdit->setText("Time Azul");
     escolheCor(true);
 }
 
@@ -144,6 +145,7 @@ void MainWindow::on_actionTIme_Amarelo_triggered()
 {
     ui->actionTIme_Amarelo->setText("Time Amarelo(Selecionado)");
     ui->actionTime_Azul->setText("Time Azul");
+    ui->lineEdit->setText("Time Amarelo");
     escolheCor(false);
 }
 
@@ -183,4 +185,23 @@ void MainWindow::on_actionDistancias_triggered()
 {
     Medindo_Distancia = true;
     First_Click_Distance = true;
+}
+
+
+void MainWindow::on_actionFlip_triggered()
+{
+    Configuracao &conf = Configuracao::getInstance();
+    if(conf.getStateFlip())
+    {
+        conf.setStateFlip(false);
+        ui->actionFlip->setText("Flip (OFF)");
+        ui->label_atacando->setText("<-- Atacando");
+    }
+    else
+    {
+
+        conf.setStateFlip(true);
+        ui->actionFlip->setText("Flip (ON)");
+        ui->label_atacando->setText("Atacando -->");
+    }
 }

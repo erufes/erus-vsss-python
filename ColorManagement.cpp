@@ -630,10 +630,14 @@ void ColorManagement::on_Quadrado_clicked()
 {
     Configuracao &conf = Configuracao::getInstance();
     conf.setStateCalibracao(true);
+    ui->Quadrado->setText("Quadrado (ON)");
+    ui->Click->setText("Click");
 }
 
 void ColorManagement::on_Click_clicked()
 {
     Configuracao &conf = Configuracao::getInstance();
     conf.setStateCalibracao(false);
+    ui->Click->setText("Click (ON)");
+    ui->Quadrado->setText("Quadrado");
 }

@@ -264,12 +264,3 @@ void CalibracaoArena::on_aplicar_clicked() {
 
     updateBorders();
 }
-
-
-
-
-
-void CalibracaoArena::on_lineEdit_10_cursorPositionChanged(int arg1, int arg2)
-{
-
-}

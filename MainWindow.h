@@ -37,7 +37,7 @@ public slots:
 
 private slots:
 
-    float Distance_Q_Point(const QPoint &, const QPoint &);
+    float Distance_Q_Point(const QPoint &, const QPoint &get);
 
     void on_actionCores_triggered();
 
@@ -66,6 +66,8 @@ private slots:
     void on_actionFechar_triggered();
 
     void on_actionDistancias_triggered();
+
+    void on_actionFlip_triggered();
 
 private:
     Ui::MainWindow *ui;

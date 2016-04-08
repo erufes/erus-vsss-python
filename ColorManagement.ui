@@ -623,7 +623,7 @@
   <widget class="QCheckBox" name="mostrarFiltroCheckBox">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>100</x>
      <y>510</y>
      <width>111</width>
      <height>17</height>
@@ -636,7 +636,7 @@
   <widget class="QPushButton" name="salvar">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>230</x>
      <y>510</y>
      <width>171</width>
      <height>23</height>
@@ -649,7 +649,7 @@
   <widget class="QPushButton" name="reset">
    <property name="geometry">
     <rect>
-     <x>290</x>
+     <x>230</x>
      <y>550</y>
      <width>171</width>
      <height>23</height>
@@ -662,9 +662,9 @@
   <widget class="QPushButton" name="Quadrado">
    <property name="geometry">
     <rect>
-     <x>480</x>
+     <x>430</x>
      <y>550</y>
-     <width>75</width>
+     <width>91</width>
      <height>23</height>
     </rect>
    </property>
@@ -675,20 +675,20 @@
   <widget class="QPushButton" name="Click">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>550</x>
      <y>550</y>
-     <width>75</width>
+     <width>91</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Click(default)</string>
+    <string>Click (ON)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>510</x>
+     <x>480</x>
      <y>520</y>
      <width>121</width>
      <height>16</height>
