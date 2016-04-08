@@ -59,7 +59,7 @@
      <string>Calibrar</string>
     </property>
     <addaction name="actionCores"/>
-    <addaction name="actionDist_ncias"/>
+    <addaction name="actionDistancias"/>
     <addaction name="actionBordas_da_arena"/>
     <addaction name="actionTIme_Amarelo"/>
     <addaction name="actionTime_Azul"/>
@@ -120,7 +120,7 @@
     <string>Bordas da arena</string>
    </property>
   </action>
-  <action name="actionDist_ncias">
+  <action name="actionDistancias">
    <property name="text">
     <string>Distâncias</string>
    </property>
@@ -156,7 +156,7 @@
   </action>
   <action name="actionTIme_Amarelo">
    <property name="text">
-    <string>TIme Amarelo</string>
+    <string>TIme Amarelo (Selecionado)</string>
    </property>
   </action>
   <action name="actionTime_Azul">

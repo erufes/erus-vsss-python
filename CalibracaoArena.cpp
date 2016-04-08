@@ -1,6 +1,7 @@
 #include "CalibracaoArena.h"
 #include "ui_CalibracaoArena.h"
 #include "Configuracao.h"
+#include "MainWindow.h"
 #include "Utils.h"
 
 #include <QMouseEvent>
@@ -224,6 +225,7 @@ void CalibracaoArena::on_pushButton_4_clicked() {
     setLabels(posEditada);
 }
 
+
 void CalibracaoArena::on_aplicar_clicked() {
     Configuracao &conf = Configuracao::getInstance();
 
@@ -238,6 +240,27 @@ void CalibracaoArena::on_aplicar_clicked() {
 
     v = getPositionRightUpper();
     conf.setPositionUpperRight(v[0], v[1]);
+
+    cv::Scalar left_upper = conf.getPositionUpperLeft();
+    cv::Scalar right_upper = conf.getPositionUpperRight();
+    cv::Scalar left_lower = conf.getPositionLowerLeft();
+    cv::Scalar right_lower = conf.getPositionLowerRight();
+
+    float x_upper = right_upper (0) - left_upper (0);
+    float x_lower = right_lower(0) - left_lower(0);
+
+    float y_left = left_lower(1) - left_upper(1);
+    float y_right = right_lower(1) - right_upper(1);
+
+    float x_arena = (x_upper + x_lower)/2;
+    float y_arena = (y_left + y_right)/2;
+
+    x_arena = Utils::pxToCm(x_arena);
+    y_arena = Utils::pxToCm(y_arena);
+
+    ui->lineEdit_9->setText(QString::fromStdString(std::to_string(x_arena)));
+    ui->lineEdit_10->setText(QString::fromStdString(std::to_string(y_arena)));
+    //float distance_cm = Utils::pxToCm()
 
     updateBorders();
 }

@@ -67,6 +67,13 @@ private:
 
 public:
 
+    float Calcula_Distancia(float x1,float y1,float x2, float y2)
+    {
+        float x = x1 - x2;
+        float y = y1 - y2;
+        return sqrt(x * x + y * y);
+    }
+
     double getComprimentoArena() {
         return 150.0;
     }

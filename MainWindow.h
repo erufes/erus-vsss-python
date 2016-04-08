@@ -22,6 +22,9 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     bool Calibrando_Bordas = false;
+    bool Medindo_Distancia = false;
+    bool First_Click_Distance = false;
+    QPoint Points_Distance[2];
     std::string name_file_load;
 
 public:
@@ -33,6 +36,9 @@ public slots:
     void updateFrame(const QImage &frame);
 
 private slots:
+
+    float Distance_Q_Point(const QPoint &, const QPoint &);
+
     void on_actionCores_triggered();
 
     void on_actionNovo_triggered();
@@ -58,6 +64,8 @@ private slots:
     void on_actionSalvar_como_triggered();
 
     void on_actionFechar_triggered();
+
+    void on_actionDistancias_triggered();
 
 private:
     Ui::MainWindow *ui;

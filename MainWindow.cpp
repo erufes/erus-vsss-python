@@ -3,6 +3,7 @@
 #include <iostream>
 #include <QFileDialog>
 #include <QMouseEvent>
+#include "Utils.h"
 
 
 
@@ -44,7 +45,35 @@ void MainWindow::mousePressEvent(QMouseEvent *ev) {
 
         //std::cout << p.QPoint() << std::endl;
     }
+    if(ev->type() == QEvent::MouseButtonPress && Medindo_Distancia)
+    {
+        QPoint t = ui->label->mapFrom(this, ev->pos());
+        if(First_Click_Distance)
+        {
+            First_Click_Distance = false;
+            Points_Distance[0] = t;
+        }
+        else
+        {
+            Points_Distance[1] = t;
+            First_Click_Distance = true;
+            float distance_px = MainWindow::Distance_Q_Point(Points_Distance[0],Points_Distance[1]);
+            float distance_cm = Utils::pxToCm(distance_px);
+            std::cout << distance_cm << std::endl;
 
+        }
+        //std::cout << "x: " << p.x() << " " << "y: " << p.y() << std::endl;
+
+        //std::cout << p.QPoint() << std::endl;
+    }
+
+}
+
+float MainWindow::Distance_Q_Point(const QPoint &a,const QPoint &b)
+{
+    float x = a.x() - b.x();
+    float y = a.y() - b.y();
+    return sqrt(x * x + y * y);
 }
 
 void MainWindow::updateFrame(const QImage &frame) {
@@ -106,11 +135,15 @@ void MainWindow::on_actionPenault_triggered()
 
 void MainWindow::on_actionTime_Azul_triggered()
 {
-     escolheCor(true);
+    ui->actionTIme_Amarelo->setText("Time Amarelo");
+    ui->actionTime_Azul->setText("Time Azul (Selecionado)");
+    escolheCor(true);
 }
 
 void MainWindow::on_actionTIme_Amarelo_triggered()
 {
+    ui->actionTIme_Amarelo->setText("Time Amarelo(Selecionado)");
+    ui->actionTime_Azul->setText("Time Azul");
     escolheCor(false);
 }
 
@@ -144,4 +177,10 @@ void MainWindow::on_actionFechar_triggered()
 {
     std::cout << "foda-se" << std::endl;
     this->close();
+}
+
+void MainWindow::on_actionDistancias_triggered()
+{
+    Medindo_Distancia = true;
+    First_Click_Distance = true;
 }
