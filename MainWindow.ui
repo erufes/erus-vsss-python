@@ -90,6 +90,7 @@
     <addaction name="actionTIme_Amarelo"/>
     <addaction name="actionTime_Azul"/>
     <addaction name="actionFlip"/>
+    <addaction name="actionTrocar_Atacante"/>
    </widget>
    <widget class="QMenu" name="menuAjuda">
     <property name="title">
@@ -202,6 +203,11 @@
   <action name="actionFlip">
    <property name="text">
     <string>Flip (ON)</string>
+   </property>
+  </action>
+  <action name="actionTrocar_Atacante">
+   <property name="text">
+    <string>Trocar Atacante</string>
    </property>
   </action>
  </widget>

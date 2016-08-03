@@ -297,7 +297,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Verde Escuro(Goleiro)</string>
+    <string>Verde Claro(Atacante)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cor1LowerV">
@@ -453,7 +453,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Verde Claro(Atacante)</string>
+    <string>Verde Escuro(Goleiro)</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="cor3UpperV">

@@ -17,7 +17,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM5')
+com = Communication('COM3')
 fps = 0
 time_start = time()
 
@@ -190,10 +190,10 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
     global fps
     global time_start
 
-    adiciona_ponto(int(pos_ball_x), int(pos_ball_y), 0, 255, 0, 'bola')
-    adiciona_ponto(int(p0_x),int(p0_y), 255, 0, 0, 'jogador1')
-    adiciona_ponto(int(p1_x),int(p1_y), 0, 255, 0, 'jogador2')
-    adiciona_ponto(int(p2_x),int(p2_y), 0, 0, 255, 'jogador3')
+    adiciona_ponto(int(pos_ball_x), int(pos_ball_y), 35, 100, 215, 'bola') #laranja
+    adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante') # verde escuro
+    adiciona_ponto(int(p1_x),int(p1_y), 170, 0, 255, 'zagueiro') # rosa
+    adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro') # verde claro
 
     """
     print (p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball_x, pos_ball_y, cobrando_penalidade, pausado)
@@ -202,10 +202,10 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
     #limpa_lista()
 
     world.update(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, (pos_ball_x, pos_ball_y))
-
+    
     # Controls each robot individually
     # msg = Message()
-    for i in [0,1,2]:  # [0] = atk , [1] defesa e [2] goleiro
+    for i in [0,1]:  # [0] = atk , [1] defesa e [2] goleiro
         p = world.get_teammate(i)
         vr, vl = p.controle(world) #xt, yt = posicao retornada pela funcao chuta
         """
@@ -247,15 +247,15 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
                 print "penalty defesa"
                 cobrando_penalidade = False
                 rodando = True
-                com.set_pwm_right('2', 90)
+                com.set_pwm_right('2', 80)
                 com.set_pwm_left('2', 250)
                 com.stop('1')
                 com.stop('3')
-                com.set_pwm_right('2', 90)
+                com.set_pwm_right('2', 80)
                 com.set_pwm_left('2', 250)
                 com.stop('1')
                 com.stop('3')
-                com.set_pwm_right('2', 90)
+                com.set_pwm_right('2', 80)
                 com.set_pwm_left('2', 250)
                 com.stop('1')
                 com.stop('3')

@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&w, SIGNAL(pauseGame(bool)), &pythonThread, SLOT(pauseGame(bool)));
     QObject::connect(&w, SIGNAL(penalty(int)), &pythonThread, SLOT(inicioPenalty(int)));
     QObject::connect(&w, SIGNAL(escolheCor(bool)), &processingThread, SLOT(escolheCor(bool)));
+    QObject::connect(&w, SIGNAL(TeamColor(bool)), &pythonThread, SLOT(TeamColor(bool)));
 
     captureThread.start();
     processingThread.start();

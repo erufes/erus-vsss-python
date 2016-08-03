@@ -31,7 +31,7 @@ private:
         arena_right_lower[0] = 1;
         arena_right_lower[1] = 1;
         quadrado[0] = false;
-        flip[0] = false;
+        flip[0] = true;
 
         blueLowerBound = NULL;
         blueUpperBound = NULL;
@@ -291,6 +291,22 @@ public:
         }
 
         color3UpperBound = new cv::Scalar(value);
+    }
+    void changeAttack()
+    {
+        if(color2UpperBound != NULL && color2LowerBound != NULL)
+           if(color3UpperBound != NULL and color3LowerBound != NULL)
+           {
+                changeColor(&color1UpperBound,&color2UpperBound);
+                changeColor(&color1LowerBound,&color2LowerBound);
+           }
+    }
+    void changeColor(cv::Scalar **color1, cv::Scalar **color2)
+    {
+        cv::Scalar *aux;
+        aux = *color1;
+        *color1 = *color2;
+        *color2 = aux;
     }
 
     bool saveToFile(const char *fullPath) {

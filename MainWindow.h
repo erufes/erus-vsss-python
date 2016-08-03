@@ -23,7 +23,9 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     bool Calibrando_Bordas = false;
     bool Medindo_Distancia = false;
+    bool Trocar_Atacante = false;
     bool First_Click_Distance = false;
+    bool Team_Azul = false;
     QPoint Points_Distance[2];
     std::string name_file_load;
 
@@ -69,6 +71,8 @@ private slots:
 
     void on_actionFlip_triggered();
 
+    void on_actionTrocar_Atacante_triggered();
+
 private:
     Ui::MainWindow *ui;
     QLabel label;
@@ -89,6 +93,7 @@ signals:
     void pauseGame(bool ativa);
     void penalty(int tipo);// 1 para ataque e 2 para defesa
     void escolheCor(bool cor);
+    void TeamColor(bool cor); // true para azul
     void updateBorders();
 };
 

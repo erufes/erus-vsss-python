@@ -14,6 +14,7 @@
 #include "World.h"
 #include "Buffer.h"
 #include "Utils.h"
+#include "Configuracao.h"
 
 class PythonThread : public QThread {
     Q_OBJECT
@@ -32,6 +33,7 @@ public slots:
     void pauseGame(bool ativa);
     void inicioPenalty(int tipo);// 1 para ataque, 2 para defesa
     void updateBorders();
+    void TeamColor(bool team);
 
 public:
     PythonThread(Buffer<World> *bufferWorld, Buffer<cv::Mat> *bufferImagemProcessada);

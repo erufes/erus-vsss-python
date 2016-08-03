@@ -190,3 +190,4 @@ void ProcessingThread::pause(bool b) {
 void ProcessingThread::escolheCor(bool cor){
     corTime = cor;
 }
+

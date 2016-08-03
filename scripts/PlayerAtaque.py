@@ -1,12 +1,11 @@
 import Player
 import math
 import World
+import numpy as np
 from lista_marcacoes import *
 
 class PlayerAtaque(Player.Player):
-
-
-
+ 
     def chuta(self, world):
 
         distancia_pra_sair_da_parede = 3.5
@@ -161,66 +160,107 @@ class PlayerAtaque(Player.Player):
 
 
     def controle(self, world):
+
+        pd = world.get_atk_player()
+        xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
+        xback , yback = pd.get_back()  #unidade das coordenadas eh cm
+        pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
+        xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+
+        arq = open("posAtk.csv","a")
+        arq.write(str(pd_x) + ", " + str(pd_y))
+        arq.write("\n")
+        arq.close()
         
-        # TODO: habilitar o setpoint depois
-        (xt, yt) = self.chuta(world)
-        if world.get_ball().getx() < (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0:
-            xt = ((world.FIELD_RIGHT + world.FIELD_LEFT)/2.0)+15
-            yt = world.FIELD_TOP + 50
+        arq = open("ball.csv","a")
+        arq.write(str(xb) + ", " + str(yb))
+        arq.write("\n")
+        arq.close()
+
+
+
+
+        #xb, yb = world.get_ball().predict_ball_method(self) #unidade das coordenadas eh cm
+        #adiciona_ponto(int(xb), int(yb), 35, 100, 215, '')
+
+
+        theta_jog = self.get_theta()
+        theta_ball = math.atan2(yb,xb) # unidade rad
+        theta_gol = math.atan2(236,515)
+
+       
+        # matriz de rotacao e matriz de translacao que colocar o eixo de coordanadas no robo alinhado com o theta, e calcula o angulo de erro        
+        M_rot = np.array([[math.cos(theta_jog), math.sin(theta_jog)], [-math.sin(theta_jog), math.cos(theta_jog)]])
+        M_trans =  np.array([[pd_x], [pd_y]])
+        oldcoords_bola = np.array([[xb], [yb]])
+        newcoords_bola = M_rot.dot(oldcoords_bola - M_trans)
+
+        oldcoords_gol = np.array([515,236])
+        newcoords_gol = M_rot.dot(oldcoords_gol - M_trans)
+
+        # erro robo bola baseado 
+        #theta_erro = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
+        theta_erro_bola = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
+        theta_erro_gol = math.atan2(newcoords_gol[1][0], newcoords_gol[0][0])
+
+        theta_erro = theta_erro_bola + (theta_erro_bola - theta_erro_gol)/3
+       
+        #distancia das rodas em metros
+        D = 0.075 
+
+        #tempo de amostragem
+        T = 30 
+
+        #constantes do controlador
+
+        ####### KP ########
+        KPx = 1
+        KPy = 1
+        KPt = 1
         
-        adiciona_ponto(int(xt), int(yt), 0,255,255, 'xt, yt')
+        ####### KD ########
+        KDx = 0
+        KDy = 0
+        KDt = 0
 
-        #xt = yt = 100; 
+        ####### KI ########
+        KIx = 0
+        KIy = 0
+        KIt = 0
 
-        distancia_y = int(yt) - self.gety()
-        distancia_x = int(xt) - self.getx()
+        #dado o sistema y = pseudoA*Matriz_erro obtem-se y que eh a velocidade da roda direita e velocidade da roda esquerda
+        A = np.array([[math.cos(theta_jog)/2, math.cos(theta_jog)/2], [math.sin(theta_jog)/2, math.sin(theta_jog)/2],[1/D, -1/D]])
+        pseudoA = np.linalg.pinv(A)
+        Matriz_erro = (T)*np.array([[(xb - pd_x)/100], [(yb - pd_y)/100], [theta_erro]])
 
-        theta_alvo = math.atan2(distancia_y, distancia_x )
-        theta_alvo *= 180.0/3.1415#conversao p/ graus
+        errox_atual = Matriz_erro[0][0]
+        erroy_atual = Matriz_erro[1][0]
+        errot_atual = Matriz_erro[2][0]
 
-        theta_robo = self.get_theta()
-        #print "orientacao do robo = ", theta_robo
+        self.inc_sumErroX(errox_atual)
+        self.inc_sumErroY(erroy_atual)
+        self.inc_sumErroT(errot_atual)
 
-        theta_erro = theta_alvo - theta_robo
+        controladorPID = np.array([[KPx + KDx*(errox_atual - self.get_xe_old()) + KIx*self.get_sumErroX()], [KPy + KDy*(erroy_atual - self.get_ye_old()) + KIy*self.get_sumErroY()], [KPt + KDt*(errot_atual - self.get_te_old()) + KIt*self.get_sumErroT()]])
+
+        self.set_xe_old(errox_atual)
+        self.set_xe_old(erroy_atual)
+        self.set_xe_old(errot_atual)
+
+        '''print("Matriz de Erro\n")
+        print(Matriz_erro)
+        print("Controlador\n")
+        print(controladorPID)
+        Matriz_erro = Matriz_erro*controladorPID
+        print("Final\n")
+        print(Matriz_erro)'''
         
-        
-        while theta_erro > 180.0:
-            theta_erro -= 360.0
-        while theta_erro < -180.0:
-            theta_erro += 360.0
-        
-        ro = math.sqrt(distancia_y*distancia_y + distancia_x*distancia_x)
 
-        alfa = theta_erro *math.pi/180.0 #conversao para radianos
+        y = pseudoA.dot(Matriz_erro)
+        vmax = max(abs(y[0][0]), abs(y[1][0])) # pega a maior velocidade
 
-        # if (ro < 8) and (xt < (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0):
-        #     theta_erro = 90 - self.get_theta()
-        #
-        #     while theta_erro > 180.0:
-        #         theta_erro -= 360.0
-        #     while theta_erro < -180.0:
-        #         theta_erro += 360.0
-        #
-        #     alfa = theta_erro * math.pi / 180.0
-        #     return self.lyapunov(ro, alfa, 0, 80.0, 45.0)
+        #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
+        K = 150
+        vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  
 
-        # ni eh a velocidade de avanco do modelo d Lyapunov
-        # alphaomega eh a voelocidade de giro
-
-        k_alfa_omega = 150.0
-        k_ni = 216.0
-        fator_freio = 156 # fator_freio = 8/(tanh^(-1)(13/255)) para obter pwm = 13 com ro = 8!
-
-        #print "---------"
-        #print "ro = ", ro
-
-        #print "alfa_graus = ", 180*alfa/math.pi
-
-        # vr, vl = self.lyapunov(ro, alfa, 200.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
-        vr, vl = self.lyapunov(ro, alfa, 250.0, 20.0, 13.0)
-        #vr, vl = self.lyapunov(ro, alfa, 255.0, 50.0, 15.0) #k_ni,k_alphaomega,fator_freio
-        
-        #melhor ate agora para atacante vr, vl = self.lyapunov(ro, alfa, 240.0, 25.0, 12.0)
-
-        #vr, vl =  self.lyapunov(ro, alfa, k_ni, k_alfa_omega, fator_freio) #k_ni,k_alphaomega,fator_freio
-        return vr, vl
+        return int(vr), int(vl)

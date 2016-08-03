@@ -90,7 +90,7 @@ void PythonThread::run()
 
                 cv::Point point(Utils::cmToPx(x), Utils::cmToPx(y));
                // std::cout << point << std::endl;
-                cv::circle(frame, point, 4, cv::Scalar(b, g, r), 4);
+                cv::circle(frame, point, 4, cv::Scalar(b, g, r), 4); // print das bolinhas marotas
             }
 
             Py_DECREF(lista);
@@ -126,4 +126,14 @@ void PythonThread::inicioPenalty(int tipo) {
 
 void PythonThread::updateBorders() {
     atualizaBordas = true;
+}
+void PythonThread::TeamColor(bool team)
+{
+   if(team)
+   {
+       std::cout << "team azul selecionado" << std::endl;
+   }
+   else{
+       std::cout << "team amarelo selecionado" << std::endl;
+   }
 }

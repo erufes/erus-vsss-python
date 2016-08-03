@@ -31,7 +31,7 @@ MainWindow::MainWindow(PythonThread *pythonThread, ProcessingThread *processingT
     std::cout << QDir::currentPath().toStdString() << std::endl;
 
     Configuracao &conf = Configuracao::getInstance();
-    conf.loadFile("config.xml");
+    conf.loadFile("certo.xml");
     updateBorders();
 
 
@@ -138,7 +138,9 @@ void MainWindow::on_actionTime_Azul_triggered()
     ui->actionTIme_Amarelo->setText("Time Amarelo");
     ui->actionTime_Azul->setText("Time Azul (Selecionado)");
     ui->lineEdit->setText("Time Azul");
-    escolheCor(true);
+    Team_Azul = true;
+    TeamColor(Team_Azul);
+    escolheCor(Team_Azul);
 }
 
 void MainWindow::on_actionTIme_Amarelo_triggered()
@@ -146,7 +148,9 @@ void MainWindow::on_actionTIme_Amarelo_triggered()
     ui->actionTIme_Amarelo->setText("Time Amarelo(Selecionado)");
     ui->actionTime_Azul->setText("Time Azul");
     ui->lineEdit->setText("Time Amarelo");
-    escolheCor(false);
+    Team_Azul = false;
+    TeamColor(Team_Azul);
+    escolheCor(Team_Azul);
 }
 
 void MainWindow::on_actionBordas_da_arena_triggered()
@@ -204,4 +208,10 @@ void MainWindow::on_actionFlip_triggered()
         ui->actionFlip->setText("Flip (ON)");
         ui->label_atacando->setText("Atacando -->");
     }
+}
+
+void MainWindow::on_actionTrocar_Atacante_triggered()
+{
+    Configuracao &conf = Configuracao::getInstance();
+    conf.changeAttack();
 }

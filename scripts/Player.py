@@ -6,10 +6,71 @@ import World
 class Player(Agent.Agent):
 
     def __init__(self, rid=None):
+        self.xa_old = [0.0,0.0,0.0,0.0,0.0]
+        self.ya_old = [0.0,0.0,0.0,0.0,0.0]
+        self.xb_old = [0.0,0.0,0.0,0.0,0.0]
+        self.yb_old = [0.0,0.0,0.0,0.0,0.0]
         self.xa = self.ya = self.xb = self.yb = 0
+        self.theta_old = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         self.theta = 0
         self.medo_de_bater_na_parede = 30.0;
         self.id = rid
+
+############# Controlador
+
+    #posicao anterior para KD
+        self.xe_old = 0
+        self.ye_old = 0
+        self.te_old = 0
+
+    #somatorio dos erros para o KI 
+        self.erroX = 0;
+        self.erroY = 0;
+        self.erroT = 0;
+
+    def set_xe_old(self, xe):
+        self.xe_old = xe
+
+    def set_ye_old(self, ye):
+        self.ye_old = ye
+
+    def set_te_old(self, te):
+        self.te_old = te
+
+    def get_xe_old(self):
+        return self.xe_old
+
+    def get_ye_old(self):
+        return self.ye_old
+
+    def get_te_old(self):
+        return self.te_old
+
+
+    #funcoes do KI       
+
+    def inc_sumErroX(self, erroX):
+        self.erroX += erroX
+
+    def inc_sumErroY(self, erroY):
+        self.erroY += erroY
+
+    def inc_sumErroT(self, erroT):
+        self.erroT += erroT
+
+    def get_sumErroX(self):
+        return self.erroX
+
+    def get_sumErroY(self):
+        return self.erroY
+
+    def get_sumErroT(self):
+        return self.erroT
+
+##########################
+
+    def get_front(self):
+        return self.xa, self.ya
 
     def get_id(self):
         return self.id
@@ -37,7 +98,9 @@ class Player(Agent.Agent):
         return self.xb, self.yb
 
     def update_theta(self):
-        self.theta = math.atan2(self.yb - self.ya, self.xb - self.xa)
+        self.theta_old.insert(0,float(math.atan2(self.yb - self.ya, self.xb - self.xa)))
+        self.theta_old.pop()
+        self.theta = sum(self.theta_old)/15.0
 
     def update_xy(self):
         # distancia_y = int(yt) - 0.5*(int(cy_pink)+int(cy_team))
@@ -47,8 +110,22 @@ class Player(Agent.Agent):
         self.update_position((x, y))
 
     def set_position(self, (xa, ya), (xb, yb)):
-        self.set_front(xa, ya)
-        self.set_back(xb, yb)
+        self.xa_old.insert(0,float(xa))
+        self.xa_old.pop()
+        self.ya_old.insert(0,float(ya))
+        self.ya_old.pop()
+        self.xb_old.insert(0,float(xb))
+        self.xb_old.pop()
+        self.yb_old.insert(0,float(yb))
+        self.yb_old.pop()
+
+        mxa = sum(self.xa_old)/5.0
+        mya = sum(self.ya_old)/5.0
+        mxb = sum(self.xb_old)/5.0
+        myb = sum(self.yb_old)/5.0
+
+        self.set_front(mxa, mya)
+        self.set_back(mxb, myb)
 
         self.update_theta()
         self.update_xy()
@@ -58,7 +135,8 @@ class Player(Agent.Agent):
         self.set_theta(theta)
 
     def get_theta(self):
-        return self.theta*180.0/3.1415
+        #return self.theta*180.0/3.1415
+        return self.theta
 
     def predicao_adaptativa(self, x, world):
         return (4.5 + (x - world.left_limit) * (3.5 - 4.5) / (world.right_limit - world.left_limit))*0.85
@@ -158,9 +236,6 @@ class Player(Agent.Agent):
         else:
             omega = K_alfa_omega*alfa + Kni * (math.tanh(ro/fator_freio)/(ro/fator_freio))*math.sin(alfa)*math.cos(alfa) #giro
         
-#        v_r = int((R_robot * omega + ni)/1.3)
-#        v_l = int((-R_robot * omega + ni)/1.3)
-
         v_r = (omega + ni)
         v_l = (-omega + ni)
 
@@ -202,36 +277,53 @@ class Player(Agent.Agent):
         
         return v_r, v_l
 
-
-
-    def new_lyapunov():
-        return 0,0
     def controle(self, world):
-        (xt, yt) = self.chuta(world)
-        distancia_y = int(yt) - self.gety()
-        distancia_x = int(xt) - self.getx()
 
-        theta_ball = math.atan2(distancia_y, distancia_x )
-        theta_ball *= 180.0/3.1415#conversao p/ graus
+        pd = world.get_def_player()
+        xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
+        xback , yback = pd.get_back()  #unidade das coordenadas eh cm
+        pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
+        xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+    
+        theta_jog = self.get_theta()
+        theta_ball = math.atan2(yb,xb) # unidade rad
+        theta_gol = math.atan2(236,515)
 
-        theta_pink = self.get_theta()
+       
+        # matriz de rotacao e matriz de translacao que colocar o eixo de coordanadas no robo alinhado com o theta, e calcula o angulo de erro        
+        M_rot = np.array([[math.cos(theta_jog), math.sin(theta_jog)], [-math.sin(theta_jog), math.cos(theta_jog)]])
+        M_trans =  np.array([[pd_x], [pd_y]])
+        oldcoords_bola = np.array([[xb], [yb]])
+        newcoords_bola = M_rot.dot(oldcoords_bola - M_trans)
 
-        theta_erro = theta_ball - theta_pink
+        oldcoords_gol = np.array([515,236])
+        newcoords_gol = M_rot.dot(oldcoords_gol - M_trans)
 
-        while theta_erro > 180.0:
-            theta_erro -= 360.0
-        while theta_erro < -180.0:
-            theta_erro += 360.0
+        # erro robo bola baseado 
+        #theta_erro = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
+        theta_erro_bola = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
+        theta_erro_gol = math.atan2(newcoords_gol[1][0], newcoords_gol[0][0])
 
-        ro = math.sqrt(distancia_y*distancia_y + distancia_x*distancia_x)
-        if ro == 0:
-            ro = 1.0
-        alfa = theta_erro *math.pi/180.0 #conversao para radianos
+        theta_erro = theta_erro_bola + (theta_erro_bola - theta_erro_gol)/3
+       
+        #distancia das rodas em metros
+        D = 0.075 
 
-        # ni eh a velocidade de avanco do modelo d Lyapunov
+        #tempo de amostragem
+        T = 30 
 
-        #return self.lyapunov(ro, alfa, 140.0, 200.0, 45.0)
-        return self.lyapunov(ro, alfa, 100.0, 185.0, 45.0)
+        #dado o sistema y = pseudoA*Matriz_erro obtem-se y que eh a velocidade da roda direita e velocidade da roda esquerda
+        A = np.array([[math.cos(theta_jog)/2, math.cos(theta_jog)/2], [math.sin(theta_jog)/2, math.sin(theta_jog)/2],[1/D, -1/D]])
+        pseudoA = np.linalg.pinv(A)
+        Matriz_erro = (T)*np.array([[(xb - pd_x)/100], [(yb - pd_y)/100], [theta_erro]])
+        y = pseudoA.dot(Matriz_erro)
+        vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
+
+        #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
+        K = 255
+        vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
+
+        return int(vr), int(vl)
 
 
 
