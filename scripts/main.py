@@ -17,7 +17,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM3')
+com = Communication('COM4')
 fps = 0
 time_start = time()
 
@@ -184,7 +184,7 @@ def run(p0_front_x, p0_front_y, p0_back_x, p0_back_y, p1_front_x, p1_front_y, p1
 """
 #Guilherme: Funcao chamada quando o c++ processar um novo frame
 #Guilherme: Versao para atualizacao de jogador usando, x,y,angle
-def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball_x, pos_ball_y, cobrando_penalidade, pausado):
+def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball_x, pos_ball_y, cobrando_penalidade, pausado, op1_x, op1_y, op2_x, op2_y, op3_x, op3_y):
     global world
     global com
     global fps
@@ -194,6 +194,9 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
     adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante') # verde escuro
     adiciona_ponto(int(p1_x),int(p1_y), 170, 0, 255, 'zagueiro') # rosa
     adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro') # verde claro
+    adiciona_ponto(int(op1_x),int(op1_y), 0, 0, 255, 'op1') # vermelho
+    adiciona_ponto(int(op2_x),int(op2_y), 0, 0, 255, 'op2') # vermelho
+    adiciona_ponto(int(op3_x),int(op3_y), 0, 0, 255, 'op3') # vermelho
 
     """
     print (p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball_x, pos_ball_y, cobrando_penalidade, pausado)

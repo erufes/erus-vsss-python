@@ -24,6 +24,7 @@ public:
     void setBall(Ball &ball);
 
     Player getTeammate(unsigned int n);
+    Player getOpponents(unsigned int n);
     Ball getBall();
 
     void toPx();

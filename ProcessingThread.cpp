@@ -40,13 +40,18 @@ void ProcessingThread::run() {
         Mat frameHsv;
         cvtColor(frame, frameHsv ,CV_BGR2HSV);
         BlobProcessor *teamColorBlobProcessor;
+        BlobProcessor *enemyColorBlobProcessor;
 
         if(corTime){
             teamColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
             teamColorBlobProcessor->process(3);
+            enemyColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getYellowLowerBound(), *conf.getYellowUpperBound());
+            enemyColorBlobProcessor->process(3);
         } else {
             teamColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getYellowLowerBound(), *conf.getYellowUpperBound());
             teamColorBlobProcessor->process(3);
+            enemyColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
+            enemyColorBlobProcessor->process(3);
         }
 
         BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());
@@ -128,8 +133,6 @@ void ProcessingThread::run() {
 
         Scalar centro3_aux = menorDist3ob;
 
-
-
         Scalar centro1 = Scalar(0,0,0);
         double menorDist = 100000;
         for(list<Scalar>::iterator it = listaTime.begin(); it != listaTime.end(); it++) // pegar somente os blobs que estão pertos
@@ -165,6 +168,14 @@ void ProcessingThread::run() {
             }
         }
 
+        list<Scalar> listaEnemyTime = enemyColorBlobProcessor->getResults();
+        Player enemy[3];
+        int i = 0;
+        for(list<Scalar>::iterator it = listaEnemyTime.begin(); it != listaEnemyTime.end(); it++) // pegar somente os blobs que estão pertos
+        {
+                enemy[i++] = Player((*it)[0],(*it)[1], (*it)[0],(*it)[1]);
+        }
+
         // mostra bola
         Scalar centroBola = ballColorBlobProcessor.getResults().front();
 //        Point point4(centroBola[0], centroBola[1]);
@@ -173,14 +184,19 @@ void ProcessingThread::run() {
         Player aux2 = Player(centro2[0],centro2[1], centro2_aux[0], centro2_aux[1]);
         Player aux3 = Player(centro3[0], centro3[1], centro3_aux[0], centro3_aux[1]);
         Player teammates[] = {aux1, aux2, aux3};
+        Player enemies[] = {enemy[0], enemy[1], enemy[2]};
         Ball ball(centroBola[0], centroBola[1]);
 
         World world;
         world.setTeammates(teammates);
         world.setBall(ball);
 
+        world.setOpponents(enemies);
+        delete(enemyColorBlobProcessor);
+
         bufferWorld->add(world);
         bufferImagemProcessada->add(frame);
+
         delete(teamColorBlobProcessor);
     }
 }

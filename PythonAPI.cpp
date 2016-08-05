@@ -42,7 +42,7 @@ PythonAPI::~PythonAPI()
 PyObject* PythonAPI::callFunctionRun(double* args){
     PyObject *pFunc; //*pDict,
     PyObject *pArgs, *pValue;
-    int nParametros = 13;
+    int nParametros = 19;
     pFunc = PyObject_GetAttrString(pModule, "run");
     /* pFunc is a new reference */
 
@@ -85,7 +85,7 @@ PyObject* PythonAPI::callFunctionRun(double* args){
 PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
 //Falta modificar para escolher quando é penalty
     //static int cnt = 0;
-    double args[13];
+    double args[19];
     //int parametros[] = {50, 50, 0, 70, 70, 3.1415, 100, 100, 0, 120, 120, 0};
     Player player;
     Ball ball = world->getBall();
@@ -103,6 +103,15 @@ PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
     args[10] = ball.getY();
     args[11] = penalty; //modificar para levar penalty em consideração
     args[12] = paused;
+
+    for(int i = 0; i < 3; i++) {
+        player = world->getOpponents(i);
+        args[2*i+13] = player.getX();
+        args[2*i+14] = player.getY();
+        //std::cout << player.getAngle() << " == " << args[3*i+2] << "?\n";
+        //if( player.getAngle() != args[3*i+2] ){cnt++;} // Esta guardando rad float em int, pq?
+        //assert ( cnt < 20 );
+    }
 
     return callFunctionRun(args);
 }

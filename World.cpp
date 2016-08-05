@@ -37,6 +37,10 @@ Player World::getTeammate(unsigned int n) {
     return teammates[n];
 }
 
+Player World::getOpponents(unsigned int n) {
+    return opponents[n];
+}
+
 Ball World::getBall() {
     return ball;
 }
@@ -69,7 +73,7 @@ void World::print(){
     for(int i=0; i<3; i++) {
         Player p = teammates[i];
         Player o = opponents[i];
-        //cout << o.getX() << ", " << o.getY() << ", " << o.getAngle() << endl;
+        cout << o.getX() << ", " << o.getY() << ", " << o.getAngle() << endl;
     }
 }
 
