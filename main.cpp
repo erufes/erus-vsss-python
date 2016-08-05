@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
     MainWindow w(&pythonThread, &processingThread, &buffer);
     w.show();
 
+
     QObject::connect(&pythonThread, SIGNAL(newFrame(QImage)), &w, SLOT(updateFrame(QImage)));
     QObject::connect(&w, SIGNAL(pauseGame(bool)), &pythonThread, SLOT(pauseGame(bool)));
     QObject::connect(&w, SIGNAL(penalty(int)), &pythonThread, SLOT(inicioPenalty(int)));

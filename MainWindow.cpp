@@ -117,6 +117,7 @@ void MainWindow::on_actionSalvar_triggered()
 {
     Configuracao &conf = Configuracao::getInstance();
     conf.saveToFile(name_file_load.c_str());
+    //std::cout << name_file_load.c_str() << std::endl;
 }
 
 void MainWindow::on_actionCarregar_triggered() {
@@ -181,7 +182,7 @@ void MainWindow::on_actionSalvar_como_triggered()
 
 void MainWindow::on_actionFechar_triggered()
 {
-    std::cout << "foda-se" << std::endl;
+    std::cout << "Finalizando programa..." << std::endl;
     this->close();
 }
 
@@ -214,4 +215,10 @@ void MainWindow::on_actionTrocar_Atacante_triggered()
 {
     Configuracao &conf = Configuracao::getInstance();
     conf.changeAttack();
+}
+
+void MainWindow::on_actionSobre_triggered()
+{
+    QMessageBox::information(this, tr("Sobre"),tr("\nInterface grafica desenvolvida pela Equipe de Robotica da Ufes(ERUS) para a categoria IEEE Very Small Soccer."
+                                                  "\n\n\t\tCopyright ® 2015 - Todos os direitos reservados\n"));
 }

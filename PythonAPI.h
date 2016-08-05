@@ -11,7 +11,7 @@ class PythonAPI
     PyObject *pName, *pModule;
 
 public:
-    PythonAPI(char* file);
+    PythonAPI(const char* file);
     ~PythonAPI();
     PyObject *callFunctionRun(double* args);
     PyObject *callFunctionRun(World* world, int penalty, int paused);

@@ -73,6 +73,8 @@ private slots:
 
     void on_actionTrocar_Atacante_triggered();
 
+    void on_actionSobre_triggered();
+
 private:
     Ui::MainWindow *ui;
     QLabel label;

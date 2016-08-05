@@ -40,6 +40,7 @@ void ProcessingThread::run() {
         Mat frameHsv;
         cvtColor(frame, frameHsv ,CV_BGR2HSV);
         BlobProcessor *teamColorBlobProcessor;
+
         if(corTime){
             teamColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
             teamColorBlobProcessor->process(3);
@@ -50,9 +51,8 @@ void ProcessingThread::run() {
 
         BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());
         EnemyColorBlobProcessor.process(7);
-        std::cout << conf.getEnemyLowerBound() << std::endl;
-        std::cout << conf.getEnemyUpperBound() << std::endl;
-        std::cout << conf.getColor1UpperBound() << std::endl;
+        //std::cout << conf.getEnemyLowerBound() << std::endl << conf.getEnemyUpperBound() << std::endl << conf.getColor1UpperBound() << std::endl;
+
         BlobProcessor ballColorBlobProcessor(frameHsv, *conf.getOrangeLowerBound(), *conf.getOrangeUpperBound());
         ballColorBlobProcessor.processBall(1);
 

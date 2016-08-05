@@ -410,14 +410,14 @@ public:
     void loadFile(const char *fullPath) {
         Configuracao &conf = Configuracao::getInstance();
 
-        float lower[3];
+        //float lower[3];
         tinyxml2::XMLDocument doc;
         doc.LoadFile(fullPath);
         tinyxml2::XMLElement *config = doc.FirstChildElement("config");
         tinyxml2::XMLElement *colors = config->FirstChildElement("colors");
         if(colors != NULL) {
             tinyxml2::XMLElement *color = colors->FirstChildElement("color");
-            int i=-1;
+            //int i=-1;
             while(1) {
                 if(color != NULL) {
                     //std::cout << "color";
@@ -517,7 +517,7 @@ public:
     cv::Point verticeComprimentoArena1 = cv::Point(95, 64);
     cv::Point verticeComprimentoArena2 = cv::Point(560, 65);
 
-    void createColorElementXml(tinyxml2::XMLDocument *doc, tinyxml2::XMLElement *parent, char *name, cv::Scalar *lowerBound, cv::Scalar *upperBound) {
+    void createColorElementXml(tinyxml2::XMLDocument *doc, tinyxml2::XMLElement *parent, const char *name, cv::Scalar *lowerBound, cv::Scalar *upperBound) {
         tinyxml2::XMLElement *color = doc->NewElement("color");
         color->SetAttribute("name", name);
         parent->LinkEndChild(color);

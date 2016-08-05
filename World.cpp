@@ -68,7 +68,8 @@ void World::toCm() {
 void World::print(){
     for(int i=0; i<3; i++) {
         Player p = teammates[i];
-        //cout << p.getX() << ", " << p.getY() << ", " << p.getAngle() << endl;
+        Player o = opponents[i];
+        //cout << o.getX() << ", " << o.getY() << ", " << o.getAngle() << endl;
     }
 }
 

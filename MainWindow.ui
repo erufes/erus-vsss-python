@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Janela Principal</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="label">
@@ -184,7 +184,7 @@
   </action>
   <action name="actionTIme_Amarelo">
    <property name="text">
-    <string>TIme Amarelo (Selecionado)</string>
+    <string>Time Amarelo (Selecionado)</string>
    </property>
   </action>
   <action name="actionTime_Azul">

@@ -7,7 +7,7 @@
 
 using namespace std;
 
-PythonAPI::PythonAPI(char* file)
+PythonAPI::PythonAPI(const char *file)
 {
     Py_Initialize();
 
@@ -40,7 +40,7 @@ PythonAPI::~PythonAPI()
 }
 
 PyObject* PythonAPI::callFunctionRun(double* args){
-    PyObject *pDict, *pFunc;
+    PyObject *pFunc; //*pDict,
     PyObject *pArgs, *pValue;
     int nParametros = 13;
     pFunc = PyObject_GetAttrString(pModule, "run");
@@ -84,9 +84,9 @@ PyObject* PythonAPI::callFunctionRun(double* args){
 
 PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
 //Falta modificar para escolher quando é penalty
-    static int cnt = 0;
+    //static int cnt = 0;
     double args[13];
-    int parametros[] = {50, 50, 0, 70, 70, 3.1415, 100, 100, 0, 120, 120, 0};
+    //int parametros[] = {50, 50, 0, 70, 70, 3.1415, 100, 100, 0, 120, 120, 0};
     Player player;
     Ball ball = world->getBall();
     for(int i = 0; i < 3; i++) {
@@ -108,9 +108,9 @@ PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
 }
 
 int PythonAPI::callFunctionPause(){
-    PyObject *pDict, *pFunc;
+    PyObject *pFunc; //,*pDict
     PyObject *pArgs, *pValue;
-    int nParametros = 15;
+    //int nParametros = 15;
     pFunc = PyObject_GetAttrString(pModule, "pause");
     /* pFunc is a new reference */
 
@@ -150,9 +150,9 @@ int PythonAPI::callFunctionPause(){
 
 int PythonAPI::callFunctionUpdateBorders()
 {
-    PyObject *pDict, *pFunc;
+    PyObject *pFunc;//*pDict,
     PyObject *pArgs, *pValue;
-    int nParametros = 15;
+    //int nParametros = 15;
     pFunc = PyObject_GetAttrString(pModule, "updateBorders");
     /* pFunc is a new reference */
 

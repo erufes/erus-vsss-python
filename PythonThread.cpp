@@ -53,7 +53,7 @@ void PythonThread::run()
 
         world = bufferWorld->get();
 
-//        world.print();
+        world.print();
 
 //        std::cout << "INICIO DOS PRINTS" << std::endl;
 
