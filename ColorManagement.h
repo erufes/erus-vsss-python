@@ -49,6 +49,12 @@ private slots:
 
     void on_Click_clicked();
 
+    void on_pushButtonEnemy_clicked();
+
+    void on_mostrarFiltroCheckBox_clicked();
+
+    void on_mostrarFiltroCheckBox_toggled(bool checked);
+
 private:
     Ui::ColorManagement *ui;
     ColorManagementThread *colorManagementThread;

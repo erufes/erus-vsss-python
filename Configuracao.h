@@ -33,6 +33,8 @@ private:
         quadrado[0] = false;
         flip[0] = true;
 
+        EnemyUpperBound = NULL;
+        EnemyLowerBound = NULL;
         blueLowerBound = NULL;
         blueUpperBound = NULL;
         yellowLowerBound = NULL;
@@ -56,6 +58,8 @@ private:
 
     cv::Scalar *blueLowerBound;
     cv::Scalar *blueUpperBound;
+    cv::Scalar *EnemyLowerBound;
+    cv::Scalar *EnemyUpperBound;
     cv::Scalar *yellowLowerBound;
     cv::Scalar *yellowUpperBound;
     cv::Scalar *orangeLowerBound;
@@ -66,6 +70,8 @@ private:
     cv::Scalar *color2UpperBound;
     cv::Scalar *color3LowerBound;
     cv::Scalar *color3UpperBound;
+
+
 
 public:
 
@@ -161,7 +167,26 @@ public:
     cv::Scalar *getBlueUpperBound() {
         return blueUpperBound;
     }
+    cv::Scalar *getEnemyUpperBound() {
+        return EnemyUpperBound;
+    }
+    cv::Scalar *getEnemyLowerBound() {
+        return EnemyLowerBound;
+    }
+    void setEnemyUpperBound(cv::Scalar value) {
+        if(EnemyUpperBound != NULL) {
+            delete EnemyUpperBound;
+        }
 
+        EnemyUpperBound = new cv::Scalar(value);
+    }
+    void setEnemyLowerBound(cv::Scalar value) {
+        if(EnemyLowerBound != NULL) {
+            delete EnemyLowerBound;
+        }
+
+        EnemyLowerBound = new cv::Scalar(value);
+    }
     void setBlueUpperBound(cv::Scalar value) {
         if(blueUpperBound != NULL) {
             delete blueUpperBound;
@@ -330,6 +355,9 @@ public:
         if(conf.getOrangeLowerBound() != NULL && conf.getOrangeUpperBound() != NULL) {
             createColorElementXml(&doc, colors, "orange", conf.getOrangeLowerBound(), conf.getOrangeUpperBound());
         }
+        if(conf.getEnemyLowerBound() != NULL && conf.getEnemyUpperBound() != NULL) {
+            createColorElementXml(&doc, colors, "enemy", conf.getEnemyLowerBound(), conf.getEnemyUpperBound());
+        }
 
         if(conf.getColor1LowerBound() != NULL && conf.getColor1UpperBound() != NULL) {
             createColorElementXml(&doc, colors, "color1", conf.getColor1LowerBound(), conf.getColor1UpperBound());
@@ -432,6 +460,9 @@ public:
                         } else if(buffer.compare("color3") == 0) {
                             conf.setColor3LowerBound(lower);
                             conf.setColor3UpperBound(upper);
+                        } else if(buffer.compare("enemy") == 0) {
+                            conf.setEnemyLowerBound(lower);
+                            conf.setEnemyUpperBound(upper);
                         }
 
                         color = color->NextSiblingElement();

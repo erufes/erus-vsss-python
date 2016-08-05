@@ -115,6 +115,11 @@ cv::Vec3b ColorManagement::pegaCorLower(int n) {
         color[1] = ui->cor3LowerS->text().toInt();
         color[2] = ui->cor3LowerV->text().toInt();
         break;
+    case 7:
+        color[0] = ui->corEnemyLowerH->text().toInt();
+        color[1] = ui->corEnemyLowerS->text().toInt();
+        color[2] = ui->corEnemyLowerV->text().toInt();
+        break;
     default:
         color[0] = 0;
         color[1] = 0;
@@ -157,6 +162,11 @@ cv::Vec3b ColorManagement::pegaCorUpper(int n) {
         color[0] = ui->cor3UpperH->text().toInt();
         color[1] = ui->cor3UpperS->text().toInt();
         color[2] = ui->cor3UpperV->text().toInt();
+        break;
+    case 7:
+        color[0] = ui->corEnemyUpperH->text().toInt();
+        color[1] = ui->corEnemyUpperS->text().toInt();
+        color[2] = ui->corEnemyUpperV->text().toInt();
         break;
     default:
         color[0] = 0;
@@ -239,6 +249,11 @@ void ColorManagement::setaCorLower(int n, cv::Vec3b color) {
         ui->cor3LowerS->setText(QString::number(color[1]));
         ui->cor3LowerV->setText(QString::number(color[2]));
         break;
+    case 7:
+        ui->corEnemyLowerH->setText(QString::number(color[0]));
+        ui->corEnemyLowerS->setText(QString::number(color[1]));
+        ui->corEnemyLowerV->setText(QString::number(color[2]));
+        break;
     }
 }
 
@@ -273,6 +288,11 @@ void ColorManagement::setaCorUpper(int n, cv::Vec3b color) {
         ui->cor3UpperH->setText(QString::number(color[0]));
         ui->cor3UpperS->setText(QString::number(color[1]));
         ui->cor3UpperV->setText(QString::number(color[2]));
+        break;
+    case 7:
+        ui->corEnemyUpperH->setText(QString::number(color[0]));
+        ui->corEnemyUpperS->setText(QString::number(color[1]));
+        ui->corEnemyUpperV->setText(QString::number(color[2]));
         break;
     }
 }
@@ -316,7 +336,10 @@ void ColorManagement::updateFrame(const cv::Mat &frame) {
 
             cv::addWeighted(maskRange1, 1, maskRange2, 1, 0, imageToShow);
         } else {
-            cv::inRange(hsvImage, lower, upper, imageToShow);
+                cv::inRange(hsvImage, lower, upper, imageToShow);
+            if(corEditada == 7)
+                imageToShow = 255 - imageToShow;
+
         }
     } else {
         imageToShow = frame;
@@ -370,7 +393,26 @@ void ColorManagement::preencheCampos() {
         ui->corAzulUpperV->setText("0");
     }
 
-
+    if(conf.getEnemyLowerBound() != NULL) {
+        cv::Scalar *enemyLowerBound = conf.getEnemyLowerBound();
+        ui->corEnemyLowerH->setText(QString::number(enemyLowerBound->val[0]));
+        ui->corEnemyLowerS->setText(QString::number(enemyLowerBound->val[1]));
+        ui->corEnemyLowerV->setText(QString::number(enemyLowerBound->val[2]));
+    } else {
+        ui->corEnemyLowerH->setText("255");
+        ui->corEnemyLowerS->setText("255");
+        ui->corEnemyLowerV->setText("255");
+    }
+    if(conf.getEnemyUpperBound() != NULL) {
+        cv::Scalar *enemyUpperBound = conf.getEnemyUpperBound();
+        ui->corEnemyUpperH->setText(QString::number(enemyUpperBound->val[0]));
+        ui->corEnemyUpperS->setText(QString::number(enemyUpperBound->val[1]));
+        ui->corEnemyUpperV->setText(QString::number(enemyUpperBound->val[2]));
+    } else {
+        ui->corEnemyUpperH->setText("0");
+        ui->corEnemyUpperS->setText("0");
+        ui->corEnemyUpperV->setText("0");
+    }
     if(conf.getYellowLowerBound() != NULL) {
         cv::Scalar *yellowLowerBound = conf.getYellowLowerBound();
         ui->corAmareloLowerH->setText(QString::number(yellowLowerBound->val[0]));
@@ -487,6 +529,7 @@ void ColorManagement::preencheCampos() {
 }
 
 void ColorManagement::setLabels(int n) {
+    ui->pushButtonEnemy->setText("Calibrar");
     ui->pushButtonAzul->setText("Calibrar");
     ui->pushButtonAmarelo->setText("Calibrar");
     ui->pushButtonLaranja->setText("Calibrar");
@@ -512,6 +555,9 @@ void ColorManagement::setLabels(int n) {
         break;
     case 6:
         ui->pushButtonCor3->setText("Calibrando");
+        break;
+    case 7:
+        ui->pushButtonEnemy->setText("Calibrando");
         break;
     default:
         break;
@@ -615,6 +661,11 @@ void ColorManagement::on_salvar_clicked() {
     conf.setColor3LowerBound(cv::Scalar(cor[0], cor[1], cor[2]));
     cor = pegaCorUpper(6);
     conf.setColor3UpperBound(cv::Scalar(cor[0], cor[1], cor[2]));
+
+    cor = pegaCorLower(7);
+    conf.setEnemyLowerBound(cv::Scalar(cor[0], cor[1], cor[2]));
+    cor = pegaCorUpper(7);
+    conf.setEnemyUpperBound(cv::Scalar(cor[0], cor[1], cor[2]));
 }
 
 void ColorManagement::on_reset_clicked() {
@@ -640,4 +691,14 @@ void ColorManagement::on_Click_clicked()
     conf.setStateCalibracao(false);
     ui->Click->setText("Click (ON)");
     ui->Quadrado->setText("Quadrado");
+}
+
+void ColorManagement::on_pushButtonEnemy_clicked()
+{
+    if(corEditada == 7) {
+        corEditada = 0;
+    } else {
+        corEditada = 7;
+    }
+    setLabels(corEditada);
 }

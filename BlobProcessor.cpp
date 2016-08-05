@@ -217,14 +217,14 @@ void BlobProcessor::process(unsigned int n) {
     Mat imageMask;
 
     inRange(imageHsv, colorLowerBound, colorUpperBound, imageMask);
-
+    if(n == 7)
+        imageMask = 255 - imageMask;
     calcHist(&imageHsv, 1, conf.channels, imageMask, histogram, 2, conf.histSize, conf.ranges);
     normalize(histogram, histogram, 0, 255, CV_MINMAX);
 
     vector<Contour> contours;
     vector<Vec4i> hierarchy;
     findContours(imageMask, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
-
     list<Contour> bestCountours = list<Contour>();
     double worstArea = -1;
 

@@ -48,6 +48,11 @@ void ProcessingThread::run() {
             teamColorBlobProcessor->process(3);
         }
 
+        BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());
+        EnemyColorBlobProcessor.process(7);
+        std::cout << conf.getEnemyLowerBound() << std::endl;
+        std::cout << conf.getEnemyUpperBound() << std::endl;
+        std::cout << conf.getColor1UpperBound() << std::endl;
         BlobProcessor ballColorBlobProcessor(frameHsv, *conf.getOrangeLowerBound(), *conf.getOrangeUpperBound());
         ballColorBlobProcessor.processBall(1);
 
@@ -59,6 +64,8 @@ void ProcessingThread::run() {
 
         BlobProcessor color3BlobProcessor(frameHsv, *conf.getColor3LowerBound(), *conf.getColor3UpperBound());
         color3BlobProcessor.process(2);
+
+
 
         list<Scalar> listaTime = teamColorBlobProcessor->getResults();
 
