@@ -28,7 +28,6 @@ private:
 
 protected:
     void run();
-
 public slots:
     void pauseGame(bool ativa);
     void inicioPenalty(int tipo);// 1 para ataque, 2 para defesa

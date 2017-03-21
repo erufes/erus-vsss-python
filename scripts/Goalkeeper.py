@@ -90,11 +90,11 @@ class Goalkeeper(Player.Player):
         xb = 0
         yb = 0
 
-        if(math.sqrt((xb - pd_x)/100, (yb - pd_y)/100) < 0.05 or start):
+        '''if(math.sqrt((xb - pd_x)/100, (yb - pd_y)/100) < 0.05 or start):
             start = False
             xb = self.position_x.pop()
             yb = self.position_y.pop()
-
+        '''
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) # unidade rad
        

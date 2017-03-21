@@ -222,3 +222,8 @@ void MainWindow::on_actionSobre_triggered()
     QMessageBox::information(this, tr("Sobre"),tr("\nInterface grafica desenvolvida pela Equipe de Robotica da Ufes(ERUS) para a categoria IEEE Very Small Soccer."
                                                   "\n\n\t\tCopyright ® 2015 - Todos os direitos reservados\n"));
 }
+
+void MainWindow::on_actionTroca_Goleiro_Defesa_triggered()
+{
+
+}

@@ -73,7 +73,7 @@ void World::print(){
     for(int i=0; i<3; i++) {
         Player p = teammates[i];
         Player o = opponents[i];
-        cout << o.getX() << ", " << o.getY() << ", " << o.getAngle() << endl;
+        //cout << o.getX() << ", " << o.getY() << ", " << o.getAngle() << endl;
     }
 }
 

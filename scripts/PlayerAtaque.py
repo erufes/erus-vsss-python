@@ -2,10 +2,11 @@ import Player
 import math
 import World
 import numpy as np
+import cv2
 from lista_marcacoes import *
 
 class PlayerAtaque(Player.Player):
- 
+
     def chuta(self, world):
 
         distancia_pra_sair_da_parede = 3.5
@@ -87,25 +88,25 @@ class PlayerAtaque(Player.Player):
 
         #return a,b
 #        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
-
+        sensibility = 1.5
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
-        if distance_to_ball < 15 and xb > self.getx():
+        if distance_to_ball < 25 and xb > self.getx():
             if(not(yb+ (yb - self.gety()) > yg + 20 or (yb+ (yb - self.gety()) < yg-20))): # so alterar o setpoint caso ajude a fazer gol.
-                return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
+                return (xb + sensibility*(xb-self.getx())), (yb+ sensibility*(yb - self.gety()))
             if(self.getx() - xg and self.gety() - yb): # faz gol na diagonal (sqn)
                 if(yb > self.gety() and self.gety() < yg-20):#parte de cima do campo
                     if(math.atan2(self.gety() - (yg-20),(self.getx()-xg)) - math.atan2(self.gety() -(yg+20),(self.getx()-xg)) > math.atan2((self.getx() - xb),(self.gety() - yb))):
-                        return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
+                        return (xb + sensibility*(xb-self.getx())), (yb+ sensibility*(yb - self.gety()))
                 if(yb < self.gety() and self.gety() > yg+20 ):#parte de baixo do campo
                     if(math.atan2(self.gety() - (yg+20),(self.getx()-xg)) - math.atan2(self.gety() -(yg-20),(self.getx()-xg)) > math.atan2((self.getx() - xb),(self.gety() - yb))):
-                        return (xb + 1*(xb-self.getx())), (yb+ 1*(yb - self.gety()))
+                        return (xb + sensibility*(xb-self.getx())), (yb+ sensibility*(yb - self.gety()))
             #if(yb < yg -20 and yb < self.gety()):
                 #return a , b-15
             #if(yb > yg +20 and yb > self.gety()):
                 #return a, b+15
         return a, b
 
-        """cm = (self.getx() + 5) 
+        '''cm = (self.getx() + 5) 
         raio = ((self.getx() - xb)**2 + (self.gety() - yb)**2)/2
         x_x0 = cm - (self.getx() + xb)/2
         y0 = (self.gety() + yb)/2
@@ -113,9 +114,10 @@ class PlayerAtaque(Player.Player):
         if(yb < self.gety()):
             y_final = y0 + (abs(y0**2 - c))**0.5
         else:
-            y_final = y0 - (abs(y0**2 - c))**0.5"""
+            y_final = y0 - (abs(y0**2 - c))**0.5
         #return a, b
-        '''cm = math.pi/6
+        '''
+        cm = math.pi/6
         raio = ((abs((self.getx() - xb)**2 + (self.gety() - yb)**2))**0.5)/2
         #if(not(self.gety() > yb)):
         #y_final = (self.gety() + yb)/2 + raio*math.sin(math.pi)
@@ -155,8 +157,33 @@ class PlayerAtaque(Player.Player):
             if(y_final < world.FIELD_TOP):
                 return x_final , world.FIELD_BOTTOM +7
             else:
-                return x_final , y_final'''    
+                return x_final , y_final    
         return a , b
+
+    def kalman(self,world):
+        meas=[]
+        pred=[]
+        mp = np.array((2,1), np.float32) # measurement
+        tp = np.zeros((2,1), np.float32) # tracked / prediction
+        kalman = cv2.KalmanFilter(4,2)
+        kalman.measurementMatrix = np.array([[1,0,0,0],[0,1,0,0]],np.float32)
+        kalman.transitionMatrix = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]],np.float32)
+        kalman.processNoiseCov = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],np.float32) * 0.03
+        kalman = cv2.KalmanFilter(4,2)
+        aux1 = 0.133333
+        aux2 = 0.033333
+        theta_ball_vel = math.atan2(aux1*aux2*vr,aux1*aux2*ve)
+        xb, yb = self.chuta(world)
+        theta_ball = math.atan2(yb,xb)
+        mp = np.array([[np.float32(theta_ball_vel)],[np.float32(theta_ball)]])
+        meas.append((theta_ball_vel,theta_ball))
+        kalman.correct(mp)
+        tp = kalman.predict()
+        pred.append((int(tp[0]),int(tp[1])))
+        return tp[0]
+
+
+
 
 
     def controle(self, world):
@@ -166,7 +193,7 @@ class PlayerAtaque(Player.Player):
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
         xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
-
+        xb, yb = self.chuta(world)
         arq = open("posAtk.csv","a")
         arq.write(str(pd_x) + ", " + str(pd_y))
         arq.write("\n")
@@ -176,6 +203,7 @@ class PlayerAtaque(Player.Player):
         arq.write(str(xb) + ", " + str(yb))
         arq.write("\n")
         arq.close()
+        adiciona_ponto(int(pd_x),int(pd_y), 128, 200, 126, 'atacante',int(xb), int(yb)) # verde escuro
 
 
 
@@ -186,6 +214,7 @@ class PlayerAtaque(Player.Player):
 
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) # unidade rad
+        #theta_ball = self.kalman(world)
         theta_gol = math.atan2(236,515)
 
        
@@ -260,7 +289,7 @@ class PlayerAtaque(Player.Player):
         vmax = max(abs(y[0][0]), abs(y[1][0])) # pega a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
-        K = 150
+        K = 100
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  
 
         return int(vr), int(vl)

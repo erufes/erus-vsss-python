@@ -36,6 +36,8 @@ public:
 
 public slots:
     void updateFrame(const QImage &frame);
+    void trajetoria(cv::Mat &frame,cv::Point ponto_final, cv::Point ponto_atual,cv::Scalar cor,bool lado);// true para esquerda
+
 
 private slots:
 
@@ -74,6 +76,8 @@ private slots:
     void on_actionTrocar_Atacante_triggered();
 
     void on_actionSobre_triggered();
+
+    void on_actionTroca_Goleiro_Defesa_triggered();
 
 private:
     Ui::MainWindow *ui;

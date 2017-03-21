@@ -79,18 +79,27 @@ void PythonThread::run()
             for(int i = 0; i < PyList_GET_SIZE(lista); i++) {
                 tupla = PyList_GetItem(lista, i);
 
-                long x, y, b, g, r;
+                long x, y, b, g, r, xf, yf;
+                std::string s;
                 x = PyInt_AsLong(PyTuple_GetItem(tupla,0));
                 y = PyInt_AsLong(PyTuple_GetItem(tupla,1));
                 b = PyInt_AsLong(PyTuple_GetItem(tupla,2));
                 g = PyInt_AsLong(PyTuple_GetItem(tupla,3));
                 r = PyInt_AsLong(PyTuple_GetItem(tupla,4));
+                s =  PyString_AsString(PyTuple_GetItem(tupla,5));
+                xf = PyInt_AsLong(PyTuple_GetItem(tupla,6));
+                yf = PyInt_AsLong(PyTuple_GetItem(tupla,7));
+
 
                 //cout << x << " " << y << " " << b << " " << g << " " << r << endl;
 
                 cv::Point point(Utils::cmToPx(x), Utils::cmToPx(y));
-               // std::cout << point << std::endl;
                 cv::circle(frame, point, 4, cv::Scalar(b, g, r), 4); // print das bolinhas marotas
+                if(s != "bola")
+                {
+                    std::cout << "bola = " << x << "y = "<< y <<  std::endl;
+                    cv::line(frame, point, cv::Point(Utils::cmToPx(xf), Utils::cmToPx(yf)), cv::Scalar(b,g,r), 4);
+                }
             }
 
             Py_DECREF(lista);

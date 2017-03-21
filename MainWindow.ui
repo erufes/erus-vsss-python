@@ -210,6 +210,11 @@
     <string>Trocar Atacante</string>
    </property>
   </action>
+  <action name="actionTroca_Goleiro_Defesa">
+   <property name="text">
+    <string>Troca Goleiro Defesa</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
