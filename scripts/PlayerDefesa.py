@@ -155,6 +155,7 @@ class PlayerDefesa(Player.Player):
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
        	pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
         xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+        #xb, yb = self.chuta();
     
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) # unidade rad

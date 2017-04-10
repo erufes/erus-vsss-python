@@ -36,7 +36,7 @@ class PlayerAtaque(Player.Player):
         adiciona_ponto(int(xg), int(yg-20),255,255,2555,'xg-20, yg')
         theta_robo = self.get_theta()
         #print theta_robo
-        
+        # SAIR DA PAREDE 
         if self.getx() > world.FIELD_RIGHT and xb < self.getx():
             return self.getx() - 30, self.gety()
 
@@ -72,7 +72,7 @@ class PlayerAtaque(Player.Player):
             a = world.FIELD_LEFT + 15
             b = self.gety()
             return a,b
-
+         #acaba sair da parede
         #a = a -5
 
         p = world.get_def_player()
@@ -85,7 +85,7 @@ class PlayerAtaque(Player.Player):
         if distance_to_amiguinho < 20:
             x,y = self.getx()+5,self.gety() 
             return int(x),int(y)
-
+        return xb,yb
         #return a,b
 #        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
         sensibility = 1.5
@@ -104,7 +104,7 @@ class PlayerAtaque(Player.Player):
                 #return a , b-15
             #if(yb > yg +20 and yb > self.gety()):
                 #return a, b+15
-        return a, b
+        #return a, b
 
         '''cm = (self.getx() + 5) 
         raio = ((self.getx() - xb)**2 + (self.gety() - yb)**2)/2
