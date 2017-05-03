@@ -87,7 +87,7 @@ class PlayerAtaque(Player.Player):
             return int(x),int(y)
         return xb,yb
         #return a,b
-#        Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
+        #Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
         sensibility = 1.5
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
         if distance_to_ball < 25 and xb > self.getx():
@@ -193,7 +193,7 @@ class PlayerAtaque(Player.Player):
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
         xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
-        xb, yb = self.chuta(world)
+        #xb, yb = self.chuta(world)
         arq = open("posAtk.csv","a")
         arq.write(str(pd_x) + ", " + str(pd_y))
         arq.write("\n")
