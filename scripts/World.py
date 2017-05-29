@@ -75,6 +75,7 @@ class World:
     def get_right_goal(self):
         return self.right_goal
 
+
     def campo_potencial(self, player):
         #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
         xr, yr = player.getxy()

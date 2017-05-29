@@ -289,7 +289,7 @@ class PlayerAtaque(Player.Player):
         vmax = max(abs(y[0][0]), abs(y[1][0])) # pega a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
-        K = 100
+        K = 255
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  
 
-        return int(vr), int(vl)
+        return int(255), int(255)

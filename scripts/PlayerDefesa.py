@@ -14,11 +14,14 @@ class PlayerDefesa(Player.Player):
         ball = world.get_ball()
         xb,yb = ball.getx(),ball.gety()
         xb, yb = ball.predict_ball_method(self)
-        xg, yg = world.get_enemy_goal()
-        #alteracao
+        xgi, ygi = world.get_enemy_goal()
+        xg, yg = world.get_team_goal()
         xd, yd = self.getxy()
 
         adiciona_ponto(int(xg), int(yg), 0, 0, 0, 'enemy',int(xg), int(yg)) #laranja
+        
+
+
 
         #calculo distancia bola
         vec_to_ball_x = xb - self.getx()
@@ -36,7 +39,39 @@ class PlayerDefesa(Player.Player):
         vec_to_goal_y /= norm_vec_to_goal
 
 
-        """#teste aki############################################################################################
+
+
+        #para impedir colicoes com o goleiro
+        p = world.get_goalkeeper()
+        x,y = p.getx(),p.gety()
+        theta_robo = self.get_theta()
+
+        distance_to_amiguinho = math.sqrt((x-self.getx())**2 + (y-self.gety())**2)
+        if distance_to_amiguinho < 15.0 and self.gety() > y:
+            x,y = self.getx() , self.gety()+20
+            return x , y
+        elif distance_to_amiguinho < 15.0 and self.gety() < y:
+            x,y = self.getx() , self.gety()-20
+            return x , y
+
+
+
+
+
+        #teste aki############################################################################################
+
+
+
+        #calculo da distancia da bola pro meio
+        xm = xg - xgi
+        ym = yg - ygi
+
+        vec_ball_meio_x = xb - xm
+        vec_ball_meio_y = yb - ym
+
+        norm_vec_ball_meio = math.sqrt(vec_ball_x**2 + vec_ball_meio_y**2)
+
+
 
         #Calculo da distancia da defesa para o gol inimigo
         vec_def_goal_x = xg - xd
@@ -46,13 +81,25 @@ class PlayerDefesa(Player.Player):
         
 
 
-        if xb < 72.5:
-            if norm_vec_def_goal > norm_vec_to_goal:
+        if norm_vec_to_goal < norm_vec_ball_meio:
+            if norm_vec_def_goal < norm_vec_to_goal:
                 return xb,yb
             elif yb < 62.5:
-                    return xg - 143 , yg - 21
-                else return xg - 143, yg + 21
-        else return vec_to_ball_x, vec_to_ball_y
+                if yd < yb:
+                    return xd, yd
+                elif yd != yb:
+                    return xg , yg - 21
+                else:
+                    return xd, yd
+            else:
+                if yd < yb:
+                    return xg, yg + 21
+                elif yd != yb:
+                    return xd, yd
+                else:
+                    return xd, yd
+        else:
+            return vec_to_ball_x, vec_to_ball_y
         ######################################################################################################"""
 
 
@@ -84,21 +131,9 @@ class PlayerDefesa(Player.Player):
         """
 
 
-        return xb,yb
+        #return xb,yb
 
-        #para impedir colicoes com o goleiro
-        p = world.get_goalkeeper()
-        x,y = p.getx(),p.gety()
-        theta_robo = self.get_theta()
-
-        distance_to_amiguinho = math.sqrt((x-self.getx())**2 + (y-self.gety())**2)
-        if distance_to_amiguinho < 15.0 and self.gety() > y:
-            x,y = self.getx() , self.gety()+20
-            return x , y
-        elif distance_to_amiguinho < 15.0 and self.gety() < y:
-            x,y = self.getx() , self.gety()-20
-            return x , y
-
+        
 
    
    
@@ -200,8 +235,8 @@ class PlayerDefesa(Player.Player):
         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
        	pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
-        xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
-        #xb, yb = self.chuta(world)
+        #xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+        xb, yb = self.chuta(world)
     
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) # unidade rad
@@ -238,7 +273,7 @@ class PlayerDefesa(Player.Player):
         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
-        K = 100
+        K = 255
     	vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
 
         return int(vr), int(vl)
