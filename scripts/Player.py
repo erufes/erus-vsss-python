@@ -325,5 +325,20 @@ class Player(Agent.Agent):
 
         return int(vr), int(vl)
 
+    # função que retorna o vetor distância entre jogador e a bola
+    #def distPlayerBall(self, world):
+    #    return math.sqrt((world.get_ball().getx - self.getx())**2 + (world.get_ball().gety - self.gety())**2)
+    
+    # função para retornar a posição do jogador (X,Y)
+    #def playerPosition(self):
+    #    return self.getx(), self.gety()
+
+    # função que retorna o ângulo entre o jogador e a bola
+    #def thetaPlayerBall(self)
+    #----------------------
+    
+    # função que retorna o vetor direção
+    #def playerDirection(self)
+    #----------------------
 
 
