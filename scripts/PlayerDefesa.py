@@ -69,7 +69,7 @@ class PlayerDefesa(Player.Player):
         vec_ball_meio_x = xb - xm
         vec_ball_meio_y = yb - ym
 
-        norm_vec_ball_meio = math.sqrt(vec_ball_x**2 + vec_ball_meio_y**2)
+        norm_vec_ball_meio = math.sqrt(vec_ball_meio_x**2 + vec_ball_meio_y**2)
 
 
 
