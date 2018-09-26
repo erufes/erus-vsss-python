@@ -6,7 +6,8 @@ float Utils::pxToCm(int px) {
     cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
     cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
     const float comprimentoPx = Utils::norm(p1, p2);
-
+    //std::cout << "p1x " << conf.getPositionLowerLeft()[1] << " p1y " << p1.y << std::endl;
+    //std::cout << "p2x " << p2.x << " p2y " << p2.y << std::endl;
     return px*(comprimentoCm/comprimentoPx);
 }
 
@@ -15,6 +16,7 @@ float Utils::cmToPx(float cm) {
     const float comprimentoCm = conf.getComprimentoArena();
     cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
     cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
+    //std::cout << p1.x << p2.x << std::endl;
     const float comprimentoPx = Utils::norm(p1, p2);
 
     return cm*(comprimentoPx/comprimentoCm);

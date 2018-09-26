@@ -17,7 +17,7 @@ class World:
     # FIELD_TOP = 83
     # FIELD_BOTTOM = 430
 
-    #LADO DE LAH
+    #LADO DE LAH (medidas oficiais do campo)
     FIELD_LEFT = 85.0 * 0.36
     FIELD_RIGHT = 555.0 * 0.36
     FIELD_TOP = 50.0 * 0.36
@@ -39,7 +39,7 @@ class World:
         # Frendly goal: 0 to left and 1 to right
         self.goal = 0
 
-        self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]
+        self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]# TODO cuidado! Se mudar em baixo muda aki!!!
         self.enemies = [Player.Player(), Player.Player(), Player.Player()]
         self.ball = Ball()
 
@@ -130,15 +130,15 @@ class World:
     #Guilherme:  Versao para atualizacao de jogador usando, x,y,angle
     def update(self, p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball):
 
-        #Goalkeeper
+        #Goalkeeper // Atacante
         p0 = self.get_teammate(0)
         p0.set_position_xyt(p0_x, p0_y, p0_theta)
 
-        #Player 1
+        #Player 1 // Zagueiro
         p1 = self.get_teammate(1)
         p1.set_position_xyt(p1_x, p1_y, p1_theta)
 
-        #Player 2
+        #Player 2 // Goleiro
         p2 = self.get_teammate(2)
         p2.set_position_xyt(p2_x, p2_y, p2_theta) 
 
@@ -162,8 +162,10 @@ class World:
         self.trave_left_lower = (self.FIELD_LEFT, (self.FIELD_BOTTOM - self.FIELD_TOP)*2/3.0 + self.FIELD_TOP)
         self.trave_right_upper = (self.FIELD_RIGHT, (self.FIELD_BOTTOM - self.FIELD_TOP)/3.0 + self.FIELD_TOP)
         self.trave_right_lower = (self.FIELD_RIGHT, (self.FIELD_BOTTOM - self.FIELD_TOP)*2/3.0 + self.FIELD_TOP)
-        print self.FIELD_RIGHT
-        print self.FIELD_LEFT
-        print self.FIELD_TOP
-        print self.FIELD_BOTTOM
+        print ("ola")
+        print (self.FIELD_RIGHT)
+        print (self.FIELD_LEFT)
+        print (self.FIELD_TOP)
+        print (self.FIELD_BOTTOM)
+        print ("ola1")
 

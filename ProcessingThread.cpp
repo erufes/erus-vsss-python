@@ -41,7 +41,6 @@ void ProcessingThread::run() {
         cvtColor(frame, frameHsv ,CV_BGR2HSV);
         BlobProcessor *teamColorBlobProcessor;
         BlobProcessor *enemyColorBlobProcessor;
-
         if(corTime){
             teamColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
             teamColorBlobProcessor->process(3);
@@ -53,14 +52,14 @@ void ProcessingThread::run() {
             enemyColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
             enemyColorBlobProcessor->process(3);
         }
-
-        BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());
+        //std::cout << *conf.getEnemyUpperBound() << " " << *conf.getEnemyLowerBound() << std::endl;
+        //std::cout << "ProcessingThread linha 55" << std::endl;
+        BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());//Aqui não está passando
+        //std::cout << "ProcessingThread linha 57" << std::endl;
         EnemyColorBlobProcessor.process(7);
         //std::cout << conf.getEnemyLowerBound() << std::endl << conf.getEnemyUpperBound() << std::endl << conf.getColor1UpperBound() << std::endl;
-
         BlobProcessor ballColorBlobProcessor(frameHsv, *conf.getOrangeLowerBound(), *conf.getOrangeUpperBound());
         ballColorBlobProcessor.processBall(1);
-
         BlobProcessor color1BlobProcessor(frameHsv, *conf.getColor1LowerBound(), *conf.getColor1UpperBound());
         color1BlobProcessor.process(2);
 
@@ -71,10 +70,9 @@ void ProcessingThread::run() {
         color3BlobProcessor.process(2);
 
 
-
         list<Scalar> listaTime = teamColorBlobProcessor->getResults();
 
-//        // mostra jogador cor 1
+//        // mostra jogador cor 1 / verde claro / atacante
         list<Scalar> listaCor1 = color1BlobProcessor.getResults();
         double menorDist1 = 500000000;
         Scalar menorDist1ob;
@@ -93,7 +91,7 @@ void ProcessingThread::run() {
         Scalar centro1_aux = menorDist1ob;
 
 
-        // mostra jogador cor 2
+        // mostra jogador cor 2 / rosa / zagueiro
         list<Scalar> listaCor2 = color2BlobProcessor.getResults();
         double menorDist2 = 500000000;
         Scalar menorDist2ob;
@@ -113,7 +111,7 @@ void ProcessingThread::run() {
         Scalar centro2_aux = menorDist2ob;
 
 
-        // mostra jogador cor 3
+        // mostra jogador cor 3 / verde escuro / goleiro
 
         list<Scalar> listaCor3 = color3BlobProcessor.getResults();
         double menorDist3 = 500000000;
@@ -180,9 +178,9 @@ void ProcessingThread::run() {
         Scalar centroBola = ballColorBlobProcessor.getResults().front();
 //        Point point4(centroBola[0], centroBola[1]);
 //        cv::circle(frame, point4, 4, Scalar(112, 160, 128), 4);
-        Player aux1 = Player(centro1[0],centro1[1], centro1_aux[0], centro1_aux[1]);
-        Player aux2 = Player(centro2[0],centro2[1], centro2_aux[0], centro2_aux[1]);
-        Player aux3 = Player(centro3[0], centro3[1], centro3_aux[0], centro3_aux[1]);
+        Player aux1 = Player(centro1[0],centro1[1], centro1_aux[0], centro1_aux[1]);//verde claro
+        Player aux2 = Player(centro2[0],centro2[1], centro2_aux[0], centro2_aux[1]);//rosa
+        Player aux3 = Player(centro3[0], centro3[1], centro3_aux[0], centro3_aux[1]);//verde escuro
         Player teammates[] = {aux1, aux2, aux3};
         Player enemies[] = {enemy[0], enemy[1], enemy[2]};
         Ball ball(centroBola[0], centroBola[1]);

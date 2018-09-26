@@ -5,8 +5,8 @@
 #include <QThread>
 #include <QTimer>
 #include <QImage>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <C:\opencv\build\include\opencv2\core\core.hpp>
+#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
 
 #include "Buffer.h"
 

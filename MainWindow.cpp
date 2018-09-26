@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QMouseEvent>
 #include "Utils.h"
+#include "Configuracao.h"
 
 
 
@@ -27,12 +28,12 @@ MainWindow::MainWindow(PythonThread *pythonThread, ProcessingThread *processingT
     fpsLabel = new QLabel(this);
 //    fpsLabel->setText("Vá se ferrar");
     ui->statusBar->addWidget(fpsLabel);
-
     std::cout << QDir::currentPath().toStdString() << std::endl;
 
     Configuracao &conf = Configuracao::getInstance();
     conf.loadFile("certo.xml");
     updateBorders();
+
 
 
 }
@@ -87,6 +88,8 @@ void MainWindow::updateFrame(const QImage &frame) {
         numberOfFrames = 0;
     }
 }
+void MainWindow::trajetoria(cv::Mat &frame,cv::Point ponto_final, cv::Point ponto_atual,cv::Scalar cor,bool lado){}
+
 
 MainWindow::~MainWindow() {
     delete elapsedTimer;
@@ -174,10 +177,10 @@ void MainWindow::on_actionSalvar_como_triggered()
     QString path = QFileDialog::getSaveFileName(0, "Save file", QDir::currentPath());
     Configuracao &conf = Configuracao::getInstance();
     conf.saveToFile(path.toUtf8().constData());
-    //Configuracao &conf = Configuracao::getInstance();
-    //conf.createColorElementXml();
-//    conf.loadFile("config.xml");
-//    std::cout << "haha";
+    // Configuracao &conf = Configuracao::getInstance();
+      //conf.createColorElementXml();
+      // conf.loadFile("certo.xml");
+    //std::cout << "haha";
 }
 
 void MainWindow::on_actionFechar_triggered()

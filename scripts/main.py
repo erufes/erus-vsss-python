@@ -17,7 +17,7 @@ from lista_marcacoes import *
 import cProfile
 
 world = World()
-com = Communication('COM4')
+com = Communication('COM18')
 fps = 0
 time_start = time()
 
@@ -191,9 +191,9 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
     global time_start
 
     adiciona_ponto(int(pos_ball_x), int(pos_ball_y), 35, 100, 215, 'bola',int(pos_ball_x), int(pos_ball_y)) #laranja
-    #adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante',int(pos_ball_x), int(pos_ball_y)) # verde escuro
+    adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante',int(pos_ball_x), int(pos_ball_y)) # verde claro
     adiciona_ponto(int(p1_x),int(p1_y), 170, 0, 255, 'zagueiro',int(pos_ball_x), int(pos_ball_y)) # rosa
-    adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro',int(pos_ball_x), int(pos_ball_y)) # verde claro
+    adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro',int(pos_ball_x), int(pos_ball_y)) # verde escuro
     #adiciona_ponto(int(op1_x),int(op1_y), 0, 0, 255, 'op1',int(op1_x),int(op1_y)) # vermelho
     #adiciona_ponto(int(op2_x),int(op2_y), 0, 0, 255, 'op2',int(op2_x),int(op2_y)) # vermelho
     #adiciona_ponto(int(op3_x),int(op3_y), 0, 0, 255, 'op3',int(op3_x),int(op3_y)) # vermelho
@@ -208,8 +208,12 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
     
     # Controls each robot individually
     # msg = Message()
+
+
     for i in [0,1,2]:  # [0] = atk , [1] defesa e [2] goleiro
         p = world.get_teammate(i)
+        #print("aaaaaaa")
+        #print(i,p.get_id())
         vr, vl = p.controle(world) #xt, yt = posicao retornada pela funcao chuta
         """
         if i == 0:

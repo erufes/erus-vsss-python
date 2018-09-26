@@ -1,7 +1,7 @@
 #ifndef CONFIGURACAO_H
 #define CONFIGURACAO_H
 
-#include <opencv2/core/core.hpp>
+#include <C:\opencv\build\include\opencv2\core\core.hpp>
 #include "tinyxml2.h"
 #include <iostream>
 
@@ -410,9 +410,17 @@ public:
     void loadFile(const char *fullPath) {
         Configuracao &conf = Configuracao::getInstance();
 
+        std::cout << fullPath << std::endl;//isto printa "certo.xml"
         //float lower[3];
         tinyxml2::XMLDocument doc;
-        doc.LoadFile(fullPath);
+        //doc.LoadFile(fullPath);
+        tinyxml2::XMLError eResult = doc.LoadFile(fullPath);
+        if (eResult != tinyxml2::XML_SUCCESS){
+            std::cout <<  eResult << std::endl; //pq ta retornando 7? Ricardo:10/04/2018 RESOLVIDO 10/04/2018
+            doc.PrintError();
+                    return ;
+        }
+
         tinyxml2::XMLElement *config = doc.FirstChildElement("config");
         tinyxml2::XMLElement *colors = config->FirstChildElement("colors");
         if(colors != NULL) {
@@ -500,7 +508,7 @@ public:
 
                         corner = corner->NextSiblingElement("corner");
                     }
-                }
+                }std::cout << "saiu side 0" << std::endl;
             }
         }
 

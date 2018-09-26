@@ -44,7 +44,6 @@ class Goalkeeper(Player.Player):
             #posy = world.get_ball().gety()
             posy = yp
             #print posy
-
         if posy < world.trave_left_upper[1] - 1.8:
             posy = world.trave_left_upper[1] - 1.8
             posx -= 3
@@ -79,15 +78,16 @@ class Goalkeeper(Player.Player):
         '''
         adiciona_ponto(int(world.trave_left_upper[0]), int(world.trave_left_upper[1]),255,255,2555,'xg+20, yg')
         adiciona_ponto(int(world.trave_left_lower[0]), int(world.trave_left_lower[1]),255,255,2555,'xg+20, yg')
-        return posx , posy
+        #print 'goleiro : ',posx, posy
+        return posx , posy # coordenadas que o goleiro deve ficar
 
     def controle(self, world):
         pd = world.get_goalkeeper()
         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
-        xb, yb = self.defende(world) # coordenadas que o goleiro deve ficar
         xb, yb = world.get_ball().getxy()
+        xb, yb = self.defende(world) # coordenadas que o goleiro deve ficar
 
         '''if(math.sqrt((xb - pd_x)/100, (yb - pd_y)/100) < 0.05 or start):
             start = False
@@ -120,7 +120,7 @@ class Goalkeeper(Player.Player):
         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
-        K = 100
+        K = 200
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
       
-        return int(255), int(255)
+        return int(vr), int(vl)

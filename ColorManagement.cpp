@@ -627,6 +627,9 @@ void ColorManagement::on_mostrarFiltroCheckBox_stateChanged(int state) {
     }
 }
 
+void ColorManagement::on_mostrarFiltroCheckBox_clicked(){}
+void ColorManagement::on_mostrarFiltroCheckBox_toggled(bool checked){}
+
 void ColorManagement::on_salvar_clicked() {
     Configuracao &conf = Configuracao::getInstance();
 

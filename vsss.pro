@@ -8,15 +8,24 @@ CONFIG   += console
 TEMPLATE = app
 
 
-INCLUDEPATH += C:\\opencv-mingw\\install\\include
+INCLUDEPATH += C:\\opencv\\build\\include
 INCLUDEPATH += C:\\Python27\\include
+#INCLUDEPATH += C:\\Users\\ERUS\\AppData\\Local\\Programs\\Python\\Python36-32\\include
 LIBS += C:\\Python27\\libs\\libpython27.a
-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_core2410.dll.a
-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_highgui2410.dll.a
-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_imgproc2410.dll.a
+#LIBS += C:\\Users\\ERUS\\AppData\\Local\\Programs\\Python\\Python36-32\\libs\\libpython36.a
+#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_core2410.dll.a
+#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_highgui2410.dll.a
+#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_imgproc2410.dll.a
 
-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_objdetect2410.dll.a
-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_video2410.dll.a
+#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_objdetect2410.dll.a
+#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_video2410.dll.a
+LIBS += C:\\opencv-build\\bin\\libopencv_core331.dll
+LIBS += C:\\opencv-build\\bin\\libopencv_highgui331.dll
+LIBS += C:\\opencv-build\\bin\\libopencv_imgproc331.dll
+LIBS += C:\\opencv-build\\bin\\libopencv_objdetect331.dll
+LIBS += C:\\opencv-build\\bin\\libopencv_video331.dll
+LIBS += C:\\opencv-build\\bin\\libopencv_videoio331.dll
+
 
 SOURCES += main.cpp \
     VideoProcessor.cpp \

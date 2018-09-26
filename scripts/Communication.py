@@ -1,20 +1,20 @@
-import serial
 import array
 import math
 import time
+import serial
 
 
 class Communication:
-    def __init__(self, port='COM0', bauds=9600):
+    def __init__(self, port='COM0', bauds=4800):
         self.ser = serial.Serial(port, bauds, timeout=1)
         time.sleep(1)
         self.ser.flush()
 
     def send_message(self, msg):
-        self.ser.write(msg.tostring())
+        self.ser.write(msg.tostring())	
 
     def sendCommand(self, robotId, cmdId, value):
-        # print (robotId, cmdId, value)
+        print (robotId, cmdId, value)
         self.ser.write(robotId)
         self.ser.write(cmdId)
         self.ser.write(value)

@@ -22,5 +22,5 @@ class Agent:
         return math.sqrt((x - self.x) ** 2 + (y - self.y) ** 2)
 
     def predicao_adaptativa(self, x):
-        return 4
-        #return 4.5 + (x - World.World.FIELD_LEFT) * (3.5 - 4.5) / (World.World.FIELD_RIGHT - World.World.FIELD_LEFT)
+        #return 4
+        return 4.5 + (x - World.World.FIELD_LEFT) * (3.5 - 4.5) / (World.World.FIELD_RIGHT - World.World.FIELD_LEFT)

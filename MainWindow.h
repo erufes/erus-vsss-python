@@ -5,8 +5,8 @@
 #include <QLabel>
 #include <QElapsedTimer>
 
-#include <opencv2/core/core.hpp>
-//#include <opencv2/highgui/highgui.hpp>
+#include <opencv2\core\core.hpp>
+#include <opencv2\highgui\highgui.hpp>
 
 #include "Buffer.h"
 #include "ColorManagement.h"

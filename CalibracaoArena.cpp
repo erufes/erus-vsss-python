@@ -228,7 +228,7 @@ void CalibracaoArena::on_pushButton_4_clicked() {
 
 void CalibracaoArena::on_aplicar_clicked() {
     Configuracao &conf = Configuracao::getInstance();
-
+    cout << "joao viado" << endl;
     cv::Scalar v = getPositionLeftLower();
     conf.setPositionLowerLeft(v[0], v[1]);
 
@@ -262,5 +262,5 @@ void CalibracaoArena::on_aplicar_clicked() {
     ui->lineEdit_10->setText(QString::fromStdString(std::to_string(y_arena)));
     //float distance_cm = Utils::pxToCm()
 
-    updateBorders();
+    //updateBorders();
 }

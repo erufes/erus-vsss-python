@@ -1,0 +1,1649 @@
+diff --git a/Ball.h b/Ball.h
+index aba6f08..453e739 100644
+--- a/Ball.h
++++ b/Ball.h
+@@ -1,7 +1,8 @@
+ #ifndef BALL_H
+ #define BALL_H
+ 
+-
++// criacao da classe de bola na qual vai ter dois atribudos
++// que sao as coordenadas no campo: X e Y
+ class Ball
+ {
+     float x, y;
+diff --git a/BlobProcessor.h b/BlobProcessor.h
+index 4ab9d8d..b6924a3 100644
+--- a/BlobProcessor.h
++++ b/BlobProcessor.h
+@@ -1,9 +1,9 @@
+ #ifndef BLOBPROCESSOR_H
+ #define BLOBPROCESSOR_H
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include <opencv2/imgproc/imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
+ 
+ #include <list>
+ #include <vector>
+diff --git a/CalibracaoArena.cpp b/CalibracaoArena.cpp
+index ee870f3..6eae642 100644
+--- a/CalibracaoArena.cpp
++++ b/CalibracaoArena.cpp
+@@ -228,7 +228,7 @@ void CalibracaoArena::on_pushButton_4_clicked() {
+ 
+ void CalibracaoArena::on_aplicar_clicked() {
+     Configuracao &conf = Configuracao::getInstance();
+-
++    cout << "joao viado" << endl;
+     cv::Scalar v = getPositionLeftLower();
+     conf.setPositionLowerLeft(v[0], v[1]);
+ 
+@@ -262,5 +262,5 @@ void CalibracaoArena::on_aplicar_clicked() {
+     ui->lineEdit_10->setText(QString::fromStdString(std::to_string(y_arena)));
+     //float distance_cm = Utils::pxToCm()
+ 
+-    updateBorders();
++    //updateBorders();
+ }
+diff --git a/CalibracaoArenaThread.h b/CalibracaoArenaThread.h
+index ff085ce..91a60fb 100644
+--- a/CalibracaoArenaThread.h
++++ b/CalibracaoArenaThread.h
+@@ -5,8 +5,8 @@
+ #include <QThread>
+ #include <QTimer>
+ #include <QImage>
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
+ 
+ #include "Buffer.h"
+ 
+diff --git a/CaptureThread.h b/CaptureThread.h
+index 58388ce..6993fbd 100644
+--- a/CaptureThread.h
++++ b/CaptureThread.h
+@@ -2,8 +2,12 @@
+ #define CAPTURETHREAD_H
+ 
+ #include <QThread>
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
++#include <opencv2\core\core.hpp>
++#include <opencv2\highgui\highgui.hpp>
++#include <opencv2\highgui.hpp>
++#include <opencv2\videoio.hpp>
++#include <opencv2\opencv.hpp>
++
+ 
+ #include "Buffer.h"
+ 
+diff --git a/Color.h b/Color.h
+index d38d818..f55629c 100644
+--- a/Color.h
++++ b/Color.h
+@@ -1,9 +1,9 @@
+ #ifndef COLOR_H
+ #define COLOR_H
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include <opencv2/imgproc/imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
+ 
+ using namespace cv;
+ 
+diff --git a/ColorManagement.cpp b/ColorManagement.cpp
+index edc8474..5538943 100644
+--- a/ColorManagement.cpp
++++ b/ColorManagement.cpp
+@@ -627,6 +627,9 @@ void ColorManagement::on_mostrarFiltroCheckBox_stateChanged(int state) {
+     }
+ }
+ 
++void ColorManagement::on_mostrarFiltroCheckBox_clicked(){}
++void ColorManagement::on_mostrarFiltroCheckBox_toggled(bool checked){}
++
+ void ColorManagement::on_salvar_clicked() {
+     Configuracao &conf = Configuracao::getInstance();
+ 
+diff --git a/ColorManagementThread.h b/ColorManagementThread.h
+index c25ec8c..41a715e 100644
+--- a/ColorManagementThread.h
++++ b/ColorManagementThread.h
+@@ -4,8 +4,8 @@
+ #include <QThread>
+ #include <QTimer>
+ #include <QImage>
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
+ 
+ #include "Buffer.h"
+ 
+diff --git a/Configuracao.h b/Configuracao.h
+index 78c8c39..78ad407 100644
+--- a/Configuracao.h
++++ b/Configuracao.h
+@@ -1,7 +1,7 @@
+ #ifndef CONFIGURACAO_H
+ #define CONFIGURACAO_H
+ 
+-#include <opencv2/core/core.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
+ #include "tinyxml2.h"
+ #include <iostream>
+ 
+@@ -410,9 +410,17 @@ public:
+     void loadFile(const char *fullPath) {
+         Configuracao &conf = Configuracao::getInstance();
+ 
++        std::cout << fullPath << std::endl;//isto printa "certo.xml"
+         //float lower[3];
+         tinyxml2::XMLDocument doc;
+-        doc.LoadFile(fullPath);
++        //doc.LoadFile(fullPath);
++        tinyxml2::XMLError eResult = doc.LoadFile(fullPath);
++        if (eResult != tinyxml2::XML_SUCCESS){
++            std::cout <<  eResult << std::endl; //pq ta retornando 7? Ricardo:10/04/2018 RESOLVIDO 10/04/2018
++            doc.PrintError();
++                    return ;
++        }
++
+         tinyxml2::XMLElement *config = doc.FirstChildElement("config");
+         tinyxml2::XMLElement *colors = config->FirstChildElement("colors");
+         if(colors != NULL) {
+@@ -500,7 +508,7 @@ public:
+ 
+                         corner = corner->NextSiblingElement("corner");
+                     }
+-                }
++                }std::cout << "saiu side 0" << std::endl;
+             }
+         }
+ 
+diff --git a/MainWindow.cpp b/MainWindow.cpp
+index 1e0def2..f753495 100644
+--- a/MainWindow.cpp
++++ b/MainWindow.cpp
+@@ -4,6 +4,7 @@
+ #include <QFileDialog>
+ #include <QMouseEvent>
+ #include "Utils.h"
++#include "Configuracao.h"
+ 
+ 
+ 
+@@ -27,7 +28,6 @@ MainWindow::MainWindow(PythonThread *pythonThread, ProcessingThread *processingT
+     fpsLabel = new QLabel(this);
+ //    fpsLabel->setText("Vá se ferrar");
+     ui->statusBar->addWidget(fpsLabel);
+-
+     std::cout << QDir::currentPath().toStdString() << std::endl;
+ 
+     Configuracao &conf = Configuracao::getInstance();
+@@ -35,6 +35,7 @@ MainWindow::MainWindow(PythonThread *pythonThread, ProcessingThread *processingT
+     updateBorders();
+ 
+ 
++
+ }
+ void MainWindow::mousePressEvent(QMouseEvent *ev) {
+ 
+@@ -87,6 +88,8 @@ void MainWindow::updateFrame(const QImage &frame) {
+         numberOfFrames = 0;
+     }
+ }
++void MainWindow::trajetoria(cv::Mat &frame,cv::Point ponto_final, cv::Point ponto_atual,cv::Scalar cor,bool lado){}
++
+ 
+ MainWindow::~MainWindow() {
+     delete elapsedTimer;
+@@ -174,10 +177,10 @@ void MainWindow::on_actionSalvar_como_triggered()
+     QString path = QFileDialog::getSaveFileName(0, "Save file", QDir::currentPath());
+     Configuracao &conf = Configuracao::getInstance();
+     conf.saveToFile(path.toUtf8().constData());
+-    //Configuracao &conf = Configuracao::getInstance();
+-    //conf.createColorElementXml();
+-//    conf.loadFile("config.xml");
+-//    std::cout << "haha";
++    // Configuracao &conf = Configuracao::getInstance();
++      //conf.createColorElementXml();
++      // conf.loadFile("certo.xml");
++    //std::cout << "haha";
+ }
+ 
+ void MainWindow::on_actionFechar_triggered()
+diff --git a/MainWindow.h b/MainWindow.h
+index 2e558b0..6ff9f08 100644
+--- a/MainWindow.h
++++ b/MainWindow.h
+@@ -5,8 +5,8 @@
+ #include <QLabel>
+ #include <QElapsedTimer>
+ 
+-#include <opencv2/core/core.hpp>
+-//#include <opencv2/highgui/highgui.hpp>
++#include <opencv2\core\core.hpp>
++#include <opencv2\highgui\highgui.hpp>
+ 
+ #include "Buffer.h"
+ #include "ColorManagement.h"
+diff --git a/Player.cpp b/Player.cpp
+index 0a824f8..d66f188 100644
+--- a/Player.cpp
++++ b/Player.cpp
+@@ -1,3 +1,4 @@
++
+ #include "Player.h"
+ #include <iostream>
+ using namespace std;
+diff --git a/ProcessingThread.cpp b/ProcessingThread.cpp
+index 9590410..69ba50a 100644
+--- a/ProcessingThread.cpp
++++ b/ProcessingThread.cpp
+@@ -41,7 +41,6 @@ void ProcessingThread::run() {
+         cvtColor(frame, frameHsv ,CV_BGR2HSV);
+         BlobProcessor *teamColorBlobProcessor;
+         BlobProcessor *enemyColorBlobProcessor;
+-
+         if(corTime){
+             teamColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
+             teamColorBlobProcessor->process(3);
+@@ -53,14 +52,14 @@ void ProcessingThread::run() {
+             enemyColorBlobProcessor = new BlobProcessor(frameHsv, *conf.getBlueLowerBound(), *conf.getBlueUpperBound());
+             enemyColorBlobProcessor->process(3);
+         }
+-
+-        BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());
++        //std::cout << *conf.getEnemyUpperBound() << " " << *conf.getEnemyLowerBound() << std::endl;
++        //std::cout << "ProcessingThread linha 55" << std::endl;
++        BlobProcessor EnemyColorBlobProcessor(frameHsv, *conf.getEnemyLowerBound(), *conf.getEnemyUpperBound());//Aqui não está passando
++        //std::cout << "ProcessingThread linha 57" << std::endl;
+         EnemyColorBlobProcessor.process(7);
+         //std::cout << conf.getEnemyLowerBound() << std::endl << conf.getEnemyUpperBound() << std::endl << conf.getColor1UpperBound() << std::endl;
+-
+         BlobProcessor ballColorBlobProcessor(frameHsv, *conf.getOrangeLowerBound(), *conf.getOrangeUpperBound());
+         ballColorBlobProcessor.processBall(1);
+-
+         BlobProcessor color1BlobProcessor(frameHsv, *conf.getColor1LowerBound(), *conf.getColor1UpperBound());
+         color1BlobProcessor.process(2);
+ 
+@@ -71,10 +70,9 @@ void ProcessingThread::run() {
+         color3BlobProcessor.process(2);
+ 
+ 
+-
+         list<Scalar> listaTime = teamColorBlobProcessor->getResults();
+ 
+-//        // mostra jogador cor 1
++//        // mostra jogador cor 1 / verde claro / atacante
+         list<Scalar> listaCor1 = color1BlobProcessor.getResults();
+         double menorDist1 = 500000000;
+         Scalar menorDist1ob;
+@@ -93,7 +91,7 @@ void ProcessingThread::run() {
+         Scalar centro1_aux = menorDist1ob;
+ 
+ 
+-        // mostra jogador cor 2
++        // mostra jogador cor 2 / rosa / zagueiro
+         list<Scalar> listaCor2 = color2BlobProcessor.getResults();
+         double menorDist2 = 500000000;
+         Scalar menorDist2ob;
+@@ -113,7 +111,7 @@ void ProcessingThread::run() {
+         Scalar centro2_aux = menorDist2ob;
+ 
+ 
+-        // mostra jogador cor 3
++        // mostra jogador cor 3 / verde escuro / goleiro
+ 
+         list<Scalar> listaCor3 = color3BlobProcessor.getResults();
+         double menorDist3 = 500000000;
+@@ -180,9 +178,9 @@ void ProcessingThread::run() {
+         Scalar centroBola = ballColorBlobProcessor.getResults().front();
+ //        Point point4(centroBola[0], centroBola[1]);
+ //        cv::circle(frame, point4, 4, Scalar(112, 160, 128), 4);
+-        Player aux1 = Player(centro1[0],centro1[1], centro1_aux[0], centro1_aux[1]);
+-        Player aux2 = Player(centro2[0],centro2[1], centro2_aux[0], centro2_aux[1]);
+-        Player aux3 = Player(centro3[0], centro3[1], centro3_aux[0], centro3_aux[1]);
++        Player aux1 = Player(centro1[0],centro1[1], centro1_aux[0], centro1_aux[1]);//verde claro
++        Player aux2 = Player(centro2[0],centro2[1], centro2_aux[0], centro2_aux[1]);//rosa
++        Player aux3 = Player(centro3[0], centro3[1], centro3_aux[0], centro3_aux[1]);//verde escuro
+         Player teammates[] = {aux1, aux2, aux3};
+         Player enemies[] = {enemy[0], enemy[1], enemy[2]};
+         Ball ball(centroBola[0], centroBola[1]);
+diff --git a/ProcessingThread.h b/ProcessingThread.h
+index 5ea0635..ef00ff6 100644
+--- a/ProcessingThread.h
++++ b/ProcessingThread.h
+@@ -7,11 +7,11 @@
+ #include <QThread>
+ #include <QImage>
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include "opencv2/video/tracking.hpp"
+-#include "opencv2/imgproc/imgproc.hpp"
+-#include "opencv2/objdetect/objdetect.hpp"
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\video\tracking.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\\imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\objdetect\objdetect.hpp>
+ 
+ #include "Buffer.h"
+ #include "Configuracao.h"
+diff --git a/PythonAPI.cpp b/PythonAPI.cpp
+index 8ce6047..b20d3a3 100644
+--- a/PythonAPI.cpp
++++ b/PythonAPI.cpp
+@@ -13,7 +13,7 @@ PythonAPI::PythonAPI(const char *file)
+ 
+     //Guilherme: Escolhe o caminho dos arquivos Python
+     char dir[] = "C:\\Users\\Erus\\Documents\\verysmall\\scripts";
+-    PyObject* sysPath = PySys_GetObject("path");
++    PyObject* sysPath = PySys_GetObject((char*)"path");
+     PyObject* curDir = PyString_FromString(dir);
+     PyList_Append(sysPath, curDir);
+     Py_DECREF(curDir);
+@@ -58,7 +58,7 @@ PyObject* PythonAPI::callFunctionRun(double* args){
+             /* pValue reference stolen here: */
+             PyTuple_SetItem(pArgs, i, pValue);
+         }
+-        pValue = PyObject_CallObject(pFunc, pArgs);
++        pValue = PyObject_CallObject(pFunc, pArgs);//Aqui pega os valores
+         Py_DECREF(pArgs);
+         if (pValue != NULL) {
+             //printf("Result of call: %ld\n", PyInt_AsLong(PyTuple_GetItem(pValue,1)));
+@@ -117,6 +117,7 @@ PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
+ }
+ 
+ int PythonAPI::callFunctionPause(){
++    std::cout << "Pause" << std::endl;
+     PyObject *pFunc; //,*pDict
+     PyObject *pArgs, *pValue;
+     //int nParametros = 15;
+@@ -167,12 +168,13 @@ int PythonAPI::callFunctionUpdateBorders()
+ 
+     Configuracao& conf = Configuracao::getInstance();
+     double direita, esquerda, cima, baixo;
+-
+     direita = Utils::pxToCm(max(conf.getPositionUpperRight()[0], conf.getPositionLowerRight()[0]));
+     esquerda = Utils::pxToCm(min(conf.getPositionUpperLeft()[0], conf.getPositionLowerLeft()[0]));
+     cima = Utils::pxToCm(min(conf.getPositionUpperRight()[1], conf.getPositionUpperLeft()[1]));
+     baixo = Utils::pxToCm(max(conf.getPositionLowerRight()[1], conf.getPositionLowerLeft()[1]));
+ 
++    //cout << conf.getPositionUpperRight()[0] << "oi" << conf.getPositionLowerRight()[0] << endl;
++    //cout << "max" << max(conf.getPositionUpperRight()[0], conf.getPositionLowerRight()[0]) << endl;
+     //cout << direita << " " << esquerda << " " << cima << " " << baixo << endl;
+ 
+     if (pFunc && PyCallable_Check(pFunc)) {
+diff --git a/PythonThread.cpp b/PythonThread.cpp
+index deb45d6..f29ed9c 100644
+--- a/PythonThread.cpp
++++ b/PythonThread.cpp
+@@ -1,3 +1,5 @@
++
++
+ #include "PythonThread.h"
+ #include <iostream>
+ 
+@@ -22,6 +24,7 @@ PythonThread::~PythonThread()
+ 
+ void PythonThread::run()
+ {
++
+     int ponto[2] = {0,0};
+     cv::Mat frame;
+     World world;
+@@ -34,7 +37,6 @@ void PythonThread::run()
+             pyAPI->callFunctionUpdateBorders();
+             atualizaBordas = false;
+         }
+-
+         if(paused) {
+             if(firstPaused){
+                 pyAPI->callFunctionPause();
+@@ -97,7 +99,7 @@ void PythonThread::run()
+                 cv::circle(frame, point, 4, cv::Scalar(b, g, r), 4); // print das bolinhas marotas
+                 if(s != "bola")
+                 {
+-                    std::cout << "bola = " << x << "y = "<< y <<  std::endl;
++                    //std::cout << "bola = " << x << "y = "<< y <<  std::endl;
+                     cv::line(frame, point, cv::Point(Utils::cmToPx(xf), Utils::cmToPx(yf)), cv::Scalar(b,g,r), 4);
+                 }
+             }
+diff --git a/PythonThread.h b/PythonThread.h
+index 7ff9fe0..1527789 100644
+--- a/PythonThread.h
++++ b/PythonThread.h
+@@ -4,11 +4,11 @@
+ #include <QThread>
+ #include <QImage>
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include "opencv2/video/tracking.hpp"
+-#include "opencv2/imgproc/imgproc.hpp"
+-#include "opencv2/objdetect/objdetect.hpp"
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\video\tracking.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\objdetect\objdetect.hpp>
+ #include "PythonAPI.h"
+ 
+ #include "World.h"
+diff --git a/SoccerField.h b/SoccerField.h
+index 0449fb9..9f4bcb8 100644
+--- a/SoccerField.h
++++ b/SoccerField.h
+@@ -1,9 +1,9 @@
+ #ifndef SOCCERFIELD_H
+ #define SOCCERFIELD_H
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include <opencv2/imgproc/imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
+ 
+ using namespace cv;
+ 
+diff --git a/Utils.cpp b/Utils.cpp
+index 0eede8f..14a3f22 100644
+--- a/Utils.cpp
++++ b/Utils.cpp
+@@ -6,7 +6,8 @@ float Utils::pxToCm(int px) {
+     cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
+     cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
+     const float comprimentoPx = Utils::norm(p1, p2);
+-
++    //std::cout << "p1x " << conf.getPositionLowerLeft()[1] << " p1y " << p1.y << std::endl;
++    //std::cout << "p2x " << p2.x << " p2y " << p2.y << std::endl;
+     return px*(comprimentoCm/comprimentoPx);
+ }
+ 
+@@ -15,6 +16,7 @@ float Utils::cmToPx(float cm) {
+     const float comprimentoCm = conf.getComprimentoArena();
+     cv::Point p1 = cv::Point(conf.getPositionLowerLeft()[0], conf.getPositionLowerLeft()[1]);
+     cv::Point p2 = cv::Point(conf.getPositionLowerRight()[0], conf.getPositionLowerRight()[1]);
++    //std::cout << p1.x << p2.x << std::endl;
+     const float comprimentoPx = Utils::norm(p1, p2);
+ 
+     return cm*(comprimentoPx/comprimentoCm);
+diff --git a/Utils.h b/Utils.h
+index 83ad60e..bb1fba8 100644
+--- a/Utils.h
++++ b/Utils.h
+@@ -6,11 +6,11 @@
+ #include <QDebug>
+ #include <QImage>
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include "opencv2/video/tracking.hpp"
+-#include "opencv2/imgproc/imgproc.hpp"
+-#include "opencv2/objdetect/objdetect.hpp"
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\video\tracking.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\objdetect\objdetect.hpp>
+ 
+ #include "Configuracao.h"
+ 
+diff --git a/VideoProcessor.cpp b/VideoProcessor.cpp
+index 5c439dd..549c441 100644
+--- a/VideoProcessor.cpp
++++ b/VideoProcessor.cpp
+@@ -1,5 +1,6 @@
+ #include "VideoProcessor.h"
+ 
++
+ VideoProcessor::VideoProcessor()
+ {
+     VideoProcessor(0);
+diff --git a/VideoProcessor.h b/VideoProcessor.h
+index b0b60a6..c79ad6b 100644
+--- a/VideoProcessor.h
++++ b/VideoProcessor.h
+@@ -1,9 +1,9 @@
+ #ifndef VIDEOPROCESSOR_H
+ #define VIDEOPROCESSOR_H
+ 
+-#include <opencv2/core/core.hpp>
+-#include <opencv2/highgui/highgui.hpp>
+-#include <opencv2/imgproc/imgproc.hpp>
++#include <C:\opencv\build\include\opencv2\core\core.hpp>
++#include <C:\opencv\build\include\opencv2\highgui\highgui.hpp>
++#include <C:\opencv\build\include\opencv2\imgproc\imgproc.hpp>
+ #include <iostream>
+ 
+ class VideoProcessor
+diff --git a/config.xml b/config.xml
+index 11c1636..a918ecc 100644
+--- a/config.xml
++++ b/config.xml
+@@ -10,7 +10,7 @@
+ 			<upperbound h="10" s="12" v="15" />
+ 		</color>
+ 		
+-		<colorname = "orange">
++		<color name="orange">
+ 			<lowerbound h="10" s="12" v="15" />		
+ 			<upperbound h="10" s="12" v="15" />
+ 		</color>
+diff --git a/main.cpp b/main.cpp
+index 3eb3425..14fdc1d 100644
+--- a/main.cpp
++++ b/main.cpp
+@@ -27,11 +27,10 @@ int main(int argc, char *argv[]) {
+     captureThread.connectToCamera();
+     ProcessingThread processingThread(&buffer, &bufferWorld, &bufferImagemProcessada);
+     PythonThread pythonThread(&bufferWorld, &bufferImagemProcessada);
+-
+     MainWindow w(&pythonThread, &processingThread, &buffer);
++    //
+     w.show();
+ 
+-
+     QObject::connect(&pythonThread, SIGNAL(newFrame(QImage)), &w, SLOT(updateFrame(QImage)));
+     QObject::connect(&w, SIGNAL(pauseGame(bool)), &pythonThread, SLOT(pauseGame(bool)));
+     QObject::connect(&w, SIGNAL(penalty(int)), &pythonThread, SLOT(inicioPenalty(int)));
+diff --git a/scripts/Agent.py b/scripts/Agent.py
+index f6bea22..21823da 100644
+--- a/scripts/Agent.py
++++ b/scripts/Agent.py
+@@ -22,5 +22,5 @@ class Agent:
+         return math.sqrt((x - self.x) ** 2 + (y - self.y) ** 2)
+ 
+     def predicao_adaptativa(self, x):
+-        return 4
+-        #return 4.5 + (x - World.World.FIELD_LEFT) * (3.5 - 4.5) / (World.World.FIELD_RIGHT - World.World.FIELD_LEFT)
+\ No newline at end of file
++        #return 4
++        return 4.5 + (x - World.World.FIELD_LEFT) * (3.5 - 4.5) / (World.World.FIELD_RIGHT - World.World.FIELD_LEFT)
+\ No newline at end of file
+diff --git a/scripts/Agent.pyc b/scripts/Agent.pyc
+index 981f068..0d95996 100644
+Binary files a/scripts/Agent.pyc and b/scripts/Agent.pyc differ
+diff --git a/scripts/Ball.pyc b/scripts/Ball.pyc
+index 7cc4a03..81aa55d 100644
+Binary files a/scripts/Ball.pyc and b/scripts/Ball.pyc differ
+diff --git a/scripts/Communication.py b/scripts/Communication.py
+index 2773b0a..37805fd 100644
+--- a/scripts/Communication.py
++++ b/scripts/Communication.py
+@@ -1,20 +1,20 @@
+-import serial
+ import array
+ import math
+ import time
++import serial
+ 
+ 
+ class Communication:
+-    def __init__(self, port='COM0', bauds=9600):
++    def __init__(self, port='COM0', bauds=4800):
+         self.ser = serial.Serial(port, bauds, timeout=1)
+         time.sleep(1)
+         self.ser.flush()
+ 
+     def send_message(self, msg):
+-        self.ser.write(msg.tostring())
++        self.ser.write(msg.tostring())	
+ 
+     def sendCommand(self, robotId, cmdId, value):
+-        # print (robotId, cmdId, value)
++        print (robotId, cmdId, value)
+         self.ser.write(robotId)
+         self.ser.write(cmdId)
+         self.ser.write(value)
+diff --git a/scripts/Communication.pyc b/scripts/Communication.pyc
+index ba06812..f70c1e3 100644
+Binary files a/scripts/Communication.pyc and b/scripts/Communication.pyc differ
+diff --git a/scripts/Goalkeeper.py b/scripts/Goalkeeper.py
+index 19f7717..82549bf 100644
+--- a/scripts/Goalkeeper.py
++++ b/scripts/Goalkeeper.py
+@@ -44,7 +44,6 @@ class Goalkeeper(Player.Player):
+             #posy = world.get_ball().gety()
+             posy = yp
+             #print posy
+-
+         if posy < world.trave_left_upper[1] - 1.8:
+             posy = world.trave_left_upper[1] - 1.8
+             posx -= 3
+@@ -79,15 +78,16 @@ class Goalkeeper(Player.Player):
+         '''
+         adiciona_ponto(int(world.trave_left_upper[0]), int(world.trave_left_upper[1]),255,255,2555,'xg+20, yg')
+         adiciona_ponto(int(world.trave_left_lower[0]), int(world.trave_left_lower[1]),255,255,2555,'xg+20, yg')
+-        return posx , posy
++        #print 'goleiro : ',posx, posy
++        return posx , posy # coordenadas que o goleiro deve ficar
+ 
+     def controle(self, world):
+         pd = world.get_goalkeeper()
+         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
+         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
+         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
+-        xb, yb = self.defende(world) # coordenadas que o goleiro deve ficar
+         xb, yb = world.get_ball().getxy()
++        xb, yb = self.defende(world) # coordenadas que o goleiro deve ficar
+ 
+         '''if(math.sqrt((xb - pd_x)/100, (yb - pd_y)/100) < 0.05 or start):
+             start = False
+@@ -120,7 +120,7 @@ class Goalkeeper(Player.Player):
+         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
+ 
+         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
+-        K = 100
++        K = 200
+         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
+       
+-        return int(255), int(255)
+\ No newline at end of file
++        return int(vr), int(vl)
+\ No newline at end of file
+diff --git a/scripts/Goalkeeper.pyc b/scripts/Goalkeeper.pyc
+index e8ba9d6..63cb122 100644
+Binary files a/scripts/Goalkeeper.pyc and b/scripts/Goalkeeper.pyc differ
+diff --git a/scripts/Player.pyc b/scripts/Player.pyc
+index 5890713..c788078 100644
+Binary files a/scripts/Player.pyc and b/scripts/Player.pyc differ
+diff --git a/scripts/PlayerAtaque.py b/scripts/PlayerAtaque.py
+index e6f81cb..c2aa1dd 100644
+--- a/scripts/PlayerAtaque.py
++++ b/scripts/PlayerAtaque.py
+@@ -6,13 +6,12 @@ import cv2
+ from lista_marcacoes import *
+ 
+ class PlayerAtaque(Player.Player):
+-
+     def chuta(self, world):
+-
++		#dados
+         distancia_pra_sair_da_parede = 3.5
+ 
+         ball = world.get_ball()
+-        xb,yb = ball.getx(),ball.gety()
++        #xb,yb = ball.getx(),ball.gety()
+         xb, yb = ball.predict_ball_method_ofensive(self)
+         xg, yg = world.get_enemy_goal()
+ 
+@@ -36,8 +35,10 @@ class PlayerAtaque(Player.Player):
+         adiciona_ponto(int(xg), int(yg-20),255,255,2555,'xg-20, yg')
+         theta_robo = self.get_theta()
+         #print theta_robo
++		
++        
+         # SAIR DA PAREDE 
+-        if self.getx() > world.FIELD_RIGHT and xb < self.getx():
++        if self.getx() > world.FIELD_RIGHT and xb < self.getx(): # nao invadir o campo do defensor
+             return self.getx() - 30, self.gety()
+ 
+         if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+@@ -72,9 +73,10 @@ class PlayerAtaque(Player.Player):
+             a = world.FIELD_LEFT + 15
+             b = self.gety()
+             return a,b
+-         #acaba sair da parede
++        #acaba sair da parede
+         #a = a -5
+ 
++		#nao pader no goleiro
+         p = world.get_def_player()
+         x,y = p.getx(),p.gety()
+ 
+@@ -86,10 +88,14 @@ class PlayerAtaque(Player.Player):
+             x,y = self.getx()+5,self.gety() 
+             return int(x),int(y)
+         return xb,yb
++		#acaba aki
++		
+         #return a,b
+         #Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
+         sensibility = 1.5
+         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
++        
++		### logica da trajetoria
+         if distance_to_ball < 25 and xb > self.getx():
+             if(not(yb+ (yb - self.gety()) > yg + 20 or (yb+ (yb - self.gety()) < yg-20))): # so alterar o setpoint caso ajude a fazer gol.
+                 return (xb + sensibility*(xb-self.getx())), (yb+ sensibility*(yb - self.gety()))
+@@ -117,6 +123,7 @@ class PlayerAtaque(Player.Player):
+             y_final = y0 - (abs(y0**2 - c))**0.5
+         #return a, b
+         '''
++		#pega o teta para ir na frente da bola
+         cm = math.pi/6
+         raio = ((abs((self.getx() - xb)**2 + (self.gety() - yb)**2))**0.5)/2
+         #if(not(self.gety() > yb)):
+@@ -130,6 +137,7 @@ class PlayerAtaque(Player.Player):
+ 
+         y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
+         x_final = (self.getx() + xb)/2 + raio*math.cos(teta) 
++		#pegou o teta
+         if(xb < self.getx()):# and xb > (world.FIELD_RIGHT + world.FIELD_LEFT)/2.0  ):
+             if(y_final > world.FIELD_BOTTOM):
+                 return x_final , world.FIELD_BOTTOM -7
+@@ -187,14 +195,15 @@ class PlayerAtaque(Player.Player):
+ 
+ 
+     def controle(self, world):
+-
+-        pd = world.get_atk_player()
++		#xb e yb e a posicao onde o jogador atacante vai tentar ir
++        pd = world.get_atk_player() #pega o atacante
+         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
+         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
+-        pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
+-        xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+-        #xb, yb = self.chuta(world)
+-        arq = open("posAtk.csv","a")
++        pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm pega a posicao do atacante
++        xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm // pego a bola // usada para ver se o atacante vai direto para a bola
++        #xb, yb = self.chuta(world) #Pega posicao para onde o atacante vai
++        '''
++		arq = open("posAtk.csv","a")
+         arq.write(str(pd_x) + ", " + str(pd_y))
+         arq.write("\n")
+         arq.close()
+@@ -203,6 +212,7 @@ class PlayerAtaque(Player.Player):
+         arq.write(str(xb) + ", " + str(yb))
+         arq.write("\n")
+         arq.close()
++        '''
+         adiciona_ponto(int(pd_x),int(pd_y), 128, 200, 126, 'atacante',int(xb), int(yb)) # verde escuro
+ 
+ 
+@@ -214,7 +224,7 @@ class PlayerAtaque(Player.Player):
+ 
+         theta_jog = self.get_theta()
+         theta_ball = math.atan2(yb,xb) # unidade rad
+-        #theta_ball = self.kalman(world)
++        #theta_ball = self.kalman(world)# funcao nao completa, nao chamar que da erro!
+         theta_gol = math.atan2(236,515)
+ 
+        
+@@ -289,7 +299,7 @@ class PlayerAtaque(Player.Player):
+         vmax = max(abs(y[0][0]), abs(y[1][0])) # pega a maior velocidade
+ 
+         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
+-        K = 255
++        K = 150 # varia de 0 a 255
+         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  
+ 
+-        return int(255), int(255)
+\ No newline at end of file
++        return int(vr), int(vl)
+\ No newline at end of file
+diff --git a/scripts/PlayerAtaque.pyc b/scripts/PlayerAtaque.pyc
+index a9534ec..4aa4004 100644
+Binary files a/scripts/PlayerAtaque.pyc and b/scripts/PlayerAtaque.pyc differ
+diff --git a/scripts/PlayerDefesa.py b/scripts/PlayerDefesa.py
+index c14ee47..82f246a 100644
+--- a/scripts/PlayerDefesa.py
++++ b/scripts/PlayerDefesa.py
+@@ -11,37 +11,38 @@ class PlayerDefesa(Player.Player):
+         distancia_pra_sair_da_parede = 3.5
+ 
+         #captura de dados : bola, inimigo
+-        ball = world.get_ball()
+-        xb,yb = ball.getx(),ball.gety()
+-        xb, yb = ball.predict_ball_method(self)
+-        xgi, ygi = world.get_enemy_goal()
+-        xg, yg = world.get_team_goal()
+-        xd, yd = self.getxy()
+-
+-        adiciona_ponto(int(xg), int(yg), 0, 0, 0, 'enemy',int(xg), int(yg)) #laranja
+-        
++        ball = world.get_ball()					#Pega bola
++        #xb,yb = ball.getx(),ball.gety()		#Pega posicoes x e y da bola
++        xb, yb = ball.predict_ball_method(self)	#Pega valor estimado de onde a bola estara
++        xgi, ygi = world.get_enemy_goal()		#Pega posicoes x e y do gol do oponente
++        xg, yg = world.get_team_goal()			#Pega posicoes x e y do proprio gol
++        xd, yd = self.getxy()					#Pega posicoes x e y do jogador defendor
+ 
++        adiciona_ponto(int(xg), int(yg), 0, 0, 0, 'enemy',int(xg), int(yg)) #laranja : Nao sei o que isso significa :D
+ 
+ 
+-        #calculo distancia bola
++        #calculo distancia bola ao defensor : INICIO
+         vec_to_ball_x = xb - self.getx()
+         vec_to_ball_y = yb - self.gety()
+-
+         norm_vec_to_ball = math.sqrt(vec_to_ball_x**2 + vec_to_ball_y **2)
++        #calculo distancia bola ao defensor : FIM
+ 
+-        #calculo distancia da bola para o gol inimigo
++        #calculo distancia da bola para o gol Aliado : INICIO
+         vec_to_goal_x = xg - xb
+         vec_to_goal_y = yg - yb
+-
+         norm_vec_to_goal = math.sqrt(vec_to_goal_x**2 + vec_to_goal_y **2)
++		#calculo distancia da bola para o gol Aliado : FIM
+ 
+-        vec_to_goal_x /= norm_vec_to_goal
+-        vec_to_goal_y /= norm_vec_to_goal
+-
+-
+-
+-
+-        #para impedir colicoes com o goleiro
++        vec_to_goal_x /= norm_vec_to_goal#Vetor para o gol Aliado
++        vec_to_goal_y /= norm_vec_to_goal#Vetor para o gol Aliado
++	
++        #Calculo da distancia da defesa para o gol : INICIO
++        vec_def_goal_x = xg - xd
++        vec_def_goal_y = yg - yd 
++        norm_vec_def_goal = math.sqrt(vec_def_goal_x**2 + vec_def_goal_y**2)#distancia da defesa pro gol
++        #Calculo da distancia da defesa para o gol : FIM
++		
++        #para impedir colicoes com o goleiro : INICIO
+         p = world.get_goalkeeper()
+         x,y = p.getx(),p.gety()
+         theta_robo = self.get_theta()
+@@ -53,35 +54,31 @@ class PlayerDefesa(Player.Player):
+         elif distance_to_amiguinho < 15.0 and self.gety() < y:
+             x,y = self.getx() , self.gety()-20
+             return x , y
+-
+-
+-
+-
+-
+-        #teste aki############################################################################################
+-
+-
+-
+-        #calculo da distancia da bola pro meio
+-        xm = xg - xgi
+-        ym = yg - ygi
+-
+-        vec_ball_meio_x = xb - xm
+-        vec_ball_meio_y = yb - ym
+-
+-        norm_vec_ball_meio = math.sqrt(vec_ball_meio_x**2 + vec_ball_meio_y**2)
+-
+-
+-
+-        #Calculo da distancia da defesa para o gol inimigo
+-        vec_def_goal_x = xg - xd
+-        vec_def_goal_y = yg - yd 
+-
+-        norm_vec_def_goal = math.sqrt(vec_def_goal_x**2 + vec_def_goal_y**2)
++		#para impedir colicoes com o goleiro : FIM
++
++        xm = xg - xgi#calculo do meio de campo X
++        ym = yg - ygi#calculo do meio de campo Y
++		
++		#NOVO
++        xmeioRicardo = xg/2 + xgi/2#calculo do meio de campo X do Ricardo
++        ymeioRicardo = yg/2 + ygi/2#calculo do meio de campo Y do Ricardo
+         
+-
+-
+-        if norm_vec_to_goal < norm_vec_ball_meio:
++		#Para nao passar do meio de campo : INICIO (Ricardo ta fazendo isto aqui :D)
++        if xd > xmeioRicardo:
++            return xmeioRicardo, yb
++        #Para nao passar do meio de campo : FIM
++		
++        #calculo da distancia da bola pro meio : INICIO
++        vec_ball_meio_x = xb - xmeioRicardo
++        vec_ball_meio_y = yb - ymeioRicardo
++        norm_vec_ball_meio = math.sqrt(vec_ball_meio_x**2 + vec_ball_meio_y**2)#distancia da bola pro meio
++        #calculo da distancia da bola pro meio : FIM
++		##########
++
++
++        #print 'Bola->Gol ', norm_vec_to_goal, 'Bola->Meio', norm_vec_ball_meio, 'Def->Gol', norm_vec_def_goal
++        #Estrategia para tirar a bola de perto do gol : INICIO
++        if norm_vec_to_goal < norm_vec_ball_meio:  #norm_vec_to_goal eh a distancia da bola para o gol
+             if norm_vec_def_goal < norm_vec_to_goal:
+                 return xb,yb
+             elif yb < 62.5:
+@@ -100,57 +97,18 @@ class PlayerDefesa(Player.Player):
+                     return xd, yd
+         else:
+             return vec_to_ball_x, vec_to_ball_y
+-        ######################################################################################################"""
+-
+-
++        #Estrategia para tirar a bola de perto do gol : FIM
+         
+-
+-
+-        """
+-        antiga forma de impetir que o jogador ficase na bateria
+-
+-        a,b = int(xb - 0.35 * norm_vec_to_ball*vec_to_goal_x), int (yb - 0.35 *norm_vec_to_ball * vec_to_goal_y)
+-        if b > world.FIELD_BOTTOM - 12:
+-            b = world.FIELD_BOTTOM + 24
+-        elif b < world.FIELD_TOP + 12:
+-            b = world.FIELD_TOP - 24
+-        if a > world.FIELD_RIGHT -12:
+-            a = world.FIELD_RIGHT - 24
+-        elif a < world.FIELD_LEFT + 12:
+-            a = world.FIELD_LEFT + 24
++		#Nunca vai pras funcoes abaixo pq n existe a e b que eu nao sei o que eh :( 			(Ricardo)
++        #Tem que fazer novo :D (Ricardo) pra sair da parede
+         
+-        
+-        if b > world.FIELD_BOTTOM:
+-            b = world.FIELD_BOTTOM - 3
+-        elif b < world.FIELD_TOP:
+-            b = world.FIELD_TOP + 3
+-        if a > world.FIELD_RIGHT - 4:
+-            a = world.FIELD_RIGHT - 8
+-        elif a < world.FIELD_LEFT + 4:
+-            a = world.FIELD_LEFT + 8
+-        """
+-
+-
+-        #return xb,yb
+-
+-        
+-
+-   
+-   
+-
+-
+-
+-
+-
+-
+-
+-        #nao sei
+-
++        #Codigo para sair da parede!! : INICIO
++        '''		
++        print world.FIELD_RIGHT, world.FIELD_BOTTOM, world.FIELD_TOP, world.FIELD_LEFT
+         if self.getx() > world.FIELD_RIGHT and xb < self.getx():
+             return self.getx() - 30, self.gety()
+ 
+-        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
+-            #print "aqui"         
++        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:       
+             if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
+                 return self.getx(),self.gety() -15
+             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
+@@ -164,7 +122,6 @@ class PlayerDefesa(Player.Player):
+ 
+             return xb, yb
+ 
+-
+         if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150):
+             b = world.FIELD_BOTTOM - 15
+             a = self.getx()
+@@ -181,17 +138,17 @@ class PlayerDefesa(Player.Player):
+             a = world.FIELD_LEFT + 15
+             b = self.gety()
+             return a,b
+-
+-
+-        #p = world.get_def_player()
++        '''
++        #Codigo para sair da parede!! : FIM
+ 
+ 
+         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
+-        ###########################################################################
++        #distance_to_ball eh a mesma coisa que norm_vec_to_ball! Distancia do defensor para a bola
++        '''
+         if distance_to_ball < 20 and xb > self.getx(): #chuta a bola pro campo inimigo
+             return (xb + 2*(xb-self.getx())), (yb + 2*(yb - self.gety()))
+         if(not(yb+ (yb - self.gety()) > yg +20 or (yb+ (yb - self.gety()) < yg-20)) and xb < self.getx()): # caso esteja na do gol dar a volta
+-            if(yb < yg + 20 and yb < self.gety()): # dando a volta por cima (bjs recalque)
++            if(yb < yg + 20 and yb < self.gety()): # dando a volta por cima (bjs recalque)############
+                 if(b+20 > world.FIELD_BOTTOM):
+                     if(a -5 < world.FIELD_LEFT +15):
+                         return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
+@@ -207,7 +164,7 @@ class PlayerDefesa(Player.Player):
+                         return world.FIELD_LEFT +20 , b+20
+                     else:
+                         return a-5 , b+20
+-            else: # dando a volta por baixo
++            else: 									# dando a volta por baixo########################
+                 if(b-20 > world.FIELD_BOTTOM):
+                     if(a -5 < world.FIELD_LEFT +15):
+                         return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
+@@ -227,16 +184,16 @@ class PlayerDefesa(Player.Player):
+             return world.FIELD_LEFT +20 , b
+         else:
+             return a,b
+-
++        '''
+ 
+     def controle(self, world):
+ 
+     	pd = world.get_def_player()
+-        xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
+-        xback , yback = pd.get_back()  #unidade das coordenadas eh cm
+-       	pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
+-        #xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm
+-        xb, yb = self.chuta(world)
++        xfront , yfront = pd.get_front()  		#unidade das coordenadas eh cm
++        xback , yback = pd.get_back()  			#unidade das coordenadas eh cm
++       	pd_x , pd_y = pd.getx() , pd.gety()  	#unidade das coordenadas eh cm
++        #xb, yb = world.get_ball().getxy() 		#unidade das coordenadas eh cm // usada para ver se o zagueiro vai direto para a bola
++        xb, yb = self.chuta(world)				#Retorna a posicao que o defensor deve ir
+     
+         theta_jog = self.get_theta()
+         theta_ball = math.atan2(yb,xb) # unidade rad
+@@ -273,7 +230,7 @@ class PlayerDefesa(Player.Player):
+         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
+ 
+         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
+-        K = 255
++        K = 150
+     	vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
+ 
+         return int(vr), int(vl)
+\ No newline at end of file
+diff --git a/scripts/PlayerDefesa.pyc b/scripts/PlayerDefesa.pyc
+index 72af0f6..c2f77d1 100644
+Binary files a/scripts/PlayerDefesa.pyc and b/scripts/PlayerDefesa.pyc differ
+diff --git a/scripts/VideoManager_backup.py b/scripts/VideoManager_backup.py
+deleted file mode 100644
+index 370cd2f..0000000
+--- a/scripts/VideoManager_backup.py
++++ /dev/null
+@@ -1,442 +0,0 @@
+-import cv2
+-import numpy as np
+-from World import *
+-from time import time
+-
+-
+-class VideoManager:
+-
+-    def resize(self, H0, Hf):
+-        factor = Hf/H0
+-        return cv2.resize(self.frame,None,fx=factor, fy=factor, interpolation = cv2.INTER_CUBIC)
+-
+-    def __init__(self):
+-        # Define the camera and configure its parameters
+-        self.cap = cv2.VideoCapture(0)
+-
+-        self.cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 800)
+-        self.cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 600)
+-
+-        # define range of pink color in HSV
+-        self.lower_pink = np.array([155, 215, 60])
+-        self.upper_pink = np.array([180, 255, 120])
+-
+-        # define range of green color in HSV
+-        self.lower_green = np.array([45, 120, 70])
+-        self.upper_green = np.array([80, 220, 200])
+-
+-        # define range of purple color in HSV
+-        self.lower_brown = np.array([0, 185, 30])
+-        self.upper_brown = np.array([0, 230, 90])
+-
+-        # define range of roxo color in HSV
+-        #self.lower_brown = np.array([130, 200, 0])
+-        #self.upper_brown = np.array([165, 255, 90])
+-
+-        # define range of red color in HSV
+-        #self.lower_brown = np.array([160, 230, 50])
+-        #self.upper_brown = np.array([180, 255, 85])
+-
+-        # define range of yellow team color in HSV
+-        self.lower_team = np.array([12, 115, 110])
+-        self.upper_team = np.array([35, 255, 180])
+-
+-        # define range of blue color in HSV
+-        #self.lower_team = np.array([100, 115, 30])
+-        #self.upper_team = np.array([150, 250, 100])
+-
+-        # define range of ball color in HSV
+-        self.lower_ball_1 = np.array([0, 120, 30])
+-        self.upper_ball_1 = np.array([12, 255, 255])
+-        self.lower_ball_2 = np.array([170, 120, 30])
+-        self.upper_ball_2 = np.array([180, 255, 255])
+-
+-        self.frame = None
+-        self.hsv = None
+-
+-        self.mask_green = None
+-
+-        # Remember that color is in BGR format
+-
+-    def draw_circle(self, pos, r, color):
+-        cv2.circle(self.frame, pos, r, color, -1)
+-
+-    def get_frame_dimensions(self):
+-        width = self.cap.get(3)
+-        height = self.cap.get(4)
+-        return width, height
+-
+-    def show(self):
+-        cv2.imshow('frame', self.frame)
+-
+-    #Calls the record
+-    def record(self):
+-        self.out.write(self.frame)
+-
+-    #Release capture and record
+-    def release(self):
+-        self.cap.release()
+-        self.out.release()
+-
+-    def get_element_position(self, color_lower, color_upper):
+-        # Threshold the HSV image to get only selected colors
+-        mask = cv2.inRange(self.hsv, color_lower, color_upper)
+-
+-        # Bitwise-AND mask and original image
+-        # res = cv2.bitwise_and(self.frame, self.frame, mask, mask)
+-
+-        # finding team contour with maximum area and store it as best_cnt_team
+-        contours, hierarchy = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+-
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # finding team centroids of best_cnt_team and draw a blue circle there
+-        max_area = 0
+-        best_cnt = 1
+-        for cnt in contours:
+-
+-            if World.is_contour_outside_field(cnt):
+-                continue
+-
+-            area = cv2.contourArea(cnt)
+-            if area > max_area and area > frame_size / 9000:
+-                max_area = area
+-                best_cnt = cnt
+-
+-        M = cv2.moments(best_cnt)
+-        cx, cy = int(M['m10'] / M['m00']), int(M['m01'] / M['m00'])
+-        return cx, cy
+-
+-    def get_element_position_verde(self, color_lower, color_upper):
+-        # Threshold the HSV image to get only selected colors
+-
+-        if self.mask_green == None:
+-            self.mask_green = cv2.inRange(self.hsv, color_lower, color_upper)
+-        #cv2.imshow("greenmask",self.mask_green)
+-        # Bitwise-AND mask and original image
+-        # res = cv2.bitwise_and(self.frame, self.frame, mask, mask)
+-
+-        # finding team contour with maximum area and store it as best_cnt_team
+-        contours, hierarchy = cv2.findContours(self.mask_green, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+-
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # finding team centroids of best_cnt_team and draw a blue circle there
+-        max_area = 0
+-        best_cnt = 1
+-        for cnt in contours:
+-
+-            if World.is_contour_outside_field(cnt):
+-                continue
+-
+-            area = cv2.contourArea(cnt)
+-            if area > max_area and area > frame_size / 9000:
+-                max_area = area
+-                best_cnt = cnt
+-
+-        M = cv2.moments(best_cnt)
+-        cx, cy = int(M['m10'] / M['m00']), int(M['m01'] / M['m00'])
+-        return cx, cy
+-
+-    def get_ball_position2(self, color_lower_1, color_upper_1):
+-        # Threshold the HSV image to get only selected colors
+-
+-
+-        mask1 = cv2.inRange(self.hsv, color_lower_1, color_upper_1)
+-
+-        # Bitwise-AND mask and original image
+-        #res = cv2.bitwise_and(self.frame, self.frame, mask1, mask1)
+-
+-        #mask2 = cv2.inRange(self.hsv, color_lower_2, color_upper_2)
+-        #res = cv2.bitwise_and(self.frame, self.frame, mask2, mask2)
+-
+-        mask = mask1
+-        #cv2.addWeighted(mask1,1,mask2,1,0,mask)
+-
+-        kernel = np.ones((5,5),np.float32)/8
+-        kernel[2][2] = 0
+-        dst = cv2.filter2D(mask,-1,kernel)
+-
+-       # cv2.imshow("mask", mask)
+-#        cv2.imshow("dst", dst)
+-        cv2.waitKey(1)
+-
+-        # finding team contour with maximum area and store it as best_cnt_team
+-
+-        contours, hierarchy = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+-
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # finding team centroids of best_cnt_team and draw a blue circle there
+-        i = 0
+-        vet = np.ones((50,4), np.float32)
+-        for cnt in contours:
+-
+-            if World.is_contour_outside_field(cnt):
+-                continue
+-
+-            area = cv2.contourArea(cnt)
+-
+-            if area > 15 and area < 200 and len(cnt) > 4: #and area > frame_size / 9000:
+-                elipse = cv2.fitEllipse(cnt)
+-                area_elipse = math.pi*elipse[1][0]*elipse[1][1]/4
+-
+-                k = area_elipse/area #k eh a razao de area: quanto mais proximo de 1 o contorno aproxima-se de uma circunferencia (no caso, a bola)
+-                if k > 1:
+-                    k = 2 - k
+-
+-                k = 1 - k
+-
+-                if elipse[1][1] == 0 or elipse[1][0] == 0:
+-                    f = 1.0
+-                elif elipse[1][1] > elipse[1][0] :
+-                    f = (elipse[1][1] - elipse[1][0])/elipse[1][1]
+-                else:
+-                    f = (elipse[1][0] - elipse[1][1])/elipse[1][0]
+-
+-                vet[i][0] = elipse[0][0]
+-                vet[i][1] = elipse[0][1]
+-                vet[i][2] = k
+-                vet[i][3] = f
+-
+-                i += 1
+-
+-        valor = 0
+-
+-        k_min = 10000.0
+-
+-        i = 0
+-        for a in vet:
+-            if a[2] < k_min and a[3] < 0.3:
+-               # cv2.drawContours(self.frame,[cnt],0,(0,0,255),1)
+-           #     cv2.circle(self.frame, (a[0],a[1]),5,(0,255,255), 5)
+-                k_min = a[2]
+-                valor = i
+-            i += 1
+-
+-
+-
+- #       cv2.circle(self.frame, (vet[valor][0],vet[valor][1]),5,(255,255,0), 2)
+-
+-        return (vet[valor][0],vet[valor][1])
+-
+-
+-    def get_ball_position(self, color_lower_1, color_upper_1, color_lower_2, color_upper_2):
+-        # Threshold the HSV image to get only selected colors
+-        mask1 = cv2.inRange(self.hsv, color_lower_1, color_upper_1)
+-
+-        # Bitwise-AND mask and original image
+-        #res = cv2.bitwise_and(self.frame, self.frame, mask1, mask1)
+-
+-        mask2 = cv2.inRange(self.hsv, color_lower_2, color_upper_2)
+-        #res = cv2.bitwise_and(self.frame, self.frame, mask2, mask2)
+-
+-        mask = mask1
+-        cv2.addWeighted(mask1,1,mask2,1,0,mask)
+-
+-        kernel = np.ones((5,5),np.float32)/8
+-        kernel[2][2] = 0
+-        dst = cv2.filter2D(mask,-1,kernel)
+-
+-        cv2.imshow("mask", mask)
+-#        cv2.imshow("dst", dst)
+-        cv2.waitKey(1)
+-
+-        # finding team contour with maximum area and store it as best_cnt_team
+-
+-        contours, hierarchy = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+-
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # finding team centroids of best_cnt_team and draw a blue circle there
+-        i = 0
+-        vet = np.ones((50,4), np.float32)
+-        for cnt in contours:
+-
+-            if World.is_contour_outside_field(cnt):
+-                continue
+-
+-            area = cv2.contourArea(cnt)
+-
+-            if area > 15 and area < 200 and len(cnt) > 4: #and area > frame_size / 9000:
+-                elipse = cv2.fitEllipse(cnt)
+-                area_elipse = math.pi*elipse[1][0]*elipse[1][1]/4
+-
+-                k = area_elipse/area #k eh a razao de area: quanto mais proximo de 1 o contorno aproxima-se de uma circunferencia (no caso, a bola)
+-                if k > 1:
+-                    k = 2 - k
+-
+-                k = 1 - k
+-
+-                if elipse[1][1] == 0 or elipse[1][0] == 0:
+-                    f = 1.0
+-                elif elipse[1][1] > elipse[1][0] :
+-                    f = (elipse[1][1] - elipse[1][0])/elipse[1][1]
+-                else:
+-                    f = (elipse[1][0] - elipse[1][1])/elipse[1][0]
+-
+-                vet[i][0] = elipse[0][0]
+-                vet[i][1] = elipse[0][1]
+-                vet[i][2] = k
+-                vet[i][3] = f
+-
+-                i += 1
+-
+-        valor = 0
+-
+-        k_min = 10000.0
+-
+-        i = 0
+-        for a in vet:
+-            if a[2] < k_min and a[3] < 0.3:
+-               # cv2.drawContours(self.frame,[cnt],0,(0,0,255),1)
+-           #     cv2.circle(self.frame, (a[0],a[1]),5,(0,255,255), 5)
+-                k_min = a[2]
+-                valor = i
+-            i += 1
+-
+-
+-
+- #       cv2.circle(self.frame, (vet[valor][0],vet[valor][1]),5,(255,255,0), 2)
+-
+-        return (vet[valor][0],vet[valor][1])
+-
+-
+-    def get_team_position(self, color_lower, color_upper):
+-        # Threshold the HSV image to get only selected colors
+-        mask = cv2.inRange(self.hsv, color_lower, color_upper)
+-
+-        # Bitwise-AND mask and original image
+-        res = cv2.bitwise_and(self.frame, self.frame, mask, mask)
+-
+-        # finding team contours with maximum areas and store it as best_cnt_team
+-        contours, hierarchy = cv2.findContours(mask, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+-
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # finding team contour with maximum area and store it as best_cnt_team
+-        first_max_area_team = 0
+-        second_max_area_team = 0
+-        third_max_area_team = 0
+-
+-        first_best_cnt_team = 1
+-        second_best_cnt_team = 1
+-        third_best_cnt_team = 1
+-
+-        for cnt_team in contours:
+-
+-            if World.is_contour_outside_field(cnt_team):
+-                continue
+-
+-            area_team = cv2.contourArea(cnt_team)
+-            if area_team > frame_size / 9000:
+-                if area_team > first_max_area_team:
+-
+-                    third_max_area_team = second_max_area_team
+-                    third_best_cnt_team = second_best_cnt_team
+-
+-                    second_max_area_team = first_max_area_team
+-                    second_best_cnt_team = first_best_cnt_team
+-
+-                    first_max_area_team = area_team
+-                    first_best_cnt_team = cnt_team
+-
+-
+-                elif area_team > second_max_area_team:
+-
+-                    third_max_area_team = second_max_area_team
+-                    third_best_cnt_team = second_best_cnt_team
+-
+-                    second_max_area_team = area_team
+-                    second_best_cnt_team = cnt_team
+-
+-                elif area_team > third_max_area_team:
+-
+-                    third_max_area_team = area_team
+-                    third_best_cnt_team = cnt_team
+-
+-        # finding team centroids of best_cnt_team and draw a blue circle there
+-        M = cv2.moments(first_best_cnt_team)
+-        ax_team, ay_team = int(M['m10'] / M['m00']), int(M['m01'] / M['m00'])
+-        cv2.circle(self.frame, (ax_team, ay_team), 5, (0, 0, 255), -1)
+-
+-        N = cv2.moments(second_best_cnt_team)
+-        bx_team, by_team = int(N['m10'] / N['m00']), int(N['m01'] / N['m00'])
+-        cv2.circle(self.frame, (bx_team, by_team), 5, (0, 0, 255), -1)
+-
+-        O = cv2.moments(third_best_cnt_team)
+-        cx_team, cy_team = int(O['m10'] / O['m00']), int(O['m01'] / O['m00'])
+-        cv2.circle(self.frame, (cx_team, cy_team), 5, (0, 0, 255), -1)
+-
+-        return [(ax_team, ay_team), (bx_team, by_team), (cx_team, cy_team)]
+-
+-    def process_frame(self, world=World()):
+-        # Take each frame
+-        _, self.frame = self.cap.read()
+-
+-        #cv2.flip(self.frame, -1, self.frame)
+-
+-        # Take frame size
+-        frame_width, frame_height = self.get_frame_dimensions()
+-        frame_size = frame_height * frame_width
+-
+-        # Convert BGR to HSV
+-        self.hsv = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
+-
+-        ls_team = self.get_team_position(self.lower_team, self.upper_team)
+-
+-        pos_ball = self.get_ball_position(self.lower_ball_1, self.upper_ball_1, self.lower_ball_2, self.upper_ball_2)
+-
+-        cv2.circle(self.frame, pos_ball, 5, (0, 255, 255), -1)
+-
+-        # pos_team = self.get_element_position(self.lower_team, self.upper_team)
+-        # cv2.circle(self.frame, pos_team, 5, (0, 0, 255), -1)
+-
+-        pos_pink = self.get_element_position(self.lower_pink, self.upper_pink)
+-        cv2.circle(self.frame, pos_pink, 5, (255, 0, 0), -1)
+-        pos_green = self.get_element_position(self.lower_green, self.upper_green)
+-        cv2.circle(self.frame, pos_green, 5, (100, 0, 100), -1)
+-        pos_brown = self.get_ball_position2(self.lower_green, self.upper_green)
+-        cv2.circle(self.frame, pos_brown, 5, (50, 100, 50), -1)
+-
+-        # Goalkeeper
+-        p0 = world.get_teammate(0)
+-        p0_front = self.mais_proximo(ls_team, pos_green)
+-        p0.set_position(p0_front, pos_green)
+-        cv2.circle(self.frame, p0.getxy(), 5, (255, 255, 255), -1)
+-
+-        # Player 1
+-        p1 = world.get_teammate(1)
+-        p1_front = self.mais_proximo(ls_team, pos_brown)
+-        p1.set_position(p1_front, pos_brown)
+-        cv2.circle(self.frame, p1.getxy(), 5, (255, 255, 255), -1)
+-
+-        # Player 2
+-        p2 = world.get_teammate(2)
+-        p2_front = self.mais_proximo(ls_team, pos_pink)
+-        p2.set_position(p2_front, pos_pink)
+-        cv2.circle(self.frame, p2.getxy(), 5, (255, 255, 255), -1)
+-
+-        # TODO: Enemies are not implemented yet
+-
+-        # Update Ball
+-        ball = world.get_ball()
+-        #if ball.distance_to(pos_ball[0], pos_ball[1]) > 60:
+-        ball.set_position(pos_ball)
+-        return world
+-
+-    def dist(self, (xa, ya), (xb, yb)):
+-        return math.sqrt((xa - xb) ** 2 + (ya - yb) ** 2)
+-
+-    def mais_proximo(self, ls, p):
+-        best = None
+-        for pos in ls:
+-            if best is None or self.dist(pos, p) < self.dist(best, p):
+-                best = pos;
+-        return best
+-
+diff --git a/scripts/World.py b/scripts/World.py
+index e4c2783..5f215ad 100644
+--- a/scripts/World.py
++++ b/scripts/World.py
+@@ -17,7 +17,7 @@ class World:
+     # FIELD_TOP = 83
+     # FIELD_BOTTOM = 430
+ 
+-    #LADO DE LAH
++    #LADO DE LAH (medidas oficiais do campo)
+     FIELD_LEFT = 85.0 * 0.36
+     FIELD_RIGHT = 555.0 * 0.36
+     FIELD_TOP = 50.0 * 0.36
+@@ -39,7 +39,7 @@ class World:
+         # Frendly goal: 0 to left and 1 to right
+         self.goal = 0
+ 
+-        self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]
++        self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]# TODO cuidado! Se mudar em baixo muda aki!!!
+         self.enemies = [Player.Player(), Player.Player(), Player.Player()]
+         self.ball = Ball()
+ 
+@@ -130,15 +130,15 @@ class World:
+     #Guilherme:  Versao para atualizacao de jogador usando, x,y,angle
+     def update(self, p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball):
+ 
+-        #Goalkeeper
++        #Goalkeeper // Atacante
+         p0 = self.get_teammate(0)
+         p0.set_position_xyt(p0_x, p0_y, p0_theta)
+ 
+-        #Player 1
++        #Player 1 // Zagueiro
+         p1 = self.get_teammate(1)
+         p1.set_position_xyt(p1_x, p1_y, p1_theta)
+ 
+-        #Player 2
++        #Player 2 // Goleiro
+         p2 = self.get_teammate(2)
+         p2.set_position_xyt(p2_x, p2_y, p2_theta) 
+ 
+@@ -162,8 +162,10 @@ class World:
+         self.trave_left_lower = (self.FIELD_LEFT, (self.FIELD_BOTTOM - self.FIELD_TOP)*2/3.0 + self.FIELD_TOP)
+         self.trave_right_upper = (self.FIELD_RIGHT, (self.FIELD_BOTTOM - self.FIELD_TOP)/3.0 + self.FIELD_TOP)
+         self.trave_right_lower = (self.FIELD_RIGHT, (self.FIELD_BOTTOM - self.FIELD_TOP)*2/3.0 + self.FIELD_TOP)
+-        print self.FIELD_RIGHT
+-        print self.FIELD_LEFT
+-        print self.FIELD_TOP
+-        print self.FIELD_BOTTOM
++        print ("ola")
++        print (self.FIELD_RIGHT)
++        print (self.FIELD_LEFT)
++        print (self.FIELD_TOP)
++        print (self.FIELD_BOTTOM)
++        print ("ola1")
+ 
+diff --git a/scripts/World.pyc b/scripts/World.pyc
+index c74f092..88163fa 100644
+Binary files a/scripts/World.pyc and b/scripts/World.pyc differ
+diff --git a/scripts/lista_marcacoes.pyc b/scripts/lista_marcacoes.pyc
+index 863eaa6..0d229fb 100644
+Binary files a/scripts/lista_marcacoes.pyc and b/scripts/lista_marcacoes.pyc differ
+diff --git a/scripts/main.py b/scripts/main.py
+index 4436a16..eec115c 100644
+--- a/scripts/main.py
++++ b/scripts/main.py
+@@ -17,7 +17,7 @@ from lista_marcacoes import *
+ import cProfile
+ 
+ world = World()
+-com = Communication('COM4')
++com = Communication('COM18')
+ fps = 0
+ time_start = time()
+ 
+@@ -191,9 +191,9 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
+     global time_start
+ 
+     adiciona_ponto(int(pos_ball_x), int(pos_ball_y), 35, 100, 215, 'bola',int(pos_ball_x), int(pos_ball_y)) #laranja
+-    #adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante',int(pos_ball_x), int(pos_ball_y)) # verde escuro
++    adiciona_ponto(int(p0_x),int(p0_y), 128, 200, 126, 'atacante',int(pos_ball_x), int(pos_ball_y)) # verde claro
+     adiciona_ponto(int(p1_x),int(p1_y), 170, 0, 255, 'zagueiro',int(pos_ball_x), int(pos_ball_y)) # rosa
+-    adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro',int(pos_ball_x), int(pos_ball_y)) # verde claro
++    adiciona_ponto(int(p2_x),int(p2_y), 0, 80, 0, 'goleiro',int(pos_ball_x), int(pos_ball_y)) # verde escuro
+     #adiciona_ponto(int(op1_x),int(op1_y), 0, 0, 255, 'op1',int(op1_x),int(op1_y)) # vermelho
+     #adiciona_ponto(int(op2_x),int(op2_y), 0, 0, 255, 'op2',int(op2_x),int(op2_y)) # vermelho
+     #adiciona_ponto(int(op3_x),int(op3_y), 0, 0, 255, 'op3',int(op3_x),int(op3_y)) # vermelho
+@@ -208,8 +208,12 @@ def run(p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ba
+     
+     # Controls each robot individually
+     # msg = Message()
++
++
+     for i in [0,1,2]:  # [0] = atk , [1] defesa e [2] goleiro
+         p = world.get_teammate(i)
++        #print("aaaaaaa")
++        #print(i,p.get_id())
+         vr, vl = p.controle(world) #xt, yt = posicao retornada pela funcao chuta
+         """
+         if i == 0:
+@@ -304,4 +308,4 @@ def updateBorders(fieldRight, fieldLeft, fieldTop, fieldBottom):
+ 
+ if __name__ == '__main__':
+     # cProfile.run('main()')
+-    main()
+\ No newline at end of file
++    main()
+diff --git a/scripts/main.pyc b/scripts/main.pyc
+index eaec848..24e5785 100644
+Binary files a/scripts/main.pyc and b/scripts/main.pyc differ
+diff --git a/vsss.pro b/vsss.pro
+index 70ff7d8..b7c391a 100644
+--- a/vsss.pro
++++ b/vsss.pro
+@@ -8,15 +8,24 @@ CONFIG   += console
+ TEMPLATE = app
+ 
+ 
+-INCLUDEPATH += C:\\opencv-mingw\\install\\include
++INCLUDEPATH += C:\\opencv\\build\\include
+ INCLUDEPATH += C:\\Python27\\include
++#INCLUDEPATH += C:\\Users\\ERUS\\AppData\\Local\\Programs\\Python\\Python36-32\\include
+ LIBS += C:\\Python27\\libs\\libpython27.a
+-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_core2410.dll.a
+-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_highgui2410.dll.a
+-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_imgproc2410.dll.a
++#LIBS += C:\\Users\\ERUS\\AppData\\Local\\Programs\\Python\\Python36-32\\libs\\libpython36.a
++#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_core2410.dll.a
++#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_highgui2410.dll.a
++#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_imgproc2410.dll.a
++
++#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_objdetect2410.dll.a
++#LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_video2410.dll.a
++LIBS += C:\\opencv-build\\bin\\libopencv_core331.dll
++LIBS += C:\\opencv-build\\bin\\libopencv_highgui331.dll
++LIBS += C:\\opencv-build\\bin\\libopencv_imgproc331.dll
++LIBS += C:\\opencv-build\\bin\\libopencv_objdetect331.dll
++LIBS += C:\\opencv-build\\bin\\libopencv_video331.dll
++LIBS += C:\\opencv-build\\bin\\libopencv_videoio331.dll
+ 
+-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_objdetect2410.dll.a
+-LIBS += C:\\opencv-mingw\\install\\x64\\mingw\\lib\\libopencv_video2410.dll.a
+ 
+ SOURCES += main.cpp \
+     VideoProcessor.cpp \

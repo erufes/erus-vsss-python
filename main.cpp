@@ -27,10 +27,9 @@ int main(int argc, char *argv[]) {
     captureThread.connectToCamera();
     ProcessingThread processingThread(&buffer, &bufferWorld, &bufferImagemProcessada);
     PythonThread pythonThread(&bufferWorld, &bufferImagemProcessada);
-
     MainWindow w(&pythonThread, &processingThread, &buffer);
+    //
     w.show();
-
 
     QObject::connect(&pythonThread, SIGNAL(newFrame(QImage)), &w, SLOT(updateFrame(QImage)));
     QObject::connect(&w, SIGNAL(pauseGame(bool)), &pythonThread, SLOT(pauseGame(bool)));

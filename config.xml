@@ -10,7 +10,7 @@
 			<upperbound h="10" s="12" v="15" />
 		</color>
 		
-		<colorname = "orange">
+		<color name="orange">
 			<lowerbound h="10" s="12" v="15" />		
 			<upperbound h="10" s="12" v="15" />
 		</color>

@@ -1,3 +1,5 @@
+
+
 #include "PythonThread.h"
 #include <iostream>
 
@@ -22,6 +24,7 @@ PythonThread::~PythonThread()
 
 void PythonThread::run()
 {
+
     int ponto[2] = {0,0};
     cv::Mat frame;
     World world;
@@ -34,7 +37,6 @@ void PythonThread::run()
             pyAPI->callFunctionUpdateBorders();
             atualizaBordas = false;
         }
-
         if(paused) {
             if(firstPaused){
                 pyAPI->callFunctionPause();
@@ -97,7 +99,7 @@ void PythonThread::run()
                 cv::circle(frame, point, 4, cv::Scalar(b, g, r), 4); // print das bolinhas marotas
                 if(s != "bola")
                 {
-                    std::cout << "bola = " << x << "y = "<< y <<  std::endl;
+                    //std::cout << "bola = " << x << "y = "<< y <<  std::endl;
                     cv::line(frame, point, cv::Point(Utils::cmToPx(xf), Utils::cmToPx(yf)), cv::Scalar(b,g,r), 4);
                 }
             }

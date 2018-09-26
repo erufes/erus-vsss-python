@@ -13,7 +13,7 @@ PythonAPI::PythonAPI(const char *file)
 
     //Guilherme: Escolhe o caminho dos arquivos Python
     char dir[] = "C:\\Users\\Erus\\Documents\\verysmall\\scripts";
-    PyObject* sysPath = PySys_GetObject("path");
+    PyObject* sysPath = PySys_GetObject((char*)"path");
     PyObject* curDir = PyString_FromString(dir);
     PyList_Append(sysPath, curDir);
     Py_DECREF(curDir);
@@ -58,7 +58,7 @@ PyObject* PythonAPI::callFunctionRun(double* args){
             /* pValue reference stolen here: */
             PyTuple_SetItem(pArgs, i, pValue);
         }
-        pValue = PyObject_CallObject(pFunc, pArgs);
+        pValue = PyObject_CallObject(pFunc, pArgs);//Aqui pega os valores
         Py_DECREF(pArgs);
         if (pValue != NULL) {
             //printf("Result of call: %ld\n", PyInt_AsLong(PyTuple_GetItem(pValue,1)));
@@ -117,6 +117,7 @@ PyObject *PythonAPI::callFunctionRun(World* world, int penalty, int paused){
 }
 
 int PythonAPI::callFunctionPause(){
+    std::cout << "Pause" << std::endl;
     PyObject *pFunc; //,*pDict
     PyObject *pArgs, *pValue;
     //int nParametros = 15;
@@ -167,12 +168,13 @@ int PythonAPI::callFunctionUpdateBorders()
 
     Configuracao& conf = Configuracao::getInstance();
     double direita, esquerda, cima, baixo;
-
     direita = Utils::pxToCm(max(conf.getPositionUpperRight()[0], conf.getPositionLowerRight()[0]));
     esquerda = Utils::pxToCm(min(conf.getPositionUpperLeft()[0], conf.getPositionLowerLeft()[0]));
     cima = Utils::pxToCm(min(conf.getPositionUpperRight()[1], conf.getPositionUpperLeft()[1]));
     baixo = Utils::pxToCm(max(conf.getPositionLowerRight()[1], conf.getPositionLowerLeft()[1]));
 
+    //cout << conf.getPositionUpperRight()[0] << "oi" << conf.getPositionLowerRight()[0] << endl;
+    //cout << "max" << max(conf.getPositionUpperRight()[0], conf.getPositionLowerRight()[0]) << endl;
     //cout << direita << " " << esquerda << " " << cima << " " << baixo << endl;
 
     if (pFunc && PyCallable_Check(pFunc)) {
