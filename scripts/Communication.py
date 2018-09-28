@@ -14,7 +14,8 @@ class Communication:
         self.ser.write(msg.tostring())	
 
     def sendCommand(self, robotId, cmdId, value):
-        print (robotId, cmdId, value)
+        print ('\0', robotId, cmdId, value)
+        self.ser.write('\0')
         self.ser.write(robotId)
         self.ser.write(cmdId)
         self.ser.write(value)
@@ -77,6 +78,7 @@ class Communication:
     def stop(self, rid):
         #self.sendCommand(rid, 'l', chr(128))
         #self.sendCommand(rid, 'r', chr(128))
+        self.sendCommand(rid, 's', chr(128))
         self.sendCommand(rid, 's', chr(128))
 
 class Message:

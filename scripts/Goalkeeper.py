@@ -86,7 +86,7 @@ class Goalkeeper(Player.Player):
         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm
-        xb, yb = world.get_ball().getxy()
+        #xb, yb = world.get_ball().getxy()
         xb, yb = self.defende(world) # coordenadas que o goleiro deve ficar
 
         '''if(math.sqrt((xb - pd_x)/100, (yb - pd_y)/100) < 0.05 or start):

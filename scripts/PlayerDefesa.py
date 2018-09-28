@@ -121,7 +121,9 @@ class PlayerDefesa(Player.Player):
                 return a,b
 
             return xb, yb
-
+        '''
+        #Testar  ||
+		#        \/
         if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150):
             b = world.FIELD_BOTTOM - 15
             a = self.getx()
@@ -138,7 +140,7 @@ class PlayerDefesa(Player.Player):
             a = world.FIELD_LEFT + 15
             b = self.gety()
             return a,b
-        '''
+        
         #Codigo para sair da parede!! : FIM
 
 
@@ -192,11 +194,11 @@ class PlayerDefesa(Player.Player):
         xfront , yfront = pd.get_front()  		#unidade das coordenadas eh cm
         xback , yback = pd.get_back()  			#unidade das coordenadas eh cm
        	pd_x , pd_y = pd.getx() , pd.gety()  	#unidade das coordenadas eh cm
-        #xb, yb = world.get_ball().getxy() 		#unidade das coordenadas eh cm // usada para ver se o zagueiro vai direto para a bola
-        xb, yb = self.chuta(world)				#Retorna a posicao que o defensor deve ir
+        xb, yb = world.get_ball().getxy() 		#unidade das coordenadas eh cm // usada para ver se o zagueiro vai direto para a bola
+        #xb, yb = self.chuta(world)				#Retorna a posicao que o defensor deve ir
     
         theta_jog = self.get_theta()
-        theta_ball = math.atan2(yb,xb) # unidade rad
+        theta_ball = math.atan2(yb,xb) 			# unidade rad
         theta_gol = math.atan2(236,515)
 
        
@@ -230,7 +232,7 @@ class PlayerDefesa(Player.Player):
         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
-        K = 150
+        K = 100
     	vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
 
         return int(vr), int(vl)
