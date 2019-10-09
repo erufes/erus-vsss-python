@@ -65,7 +65,7 @@ Em breve.
 
 # Dados da Equipe:
 O VSSS-ERUS é uma equipe dedicada a implementação do desafio Very Small Size Soccer para competições. É um projeto da ERUS - Equipe de Robótica da UFES, e diversos documentos sobre o projeto podem ser encontrados no site da equipe.
-- Site da ERUS : erus.ufes.br/
+- Site da ERUS : http://erus.ufes.br/
 - E-mail da ERUS : erus@inf.ufes.br
 - E-mail do VSSS-ERUS : vssserus@gmail.com
 
