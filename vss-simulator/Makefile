@@ -1,8 +1,8 @@
 ### Makefile ###
 
 all:
-	g++ -o Instalador Instalador.cpp
+	g++ -o Simulador Simulador.cpp ListaComandos/ListaComandos.c
 
 run:
-	sudo ./Instalador 
+	./Simulador
 
