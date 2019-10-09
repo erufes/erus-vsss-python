@@ -44,11 +44,11 @@ class kernel():
         state = self.state_receiver.receive_state()
         return state
 
-vel1 = vel2 = 0
+
 k = kernel()
 while True:
-    vel1 += 1
-    vel2 += 1
+    vel1 = 10
+    vel2 = -10
     comando = WheelsCommand(vel1, vel2)
     k.envia_comando(comando, comando, comando)
     

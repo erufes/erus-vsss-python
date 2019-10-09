@@ -30,7 +30,12 @@ Em breve
 # Executando
 
 ## Com Simulador
-Em breve.
+Há um arquivo de auxílio para rodar o simulador. Para compilá-lo, entre no diretório vss-simulator e rode o comando make.<br>
+Depois de compilado o programa pode ser rodado pelo comando:
+```
+$ ./Simulador
+```
+A simulação cria um arquivo de log com as saídas dos programas de simulação para serem analisados.
 
 ## Com Sistemas de Visão e Hardware reais
 Em breve.
@@ -49,7 +54,7 @@ Em breve.
     """
 
 
-## Comentário de protótipo de funções (.h)
+## Comentário de protótipo de funções
 
     """
     Nome da função :
@@ -61,7 +66,7 @@ Em breve.
     """
     
 
-**IMPORTANTE**: Comentários adicionais devem ser feitos no arquivo de implementação (.cpp) detalhando a implementação do código.
+**IMPORTANTE**: Comentários adicionais devem ser feitos na implementação (corpo das funções) detalhando a implementação do código.
 
 # Dados da Equipe:
 O VSSS-ERUS é uma equipe dedicada a implementação do desafio Very Small Size Soccer para competições. É um projeto da ERUS - Equipe de Robótica da UFES, e diversos documentos sobre o projeto podem ser encontrados no site da equipe.
