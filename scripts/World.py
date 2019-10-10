@@ -33,7 +33,7 @@ class World:
         # Frendly goal: 0 to left and 1 to right
         self.goal = 0
 
-        self.jogadores = {"Team" : {"GK" : list(), "DF" : list(), "FW" : list()}, "Enemies" = list()}
+        self.jogadores = {"Team" : {"GK" : list(), "DF" : list(), "FW" : list()}, "Enemies" : list()}
         self.ball = Ball()
     
     def remove_def_player(self, p):
@@ -83,36 +83,6 @@ class World:
 
     def get_right_goal(self):
         return self.right_goal
-    """ 
-    @staticmethod
-    def is_contour_outside_field(cnt):
-        c = 35
-        x,y,w,h = cv2.boundingRect(cnt)
-        if x < World.FIELD_LEFT-c or y < World.FIELD_TOP-c or x+w > World.FIELD_RIGHT+c or y+h > World.FIELD_BOTTOM+c:
-            return True
-        else:
-            return False
- """
-    """
-    #Guilherme: Funcao criada para atualizar o world. substitui a funcao vm.process_frame(world)
-    def update(self, p0_front, p0_back, p1_front, p1_back, p2_front, p2_back, pos_ball):
-
-        #Goalkeeper
-        p0 = self.get_teammate(0)
-        p0.set_position(p0_front, p0_back)
-
-        #Player 1
-        p0 = self.get_teammate(1)
-        p0.set_position(p1_front, p1_back)
-
-        #Player 2
-        p0 = self.get_teammate(2)
-        p0.set_position(p2_front, p2_back) 
-
-        # Update Ball
-        ball = self.get_ball()
-        ball.set_position(pos_ball)
-    """
     #Guilherme:  Versao para atualizacao de jogador usando, x,y,angle
     def update(self, p0_x, p0_y, p0_theta, p1_x, p1_y, p1_theta, p2_x, p2_y, p2_theta, pos_ball):
 
@@ -154,4 +124,3 @@ class World:
         print (self.FIELD_TOP)
         print (self.FIELD_BOTTOM)
         print ("ola1")
-

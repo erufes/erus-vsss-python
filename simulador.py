@@ -54,18 +54,20 @@ class kernel():
 
 k = kernel()
 mundo = World()
-team = [fw(), gk(), df()]
+team = [fw(), df(), gk()]
+mundo.add_atk_player(team[0])
+mundo.add_def_player(team[1])
+mundo.add_gk_player(team[2])
 enemie = [Player(), Player(), Player()]
+mundo.jogadores["Enemies"].extend(enemie)
 while True:
     state = k.recebe_estado()
     mundo.ball.update_position((state.ball.x, state.ball.y))
     for i in range(0, 2):
         r = state.team_yellow[i]
         e = state.team_blue[i]
-        team[i].set_xy(r.x, r.y)
-        team[i].set_theta(r.angle)
-        enemie[i].set_xy(e.x, e.y)
-        enemie[i].set_theta(e.angle)
+        team[i].set_position_xyt(r.x, r.y, r.angle)
+        enemie[i].set_position_xyt(e.x, e.y, e.angle)
     
     listaComando = list()
     for p in team:

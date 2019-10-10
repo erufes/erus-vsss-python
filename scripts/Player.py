@@ -15,6 +15,7 @@ class Player(Agent):
         self.theta = 0
         self.medo_de_bater_na_parede = 30.0
         self.id = rid
+        Agent.__init__(self)
 
 ############# Controlador
 
@@ -103,8 +104,6 @@ class Player(Agent):
         self.theta = sum(self.theta_old)/15.0
 
     def update_xy(self):
-        # distancia_y = int(yt) - 0.5*(int(cy_pink)+int(cy_team))
-        #distancia_x = int(xt) - 0.5*(int(cx_pink)+int(cx_team))
         x = 0.5 * (self.xa + self.xb)
         y = 0.5 * (self.ya + self.yb)
         self.update_position((x, y))
@@ -135,7 +134,6 @@ class Player(Agent):
         self.set_theta(theta)
 
     def get_theta(self):
-        #return self.theta*180.0/3.1415
         return self.theta
 
     def predicao_adaptativa(self, x, world):
@@ -143,7 +141,7 @@ class Player(Agent):
 
     def chuta(self, world):
         ball = world.get_ball()
-        xb, yb = ball.predict_ball_method(self)
+        xb, yb = ball.predict_ball_method(self, world)
         xr, yr = self.getxy()
         xg, yg = world.get_right_goal()
         my_inf = 1e5
@@ -184,7 +182,6 @@ class Player(Agent):
         curva_de_nivel_segura = 0.2  # Curva de nivel a partir da qual nao eh mais possivel manobrar o robo.
 
 
-        # cv2.circle(frame,(     int(grad_x + xb_real)   ,   int(grad_y + yb_real)    ),5,(200,200,50),-1)
         posx = xb
         posy = yb
 
@@ -238,42 +235,15 @@ class Player(Agent):
         
         v_r = (omega + ni)
         v_l = (-omega + ni)
-
-        #print "antes, vr, vl = ", v_l, v_r
-        
+   
         maior = max(abs(v_r),abs(v_l))
 
         if maior > 255.0:
             v_r = v_r * (255.0/maior)
             v_l = v_l * (255.0/maior)
 
-        """
-        if abs(v_r) > 255.0:
-            v_r = v_r * (255.0/abs(v_r))
-            v_l = v_l * (255.0/abs(v_r))
-        
-        
-        if abs(v_l) > 255.0:
-            v_l = v_l * (255.0/abs(v_l))
-            v_r = v_r * (255.0/abs(v_l))
-        """
-    
         v_r = int(v_r)
         v_l = int(v_l)
-        
-        """
-        if v_r > 255:
-            v_r = 255
-        if v_r < -255:
-            v_r = -255
-
-        if v_l > 255:
-            v_l = 255
-        if v_l < -255:
-            v_l = -255
-        """
-        
-        #print "depois, vr, vl = ", v_l, v_r
         
         return v_r, v_l
 
@@ -335,5 +305,4 @@ class Player(Agent):
         ret = (math.tanh((xr - self.right_upper[0])**2/self.medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/player.medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
         if ro < 100:
             ret = 0
-        # print ret
         return ret

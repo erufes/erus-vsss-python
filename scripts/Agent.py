@@ -20,6 +20,5 @@ class Agent:
     def distance_to(self, x, y):
         return math.sqrt((x - self.x) ** 2 + (y - self.y) ** 2)
 
-    """ def predicao_adaptativa(self, x):
-        #return 4
-        return 4.5 + (x - World.World.FIELD_LEFT) * (3.5 - 4.5) / (World.World.FIELD_RIGHT - World.World.FIELD_LEFT) """
+    def predicao_adaptativa(self, x, mundo):
+        return 4.5 + (x - mundo.FIELD_LEFT) * (3.5 - 4.5) / (mundo.FIELD_RIGHT - mundo.FIELD_LEFT)
