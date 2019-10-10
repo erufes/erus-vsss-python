@@ -13,7 +13,7 @@ Caso o pacote `pkg-config` esteja indisponível, instale o `pkgconf`.
 
 Utilize o gerenciador de pacotes da sua distribuição, como `apt` ou `pacman`, para  instalar os pacotes listados.
 
-Também é necessário instalar o vssscorepy, o vss-sdk e pyzmq
+Também é necessário instalar o vssscorepy, o vss-sdk, pyzmq, OpenCV, numpy e google.
 
 ```
 $ sudo -H pip install git+https://github.com/VSS-SDK/VSS-CorePy --upgrade

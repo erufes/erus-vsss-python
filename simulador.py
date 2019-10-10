@@ -39,7 +39,6 @@ class kernel():
         self.command_sender.create_socket()
         """ self.debug_sender = DebugSender()
         self.debug_sender.create_socket() """
-        self.team = team
     
     def envia_comando(self, comando_Player1, comando_Player2, comando_Player3):
         command = Command()
@@ -68,8 +67,8 @@ while True:
         enemie[i].set_xy(e.x, e.y)
         enemie[i].set_theta(e.angle)
     
-    vel1 = 10
-    vel2 = -10
-    comando = WheelsCommand(vel1, vel2)
-    k.envia_comando(comando, comando, comando)
-    
+    listaComando = list()
+    for p in team:
+        velr, vell = p.controle(mundo)
+        listaComando.append(WheelsCommand(vell, velr))
+    k.envia_comando(listaComando[0], listaComando[1], listaComando[2])

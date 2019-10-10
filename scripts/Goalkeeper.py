@@ -82,7 +82,7 @@ class Goalkeeper(Player):
         return posx , posy # coordenadas que o goleiro deve ficar
 
     def controle(self, world):
-        pd = world.get_goalkeeper()
+        pd = self
         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm

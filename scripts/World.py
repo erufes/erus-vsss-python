@@ -33,26 +33,39 @@ class World:
         # Frendly goal: 0 to left and 1 to right
         self.goal = 0
 
-        
-        """ self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]# TODO cuidado! Se mudar em baixo muda aki!!! """
-        """ self.enemies = [Player.Player(), Player.Player(), Player.Player()] """
+        self.jogadores = {"Team" : {"GK" : list(), "DF" : list(), "FW" : list()}, "Enemies" = list()}
         self.ball = Ball()
+    
+    def remove_def_player(self, p):
+        self.jogadores["Team"]["DF"].remove(p)
+    
+    def remove_atk_player(self, p):
+        self.jogadores["Team"]["FW"].remove(p)
+    
+    def remove_gk_player(self, p):
+        self.jogadores["Team"]["GK"].remove(p)
 
-        # TODO: find information about game states
-        self.game_state = None
-    """ 
+    def add_def_player(self, p):
+        self.jogadores["Team"]["DF"].append(p)
+    
+    def add_atk_player(self, p):
+        self.jogadores["Team"]["FW"].append(p)
+
+    def add_gk_player(self, p):
+        self.jogadores["Team"]["GK"].append(p)
+
     def get_def_player(self):
-        return self.team[1] # TODO cuidado! Se mudar acima muda aki!!!
+        return self.jogadores["Team"]["DF"] 
 
     def get_atk_player(self):
-        return self.team[0] # TODO cuidado! Se mudar acima muda aki!!!
+        return self.jogadores["Team"]["FW"] 
 
     def get_goalkeeper(self):
-        return self.team[2] # TODO cuidado! Se mudar acima muda aki!!!
+        return self.jogadores["Team"]["GK"] 
 
     def get_teammate(self, n):
-        return self.team[n]
- """
+        return self.jogadores["Team"][n]
+
     def get_team_goal(self):
         if self.goal == 0:
             return self.left_goal
