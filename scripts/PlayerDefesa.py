@@ -1,10 +1,10 @@
-from Player import Player
+from .Player import Player
 import math
-from World import World
+from .World import World
 import numpy as np
-from lista_marcacoes import *
+from .lista_marcacoes import *
 
-class PlayerDefesa(Player.Player):
+class PlayerDefesa(Player):
 
     def chuta(self, world):
 

@@ -1,11 +1,11 @@
-import Player
-from World import *
+from .Player import Player
+from .World import *
 import numpy as np
-from lista_marcacoes import *
+from .lista_marcacoes import *
 '''posicaox = [0,0,0,0] para pegar o vetor velocidade
 posicaoy = [0,0,0,0]'''
 
-class Goalkeeper(Player.Player):
+class Goalkeeper(Player):
     # def __init__(self, rid=None):
     #     Player.__init__(rid)
     #     self.path_x = [0.10,0.30,0.60]

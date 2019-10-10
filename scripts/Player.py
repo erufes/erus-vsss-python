@@ -1,9 +1,9 @@
-import Agent
+from .Agent import Agent
 import math
-import World
+from .World import *
 
 
-class Player(Agent.Agent):
+class Player(Agent):
 
     def __init__(self, rid=None):
         self.xa_old = [0.0,0.0,0.0,0.0,0.0]
@@ -13,7 +13,7 @@ class Player(Agent.Agent):
         self.xa = self.ya = self.xb = self.yb = 0
         self.theta_old = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
         self.theta = 0
-        self.medo_de_bater_na_parede = 30.0;
+        self.medo_de_bater_na_parede = 30.0
         self.id = rid
 
 ############# Controlador
@@ -24,9 +24,9 @@ class Player(Agent.Agent):
         self.te_old = 0
 
     #somatorio dos erros para o KI 
-        self.erroX = 0;
-        self.erroY = 0;
-        self.erroT = 0;
+        self.erroX = 0
+        self.erroY = 0
+        self.erroT = 0
 
     def set_xe_old(self, xe):
         self.xe_old = xe
@@ -109,14 +109,14 @@ class Player(Agent.Agent):
         y = 0.5 * (self.ya + self.yb)
         self.update_position((x, y))
 
-    def set_position(self, (xa, ya), (xb, yb)):
-        self.xa_old.insert(0,float(xa))
+    def set_position(self, ta, tb):
+        self.xa_old.insert(0,float(ta[0]))
         self.xa_old.pop()
-        self.ya_old.insert(0,float(ya))
+        self.ya_old.insert(0,float(ta[1]))
         self.ya_old.pop()
-        self.xb_old.insert(0,float(xb))
+        self.xb_old.insert(0,float(tb[0]))
         self.xb_old.pop()
-        self.yb_old.insert(0,float(yb))
+        self.yb_old.insert(0,float(tb[1]))
         self.yb_old.pop()
 
         mxa = sum(self.xa_old)/5.0
@@ -176,7 +176,7 @@ class Player(Agent.Agent):
         grad_y = (world.campo_potencial_g(xb, yb + 10.0, self.medo_de_bater_na_parede) - value )
 
 
-        norm_grad = math.sqrt(grad_x ** 2 + grad_y ** 2);
+        norm_grad = math.sqrt(grad_x ** 2 + grad_y ** 2)
         if norm_grad != 0:
             grad_x /= norm_grad
             grad_y /= norm_grad
@@ -324,3 +324,16 @@ class Player(Agent.Agent):
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
 
         return int(vr), int(vl)
+
+    def campo_potencial(self, mundo):
+        #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
+        xr, yr = mundo.getxy()
+        dx = xr - mundo.left_goal[0]
+        dy = yr - mundo.left_goal[1]
+
+        ro = math.sqrt(dx**2+dy**2)
+        ret = (math.tanh((xr - self.right_upper[0])**2/self.medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/player.medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
+        if ro < 100:
+            ret = 0
+        # print ret
+        return ret

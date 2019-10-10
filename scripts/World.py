@@ -1,10 +1,4 @@
-import PlayerAtaque
-import PlayerDefesa
-import Player
-from Ball import *
-import Goalkeeper
-import cv2
-
+from .Ball import *
 
 class World:
     #TODO: update field constants
@@ -39,12 +33,14 @@ class World:
         # Frendly goal: 0 to left and 1 to right
         self.goal = 0
 
-        self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]# TODO cuidado! Se mudar em baixo muda aki!!!
-        self.enemies = [Player.Player(), Player.Player(), Player.Player()]
+        
+        """ self.team = [PlayerAtaque.PlayerAtaque('3'), PlayerDefesa.PlayerDefesa('2') , Goalkeeper.Goalkeeper('1')]# TODO cuidado! Se mudar em baixo muda aki!!! """
+        """ self.enemies = [Player.Player(), Player.Player(), Player.Player()] """
         self.ball = Ball()
 
         # TODO: find information about game states
         self.game_state = None
+    """ 
     def get_def_player(self):
         return self.team[1] # TODO cuidado! Se mudar acima muda aki!!!
 
@@ -56,7 +52,7 @@ class World:
 
     def get_teammate(self, n):
         return self.team[n]
-
+ """
     def get_team_goal(self):
         if self.goal == 0:
             return self.left_goal
@@ -74,30 +70,7 @@ class World:
 
     def get_right_goal(self):
         return self.right_goal
-
-
-    def campo_potencial(self, player):
-        #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
-        xr, yr = player.getxy()
-        dx = xr - self.left_goal[0]
-        dy = yr - self.left_goal[1]
-
-        ro = math.sqrt(dx**2+dy**2)
-        ret = (math.tanh((xr - self.right_upper[0])**2/player.medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/player.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/player.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/player.medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
-        if ro < 100:
-            ret = 0
-        # print ret
-        return ret
-
-    def campo_potencial_g(self, xr, yr, medo_de_bater_na_parede):
-        #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
-        dx = xr - self.right_goal[0]
-        dy = yr - self.right_goal[1]
-        ro = math.sqrt(dx**2+dy**2)
-        if ro < 100:
-            return 0
-        return (math.tanh((xr - self.right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
-
+    """ 
     @staticmethod
     def is_contour_outside_field(cnt):
         c = 35
@@ -106,7 +79,7 @@ class World:
             return True
         else:
             return False
-
+ """
     """
     #Guilherme: Funcao criada para atualizar o world. substitui a funcao vm.process_frame(world)
     def update(self, p0_front, p0_back, p1_front, p1_back, p2_front, p2_back, pos_ball):

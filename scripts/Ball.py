@@ -1,8 +1,8 @@
-import Agent
+from .Agent import Agent
 import math
 
 
-class Ball(Agent.Agent):
+class Ball(Agent):
     def __init__(self):
         #self.x_old, self.y_old = 0, 0
         self.x_old = [0.0,0.0,0.0,0.0,0.0]

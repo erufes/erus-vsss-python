@@ -54,6 +54,7 @@ class kernel():
 
 
 k = kernel()
+mundo = World()
 while True:
     state = k.recebe_estado()
     vel1 = 10

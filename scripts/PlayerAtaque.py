@@ -1,11 +1,11 @@
-import Player
+from .Player import Player
 import math
-import World
+from .World import World
 import numpy as np
 import cv2
-from lista_marcacoes import *
+from .lista_marcacoes import *
 
-class PlayerAtaque(Player.Player):
+class PlayerAtaque(Player):
     def chuta(self, world):
 		#dados
         distancia_pra_sair_da_parede = 3.5
