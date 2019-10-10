@@ -55,8 +55,19 @@ class kernel():
 
 k = kernel()
 mundo = World()
+team = [fw(), gk(), df()]
+enemie = [Player(), Player(), Player()]
 while True:
     state = k.recebe_estado()
+    mundo.ball.update_position((state.ball.x, state.ball.y))
+    for i in range(0, 2):
+        r = state.team_yellow[i]
+        e = state.team_blue[i]
+        team[i].set_xy(r.x, r.y)
+        team[i].set_theta(r.angle)
+        enemie[i].set_xy(e.x, e.y)
+        enemie[i].set_theta(e.angle)
+    
     vel1 = 10
     vel2 = -10
     comando = WheelsCommand(vel1, vel2)
