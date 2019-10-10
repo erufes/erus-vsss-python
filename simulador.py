@@ -8,6 +8,14 @@
     
 """
 import vsscorepy as simulador
+import scripts as vsss_erus
+from scripts.World import World
+from scripts.Goalkeeper import Goalkeeper as gk
+from scripts.PlayerAtaque import PlayerAtaque as fw
+from scripts.PlayerDefesa import PlayerDefesa as df
+from scripts.Ball import Ball
+from scripts.Player import Player
+from scripts.Agent import Agent
 from vsscorepy.communications.command_sender import CommandSender
 from vsscorepy.communications.debug_sender import DebugSender
 from vsscorepy.communications.state_receiver import StateReceiver
@@ -47,6 +55,7 @@ class kernel():
 
 k = kernel()
 while True:
+    state = k.recebe_estado()
     vel1 = 10
     vel2 = -10
     comando = WheelsCommand(vel1, vel2)
