@@ -44,25 +44,23 @@ Em breve.
 
 ## Primeiro comentário do arquivo
 
-    """    
-    Nome do módulo :
-    Ano de criação :
-    Descrição do módulo :
-    Versão :
-    Pré-requisitos : (arquivos e bibliotecas necessárias para compilar)
-    Membros :
+    """ Nome do módulo :
+        Ano de criação :
+        Descrição do módulo :
+        Versão :
+        Pré-requisitos : (arquivos e bibliotecas necessárias para compilar)
+        Membros :
     """
 
 
 ## Comentário de protótipo de funções
 
-    """
-    Nome da função :
-    Intenção da função :
-    Pré-requisitos :
-    Efeitos colaterais :
-    Parâmetros :
-    Retorno :
+    """ Nome da função :
+        Intenção da função :
+        Pré-requisitos :
+        Efeitos colaterais :
+        Parâmetros :
+        Retorno :
     """
     
 

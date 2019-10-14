@@ -1,0 +1,50 @@
+""" Nome do módulo :      Agente
+    Ano de criação :      2019/10
+    Descrição do módulo : Agente representa uma entidade em campo
+    Versão :              2.0
+    Pré-requisitos :      sklearn
+                          geometria
+    Membros :             Lorena Bassani
+"""
+from sklearn.linear_model import LinearRegression
+from .geometria import Ponto
+
+class Agente(object):
+
+    def __init__(self, ponto = Ponto()):
+        self._ponto = ponto
+        self._posicoesAntigas = list()
+    
+    @property
+    def ponto(self):
+        return self._ponto
+    
+    @ponto.setter
+    def ponto(self, value):
+        self._changePosition()
+        self._ponto = value
+    
+    @property
+    def posicao(self):
+        return self.ponto.posicao
+    
+    @posicao.setter
+    def posicao(self, value):
+        self._changePosition()
+        self.ponto.posicao = value
+    
+    @property
+    def x(self):
+        return self.ponto.x
+    
+    @property
+    def posicoesAntigas(self):
+        return self._posicoesAntigas.copy()
+    
+    def _changePosition(self):
+        if(len(self._posicoesAntigas) >= 5):
+            self._posicoesAntigas.pop(0)
+        self._posicoesAntigas.append(Ponto(self.ponto.x, self.ponto.y))
+
+    def predicaoAdaptativa(self):
+        pass
