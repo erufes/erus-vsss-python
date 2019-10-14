@@ -12,17 +12,17 @@ from .geometria import Ponto
 class Agente(object):
 
     def __init__(self, ponto = Ponto()):
-        self._ponto = ponto
-        self._posicoesAntigas = list()
+        self.__ponto = ponto
+        self.__posicoesAntigas = list()
     
     @property
     def ponto(self):
-        return self._ponto
+        return self.__ponto
     
     @ponto.setter
     def ponto(self, value):
         self._changePosition()
-        self._ponto = value
+        self.__ponto = value
     
     @property
     def posicao(self):
@@ -39,12 +39,12 @@ class Agente(object):
     
     @property
     def posicoesAntigas(self):
-        return self._posicoesAntigas.copy()
+        return self.__posicoesAntigas.copy()
     
     def _changePosition(self):
-        if(len(self._posicoesAntigas) >= 5):
-            self._posicoesAntigas.pop(0)
-        self._posicoesAntigas.append(Ponto(self.ponto.x, self.ponto.y))
+        if(len(self.__posicoesAntigas) >= 5):
+            self.__posicoesAntigas.pop(0)
+        self.__posicoesAntigas.append(Ponto(self.ponto.x, self.ponto.y))
 
     def predicaoAdaptativa(self):
         pass
