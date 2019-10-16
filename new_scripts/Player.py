@@ -1,6 +1,8 @@
 from .Agente import Agente
 from .geometria import Ponto
-from .ComportamentosJogadores import Comportamentos, Factory
+from .ComportamentosJogadores.Factory import Factory
+from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+
 
 class Player(Agente):
 
