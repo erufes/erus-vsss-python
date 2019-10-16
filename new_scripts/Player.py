@@ -1,11 +1,6 @@
-from enum import Enum
 from .Agente import Agente
 from .geometria import Ponto
-
-class COMPORTAMENTOS(Enum):
-    GOLEIRO = 0
-    ATACANTE = 1
-    DEFESA = 2
+from .ComportamentosJogadores import Comportamentos, Factory
 
 class Player(Agente):
 
@@ -16,11 +11,12 @@ class Player(Agente):
     
     @property
     def comportamento(self):
-        return self.__comportamento
+        return self.__comportamentoId
     
     @comportamento.setter
     def comportamento(self, comportamento):
-        self.__comportamento = comportamento
+        self.__comportamentoId = comportamento
+        self.__comportamento = Factory.create(comportamento)
     
     @property
     def id(self):

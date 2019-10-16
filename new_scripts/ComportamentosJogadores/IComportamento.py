@@ -1,0 +1,2 @@
+class IComportamento(object):
+    pass
