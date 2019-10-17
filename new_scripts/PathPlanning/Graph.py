@@ -37,3 +37,21 @@ class GridGraph(object):
     
     def whatIsOccupied(self):
         return list(map(lambda x: x[0], self.__occupied))
+    
+    def neighbors(self, cel):
+        nbs = list()
+        cels = list()
+        cels.append(cel - self.__grade[1])
+        cels.append(cel + self.__grade[1])
+        if cel % self.__grade[1] > 0:
+            cels.append(cel - 1) 
+        if cel % self.__grade[1] < self.__grade[1] - 1:
+            cels.append(cel + 1)
+        
+        for c in cels:
+            if self.isInsideGrid(c):
+                o = self.getOccupier(c)
+                if o is None:
+                    o = (c, None)
+                nbs.append(o)
+        return nbs
