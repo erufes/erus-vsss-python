@@ -15,5 +15,5 @@ from .IPathPlanning import IPathPlanning
 class AStar(IPathPlanning):
 
     @staticmethod
-    def PathPlan():
+    def PathPlan(graph, start, goal):
         pass

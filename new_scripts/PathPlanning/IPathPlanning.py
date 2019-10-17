@@ -9,5 +9,5 @@
 class IPathPlanning(object):
 
     @staticmethod
-    def PathPlan():
+    def PathPlan(graph, start, goal):
         raise NotImplementedError

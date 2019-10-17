@@ -16,5 +16,5 @@ from .IPathPlanning import IPathPlanning
 class DijkstraAlgorithm(IPathPlanning):
 
     @staticmethod
-    def PathPlan():
+    def PathPlan(graph, start, goal):
         pass
