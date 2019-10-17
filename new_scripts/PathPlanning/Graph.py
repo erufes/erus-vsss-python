@@ -21,7 +21,7 @@ class GridGraph(object):
     def release(self, cel):
         liberar = self.getOccupier(cel)
         if liberar:
-            self.__occupied.remove(liberar[0])
+            self.__occupied.remove(liberar)
 
     def isOccupied(self, cel):
         return self.getOccupier(cel) is not None
