@@ -15,7 +15,8 @@ class GridGraph(object):
         return self.__grade
     
     def occupy(self, cel, obj):
-        self.__occupied.append((cel, obj))
+        if self.isInsideGrid(cel):
+            self.__occupied.append((cel, obj))
     
     def release(self, cel):
         liberar = self.getOccupier(cel)
@@ -30,3 +31,9 @@ class GridGraph(object):
         if ocupador:
             return ocupador[0]
         return None
+    
+    def isInsideGrid(self, cel):
+        return cel >= 0 and cel < self.__grade[0]*self.__grade[1]
+    
+    def whatIsOccupied(self):
+        return list(map(lambda x: x[0], self.__occupied))
