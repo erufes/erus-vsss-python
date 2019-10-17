@@ -55,3 +55,10 @@ class GridGraph(object):
                     o = (c, None)
                 nbs.append(o)
         return nbs
+    
+    def transform2Cart(self, cel):
+        return ((cel % self.__grade[0]) + 1, (cel // self.__grade[0]) + 1)
+
+    def trasnform2Grid(self, cel):
+        x, y = cel
+        pass
