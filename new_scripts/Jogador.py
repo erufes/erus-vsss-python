@@ -11,7 +11,7 @@ from .geometria import Ponto
 
 class Jogador(Agente):
 
-    def __init__(self, idJ, ponto = Ponto(), comportamento = COMPORTAMENTOS.DEFESA):
+    def __init__(self, idJ, ponto = Ponto()):
         Agente.__init__(ponto)
         self.__id = idJ
 
