@@ -8,6 +8,14 @@
     
 """
 import vsscorepy as simulador
+import scripts as vsss_erus
+from scripts.World import World
+from scripts.Goalkeeper import Goalkeeper as gk
+from scripts.PlayerAtaque import PlayerAtaque as fw
+from scripts.PlayerDefesa import PlayerDefesa as df
+from scripts.Ball import Ball
+from scripts.Player import Player
+from scripts.Agent import Agent
 from vsscorepy.communications.command_sender import CommandSender
 from vsscorepy.communications.debug_sender import DebugSender
 from vsscorepy.communications.state_receiver import StateReceiver
@@ -31,7 +39,6 @@ class kernel():
         self.command_sender.create_socket()
         """ self.debug_sender = DebugSender()
         self.debug_sender.create_socket() """
-        self.team = team
     
     def envia_comando(self, comando_Player1, comando_Player2, comando_Player3):
         command = Command()
@@ -46,9 +53,24 @@ class kernel():
 
 
 k = kernel()
+mundo = World()
+team = [fw(), df(), gk()]
+mundo.add_atk_player(team[0])
+mundo.add_def_player(team[1])
+mundo.add_gk_player(team[2])
+enemie = [Player(), Player(), Player()]
+mundo.jogadores["Enemies"].extend(enemie)
 while True:
-    vel1 = 10
-    vel2 = -10
-    comando = WheelsCommand(vel1, vel2)
-    k.envia_comando(comando, comando, comando)
+    state = k.recebe_estado()
+    mundo.ball.update_position((state.ball.x, state.ball.y))
+    for i in range(0, 2):
+        r = state.team_yellow[i]
+        e = state.team_blue[i]
+        team[i].set_position_xyt(r.x, r.y, r.angle)
+        enemie[i].set_position_xyt(e.x, e.y, e.angle)
     
+    listaComando = list()
+    for p in team:
+        velr, vell = p.controle(mundo)
+        listaComando.append(WheelsCommand(vell, velr))
+    k.envia_comando(listaComando[0], listaComando[1], listaComando[2])

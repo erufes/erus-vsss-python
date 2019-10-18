@@ -13,7 +13,7 @@ Caso o pacote `pkg-config` esteja indisponível, instale o `pkgconf`.
 
 Utilize o gerenciador de pacotes da sua distribuição, como `apt` ou `pacman`, para  instalar os pacotes listados.
 
-Também é necessário instalar o vssscorepy, o vss-sdk e pyzmq
+Também é necessário instalar o vssscorepy, o vss-sdk, pyzmq, OpenCV, numpy e google.
 
 ```
 $ sudo -H pip install git+https://github.com/VSS-SDK/VSS-CorePy --upgrade
@@ -44,25 +44,23 @@ Em breve.
 
 ## Primeiro comentário do arquivo
 
-    """    
-    Nome do módulo :
-    Ano de criação :
-    Descrição do módulo :
-    Versão :
-    Pré-requisitos : (arquivos e bibliotecas necessárias para compilar)
-    Membros :
+    """ Nome do módulo :
+        Ano de criação :
+        Descrição do módulo :
+        Versão :
+        Pré-requisitos : (arquivos e bibliotecas necessárias para compilar)
+        Membros :
     """
 
 
 ## Comentário de protótipo de funções
 
-    """
-    Nome da função :
-    Intenção da função :
-    Pré-requisitos :
-    Efeitos colaterais :
-    Parâmetros :
-    Retorno :
+    """ Nome da função :
+        Intenção da função :
+        Pré-requisitos :
+        Efeitos colaterais :
+        Parâmetros :
+        Retorno :
     """
     
 

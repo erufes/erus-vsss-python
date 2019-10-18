@@ -1,10 +1,12 @@
-import Player
+from .Player import Player
 import math
-import World
+from .World import World
 import numpy as np
-from lista_marcacoes import *
+from .lista_marcacoes import *
 
-class PlayerDefesa(Player.Player):
+class PlayerDefesa(Player):
+    def __init__(self):
+        Player.__init__(self)
 
     def chuta(self, world):
 
@@ -12,8 +14,7 @@ class PlayerDefesa(Player.Player):
 
         #captura de dados : bola, inimigo
         ball = world.get_ball()					#Pega bola
-        #xb,yb = ball.getx(),ball.gety()		#Pega posicoes x e y da bola
-        xb, yb = ball.predict_ball_method(self)	#Pega valor estimado de onde a bola estara
+        xb, yb = ball.predict_ball_method(self, world)	#Pega valor estimado de onde a bola estara
         xgi, ygi = world.get_enemy_goal()		#Pega posicoes x e y do gol do oponente
         xg, yg = world.get_team_goal()			#Pega posicoes x e y do proprio gol
         xd, yd = self.getxy()					#Pega posicoes x e y do jogador defendor
@@ -43,7 +44,7 @@ class PlayerDefesa(Player.Player):
         #Calculo da distancia da defesa para o gol : FIM
 		
         #para impedir colicoes com o goleiro : INICIO
-        p = world.get_goalkeeper()
+        p = world.get_goalkeeper()[0]
         x,y = p.getx(),p.gety()
         theta_robo = self.get_theta()
 
@@ -58,15 +59,6 @@ class PlayerDefesa(Player.Player):
 
         xm = xg - xgi#calculo do meio de campo X
         ym = yg - ygi#calculo do meio de campo Y
-		
-		#NOVO
-        xmeioRicardo = xg/2 + xgi/2#calculo do meio de campo X do Ricardo
-        ymeioRicardo = yg/2 + ygi/2#calculo do meio de campo Y do Ricardo
-        
-		#Para nao passar do meio de campo : INICIO (Ricardo ta fazendo isto aqui :D)
-        if xd > xmeioRicardo:
-            return xmeioRicardo, yb
-        #Para nao passar do meio de campo : FIM
 		
         #calculo da distancia da bola pro meio : INICIO
         vec_ball_meio_x = xb - xmeioRicardo
@@ -103,27 +95,6 @@ class PlayerDefesa(Player.Player):
         #Tem que fazer novo :D (Ricardo) pra sair da parede
         
         #Codigo para sair da parede!! : INICIO
-        '''		
-        print world.FIELD_RIGHT, world.FIELD_BOTTOM, world.FIELD_TOP, world.FIELD_LEFT
-        if self.getx() > world.FIELD_RIGHT and xb < self.getx():
-            return self.getx() - 30, self.gety()
-
-        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:       
-            if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
-                return self.getx(),self.gety() -15
-            elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
-                return self.getx(),self.gety() +15
-            if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
-                a = world.FIELD_RIGHT - 15
-                return a,b
-            elif self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
-                a = world.FIELD_LEFT + 15
-                return a,b
-
-            return xb, yb
-        '''
-        #Testar  ||
-		#        \/
         if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150):
             b = world.FIELD_BOTTOM - 15
             a = self.getx()
@@ -143,66 +114,20 @@ class PlayerDefesa(Player.Player):
         
         #Codigo para sair da parede!! : FIM
 
-
-        distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
-        #distance_to_ball eh a mesma coisa que norm_vec_to_ball! Distancia do defensor para a bola
-        '''
-        if distance_to_ball < 20 and xb > self.getx(): #chuta a bola pro campo inimigo
-            return (xb + 2*(xb-self.getx())), (yb + 2*(yb - self.gety()))
-        if(not(yb+ (yb - self.gety()) > yg +20 or (yb+ (yb - self.gety()) < yg-20)) and xb < self.getx()): # caso esteja na do gol dar a volta
-            if(yb < yg + 20 and yb < self.gety()): # dando a volta por cima (bjs recalque)############
-                if(b+20 > world.FIELD_BOTTOM):
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
-                    else:
-                        return a-5 , world.FIELD_BOTTOM -15
-                if(b+20 < world.FIELD_TOP):
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM +15
-                    else:
-                        return a-5 , world.FIELD_BOTTOM +15
-                else:
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , b+20
-                    else:
-                        return a-5 , b+20
-            else: 									# dando a volta por baixo########################
-                if(b-20 > world.FIELD_BOTTOM):
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM -15
-                    else:
-                        return a-5 , world.FIELD_BOTTOM -15
-                if(b-20 < world.FIELD_TOP):
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , world.FIELD_BOTTOM +15
-                    else:
-                        return a-5 , world.FIELD_BOTTOM +15
-                else:
-                    if(a -5 < world.FIELD_LEFT +15):
-                        return world.FIELD_LEFT +20 , b-20
-                    else:
-                        return a-5 , b-20
-        if(a -5 < world.FIELD_LEFT +15):
-            return world.FIELD_LEFT +20 , b
-        else:
-            return a,b
-        '''
-
     def controle(self, world):
 
-    	pd = world.get_def_player()
+        pd = self
         xfront , yfront = pd.get_front()  		#unidade das coordenadas eh cm
         xback , yback = pd.get_back()  			#unidade das coordenadas eh cm
        	pd_x , pd_y = pd.getx() , pd.gety()  	#unidade das coordenadas eh cm
         xb, yb = world.get_ball().getxy() 		#unidade das coordenadas eh cm // usada para ver se o zagueiro vai direto para a bola
-        #xb, yb = self.chuta(world)				#Retorna a posicao que o defensor deve ir
-    
+        
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) 			# unidade rad
         theta_gol = math.atan2(236,515)
 
        
-        # matriz de rotacao e matriz de translacao que colocar o eixo de coordanadas no robo alinhado com o theta, e calcula o angulo de erro        
+        # matriz de rotacao e matriz de translacao que colocar o eixo de coordanadas no robo alinhado com o theta, e calcula o angulo de erro      
         M_rot = np.array([[math.cos(theta_jog), math.sin(theta_jog)], [-math.sin(theta_jog), math.cos(theta_jog)]])
         M_trans =  np.array([[pd_x], [pd_y]])
         oldcoords_bola = np.array([[xb], [yb]])
@@ -212,27 +137,26 @@ class PlayerDefesa(Player.Player):
         newcoords_gol = M_rot.dot(oldcoords_gol - M_trans)
 
         # erro robo bola baseado 
-        #theta_erro = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
         theta_erro_bola = math.atan2(newcoords_bola[1][0], newcoords_bola[0][0])
         theta_erro_gol = math.atan2(newcoords_gol[1][0], newcoords_gol[0][0])
 
         theta_erro = theta_erro_bola + (theta_erro_bola - theta_erro_gol)/3
        
         #distancia das rodas em metros
-    	D = 0.075 
+        D = 0.075 
 
         #tempo de amostragem
         T = 30 
 
         #dado o sistema y = pseudoA*Matriz_erro obtem-se y que eh a velocidade da roda direita e velocidade da roda esquerda
         A = np.array([[math.cos(theta_jog)/2, math.cos(theta_jog)/2], [math.sin(theta_jog)/2, math.sin(theta_jog)/2],[1/D, -1/D]])
-    	pseudoA = np.linalg.pinv(A)
+        pseudoA = np.linalg.pinv(A)
         Matriz_erro = (T)*np.array([[(xb - pd_x)/100], [(yb - pd_y)/100], [theta_erro]])
-    	y = pseudoA.dot(Matriz_erro)
+        y = pseudoA.dot(Matriz_erro)
         vmax = max(abs(y[0][0]), abs(y[1][0])) # paga a maior velocidade
 
         #como a velocidade foi parametrizada pela maior, K eh a maior velocidade que a roda pode assumir
         K = 100
-    	vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
+        vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
 
         return int(vr), int(vl)
