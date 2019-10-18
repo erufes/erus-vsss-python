@@ -147,3 +147,10 @@ class GridGraph(object):
     def transform2Grid(self, cel):
         x, y = cel
         return y*self.__grade[0] + x
+    
+class WeightedGridGraph(GridGraph):
+    def __init__(self, celulasX, celulasY):
+        GridGraph.__init__(self, celulasX, celulasY)
+
+    def cost(self, cel1, cel2):
+        return 1
