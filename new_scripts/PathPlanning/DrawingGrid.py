@@ -1,3 +1,10 @@
+""" Nome do módulo :        GraphDrawer
+    Ano de criação :        2019/10
+    Descrição do módulo :   Desenha o Grafo em tela
+    Versão :                1.0
+    Pré-requisitos :        GridGraph
+    Membros :               Lorena Bassani
+"""
 from .Graph import GridGraph
 class GridDrawer(object):
     @staticmethod
