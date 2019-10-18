@@ -7,7 +7,7 @@
     Membros :             Lorena Bassani
 """
 from sklearn.linear_model import LinearRegression
-from .geometria import Ponto
+from .Geometria import Ponto
 
 class Agente(object):
 

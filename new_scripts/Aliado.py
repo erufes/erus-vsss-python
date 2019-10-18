@@ -11,7 +11,7 @@
     Membros :               Lorena Bassani
 """
 from .Jogador import Jogador
-from .geometria import Ponto
+from .Geometria import Ponto
 from .ComportamentosJogadores.Factory import Factory
 from .ComportamentosJogadores.IComportamento import IComportamento
 

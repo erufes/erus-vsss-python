@@ -8,7 +8,7 @@
                             ComportamentosJogadores Comportamentos
     Membros :               Lorena Bassani
 """
-from .padroes.Singleton import Singleton
+from .Patterns.Singleton import Singleton
 from .Jogador import Jogador
 from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from .Ball import Ball
