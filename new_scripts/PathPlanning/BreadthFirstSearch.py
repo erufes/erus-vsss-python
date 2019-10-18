@@ -28,9 +28,9 @@ class BreadthFirstSearch(IPathPlanning):
             if current == goal:
                 break
             neighbors = graph.neighbors(current)
-            for prox in neighbors:
-                if prox[0] not in came_from and prox[1] == None:
-                    frontier.put(prox[0])
-                    came_from[prox[0]] = current
+            for prox, occ in neighbors:
+                if prox not in came_from and occ == None:
+                    frontier.put(prox)
+                    came_from[prox] = current
         
         return came_from
