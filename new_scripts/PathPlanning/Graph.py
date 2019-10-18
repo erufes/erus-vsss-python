@@ -41,11 +41,11 @@ class GridGraph(object):
     def neighbors(self, cel):
         nbs = list()
         cels = list()
-        cels.append(cel - self.__grade[1])
-        cels.append(cel + self.__grade[1])
-        if cel % self.__grade[1] > 0:
+        cels.append(cel - self.__grade[0])
+        cels.append(cel + self.__grade[0])
+        if cel % self.__grade[0] > 0:
             cels.append(cel - 1) 
-        if cel % self.__grade[1] < self.__grade[1] - 1:
+        if cel % self.__grade[0] < self.__grade[0] - 1:
             cels.append(cel + 1)
         
         for c in cels:
@@ -57,8 +57,8 @@ class GridGraph(object):
         return nbs
     
     def transform2Cart(self, cel):
-        return ((cel % self.__grade[0]) + 1, (cel // self.__grade[0]) + 1)
+        return (cel % self.__grade[0], cel // self.__grade[0])
 
-    def trasnform2Grid(self, cel):
+    def transform2Grid(self, cel):
         x, y = cel
-        pass
+        return y*self.__grade[0] + x
