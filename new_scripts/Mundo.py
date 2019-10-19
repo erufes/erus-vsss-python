@@ -12,12 +12,11 @@ from .Patterns.Singleton import Singleton
 from .Jogador import Jogador
 from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from .Ball import Ball
-
 class Mundo(Singleton):
-    def __init__(self, ball):
+    def __init__(self):
         Singleton.__init__(self)
         self.__jogadores = {"Team" : list(), "Enemies" : list()}
-        self.__ball = ball
+        self.__ball = Ball.getInstance()
     
     """ Nome da função :     inimigos (getter)
         Intenção da função : Retorna os Inimigos
@@ -64,20 +63,20 @@ class Mundo(Singleton):
         Retorno :            Nenhum
     """
     @goleiro.setter
-    def goleiro(self, playerId):
+    def goleiro(self, jogadorId):
         if not self.goleiro:
-            p = player(playerId)
+            p = self.jogador(jogadorId)
             p.comportamento = COMPORTAMENTOS.GOLEIRO
     
-    """ Nome da função :     player (getter)
+    """ Nome da função :     jogador (getter)
         Intenção da função : Retornar um Jogador de Acordo com seu Id
         Pré-requisitos :     Nenhum
         Efeitos colaterais : Nenhum
         Parâmetros :         int : Id do Jogador
         Retorno :            Jogador : Jogador correspondente ao Id
     """
-    def player(self, playerId):
-        p = list(filter(lambda x: x.id == playerId, self.__jogadores["Team"]))
+    def jogador(self, jogadorId):
+        p = list(filter(lambda x: x.id == jogadorId, self.__jogadores["Team"]))
         if p:
             return p
         return None
