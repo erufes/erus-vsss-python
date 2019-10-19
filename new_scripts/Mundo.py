@@ -12,11 +12,13 @@ from .Patterns.Singleton import Singleton
 from .Jogador import Jogador
 from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from .Ball import Ball
+from .Campo import Campo
+
 class Mundo(Singleton):
     def __init__(self):
-        Singleton.__init__(self)
         self.__jogadores = {"Team" : list(), "Enemies" : list()}
-        self.__ball = Ball.getInstance()
+        self.ball = Ball()
+        self.campo = Campo(celulasX = 15, celulasY = 13)
     
     """ Nome da função :     inimigos (getter)
         Intenção da função : Retorna os Inimigos
