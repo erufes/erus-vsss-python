@@ -15,7 +15,11 @@ from .Ball import Ball
 from .Campo import Campo
 
 class Mundo(Singleton):
-    def __init__(self):
+
+    def __init__(self, *args, **keyargs):
+        pass
+
+    def inicializa(self):
         self.__jogadores = {"Team" : list(), "Enemies" : list()}
         self.ball = Ball()
         self.campo = Campo(celulasX = 15, celulasY = 13)
