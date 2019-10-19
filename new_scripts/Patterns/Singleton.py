@@ -14,6 +14,7 @@ class Singleton(object):
         # Compare class types instead of just looking for None so
         # that subclasses will create their own __single objects
         if classtype != type(classtype.__single):
-            classtype.__single = object.__new__(classtype, *args, **kwargs)
+            classtype.__single = object.__new__(classtype)
+            classtype.__init__(classtype.__single, *args, **kwargs)
         return classtype.__single
 

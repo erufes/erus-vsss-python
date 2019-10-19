@@ -9,9 +9,9 @@
 from .Patterns.Singleton import Singleton
 from .PathPlanning.Graph import WeightedGridGraph
 
-class Campo(Singleton, WeightedGridGraph):
-    def __init__(self, celulasX : int, celulasY : int, dimX = 150, dimY = 130):
-        Singleton.__init__(self)
+
+class Campo(WeightedGridGraph, Singleton):
+    def __init__(self, celulasX, celulasY, dimX = 150, dimY = 130):
         WeightedGridGraph.__init__(self, celulasX, celulasY)
         self.__h = (dimX/(celulasX - 1), dimY/(celulasY - 1))
 
@@ -27,3 +27,7 @@ class Campo(Singleton, WeightedGridGraph):
     def transform2Grid(self, cel):
         # TODO : Redefinir trasnformação
         pass
+
+    def cost(self, start, goal):
+        # TODO : Redefinir custo para variar com a proximidade a um obstáculo
+        return WeightedGridGraph.cost(self, start, goal)
