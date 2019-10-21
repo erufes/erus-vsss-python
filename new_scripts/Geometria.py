@@ -68,4 +68,12 @@ class Ponto(object):
     """
     def distancia(self, outro):
         return m.sqrt((self.x - outro.x)**2 + (self.y - outro.y)**2)
-    
+
+def to180range(angle):
+    M_PI = 3.14159
+    angle = m.fmod(angle, 2 * M_PI)
+    if (angle < - M_PI):
+        angle = angle + 2 * M_PI
+    elif (angle > M_PI):
+        angle = angle - 2 * M_PI
+    return angle
