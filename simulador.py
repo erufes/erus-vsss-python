@@ -16,6 +16,7 @@ from scripts.PlayerDefesa import PlayerDefesa as df
 from scripts.Ball import Ball
 from scripts.Player import Player
 from scripts.Agent import Agent
+from new_scripts.Controle.ControleTrajeto.ControleSiegwart import ControleSiegwart
 from vsscorepy.communications.command_sender import CommandSender
 from vsscorepy.communications.debug_sender import DebugSender
 from vsscorepy.communications.state_receiver import StateReceiver
@@ -25,6 +26,7 @@ from vsscorepy.domain.point import Point
 from vsscorepy.domain.pose import Pose
 from vsscorepy.domain.debug import Debug
 from enum import Enum
+import math as m
 
 class Team(Enum):
     BLUE = 1
@@ -60,6 +62,7 @@ mundo.add_def_player(team[1])
 mundo.add_gk_player(team[2])
 enemie = [Player(), Player(), Player()]
 mundo.jogadores["Enemies"].extend(enemie)
+controle = ControleSiegwart()
 while True:
     state = k.recebe_estado()
     mundo.ball.update_position((state.ball.x, state.ball.y))
@@ -71,6 +74,10 @@ while True:
     
     listaComando = list()
     for p in team:
-        velr, vell = p.controle(mundo)
+        ox, oy = p.chuta(mundo)
+        objetivo = (ox, oy, m.atan2(oy, ox))
+        ax, ay = p.getxy()
+        atual = (ax, ay, p.get_theta())
+        vell, velr = controle.controle(actualValue = atual, objective = objetivo, speed = 60)
         listaComando.append(WheelsCommand(vell, velr))
     k.envia_comando(listaComando[0], listaComando[1], listaComando[2])

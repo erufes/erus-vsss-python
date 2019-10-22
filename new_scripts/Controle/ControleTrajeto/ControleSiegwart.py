@@ -2,7 +2,7 @@ from .IControleTrajeto import IcontroleTrajeto
 from ...Geometria import Ponto, to180range
 import math as m
 
-class controleSiegwart(IcontroleTrajeto):
+class ControleSiegwart(IcontroleTrajeto):
 
     __kRho = 1.85
     __kAlpha = 9.7
@@ -13,6 +13,7 @@ class controleSiegwart(IcontroleTrajeto):
         xa, ya, ta = actualValue
         xo, yo, to = objective
 
+        ta = to180range(ta*ControleSiegwart.__PI/180)
         rho = Ponto(xa, ya).distancia(Ponto(xo, yo))
         lamb = m.atan2(yo - ya, xo - xa)
 
@@ -22,8 +23,8 @@ class controleSiegwart(IcontroleTrajeto):
         alpha = to180range(lamb - ta)
         beta = to - lamb
 
-        linearSpeed = - controleSiegwart.__kRho*rho
-        angularSpeed = controleSiegwart.__kAlpha*alpha + controleSiegwart.__kBeta*beta
+        linearSpeed = - ControleSiegwart.__kRho*rho
+        angularSpeed = ControleSiegwart.__kAlpha*alpha + ControleSiegwart.__kBeta*beta
 
         scale = speed/linearSpeed
         linearSpeed *= scale
@@ -33,7 +34,7 @@ class controleSiegwart(IcontroleTrajeto):
             linearSpeed = 0
             angularSpeed *= 0.4
         
-        if m.fabs(alpha) > 0.5*controleSiegwart.__PI:
+        if m.fabs(alpha) > 0.5*ControleSiegwart.__PI:
             linearSpeed = - linearSpeed
         
         result = ((linearSpeed - angularSpeed*3.35)/2, (linearSpeed + angularSpeed*3.35)/2)
