@@ -14,7 +14,7 @@ class PlayerAtaque(Player):
         distancia_pra_sair_da_parede = 3.5
 
         ball = world.get_ball()
-        xb, yb = ball.predict_ball_method_ofensive(self)
+        xb, yb = ball.predict_ball_method_ofensive(self, world)
         xg, yg = world.get_enemy_goal()
 
         adiciona_ponto(int(xb), int(yb), 127, 255, 60, 'bola')

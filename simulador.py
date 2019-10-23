@@ -1,21 +1,12 @@
 """ VSSS-o-Primeiro
     Nome do módulo :        simulador
-    Ano de criação :        2019/01  
-    Descrição do módulo:    Modulo para rodar o simulador no código do VSSS (primeira versão)
-    Versão:                 1.0
+    Ano de criação :        2019/10  
+    Descrição do módulo:    Modulo para rodar o simulador no código do VSSS (segunda versão)
+    Versão:                 2.0
     Pré-requisitos :        vsscorepy
     Membros:                Lorena Bassani
     
 """
-import vsscorepy as simulador
-import scripts as vsss_erus
-from scripts.World import World
-from scripts.Goalkeeper import Goalkeeper as gk
-from scripts.PlayerAtaque import PlayerAtaque as fw
-from scripts.PlayerDefesa import PlayerDefesa as df
-from scripts.Ball import Ball
-from scripts.Player import Player
-from scripts.Agent import Agent
 from vsscorepy.communications.command_sender import CommandSender
 from vsscorepy.communications.debug_sender import DebugSender
 from vsscorepy.communications.state_receiver import StateReceiver
@@ -24,7 +15,14 @@ from vsscorepy.domain.wheels_command import WheelsCommand
 from vsscorepy.domain.point import Point
 from vsscorepy.domain.pose import Pose
 from vsscorepy.domain.debug import Debug
+
+from new_scripts.Mundo import Mundo
+from new_scripts.Inimigo import Inimigo
+from new_scripts.Aliado import Aliado
+from new_scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
+
 from enum import Enum
+import math as m
 
 class Team(Enum):
     BLUE = 1
@@ -53,24 +51,22 @@ class kernel():
 
 
 k = kernel()
-mundo = World()
-team = [fw(), df(), gk()]
-mundo.add_atk_player(team[0])
-mundo.add_def_player(team[1])
-mundo.add_gk_player(team[2])
-enemie = [Player(), Player(), Player()]
-mundo.jogadores["Enemies"].extend(enemie)
+mundo = Mundo()
+time = [Aliado(0, comportamento = COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamento = COMPORTAMENTOS.ATACANTE), Aliado(2)]
+inimigo = [Inimigo(3), Inimigo(4), Inimigo(5)]
+mundo.inimigos = inimigo
+mundo.time = time
 while True:
     state = k.recebe_estado()
-    mundo.ball.update_position((state.ball.x, state.ball.y))
-    for i in range(0, 2):
+    mundo.ball.posicao = (state.ball.x, state.ball.y)
+    mundo.ball.theta = m.atan2(state.ball.speed_y, state.ball.speed_x)
+    for i in range(0, len(time)):
         r = state.team_yellow[i]
         e = state.team_blue[i]
-        team[i].set_position_xyt(r.x, r.y, r.angle)
-        enemie[i].set_position_xyt(e.x, e.y, e.angle)
-    
-    listaComando = list()
-    for p in team:
-        velr, vell = p.controle(mundo)
-        listaComando.append(WheelsCommand(vell, velr))
-    k.envia_comando(listaComando[0], listaComando[1], listaComando[2])
+        time[i].posicao = (r.x, r.y)
+        time[i].theta = r.angle
+        inimigo[i].posicao = (e.x, e.y)
+        inimigo[i].theta = (e.angle)
+    listaComando = mundo.control()
+    listaComando = list(map(lambda vel: WheelsCommand(vel[0], vel[1]), listaComando))
+    k.envia_comando(listaComando[0], listaComando[1], listaComando[2])    

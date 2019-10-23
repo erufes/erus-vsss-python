@@ -124,3 +124,12 @@ class World:
         print (self.FIELD_TOP)
         print (self.FIELD_BOTTOM)
         print ("ola1")
+
+    def campo_potencial_g(self, xr, yr, medo_de_bater_na_parede):
+        #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
+        dx = xr - self.right_goal[0]
+        dy = yr - self.right_goal[1]
+        ro = math.sqrt(dx**2+dy**2)
+        if ro < 100:
+            return 0
+        return (math.tanh((xr - self.right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0

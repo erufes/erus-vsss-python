@@ -152,5 +152,13 @@ class WeightedGridGraph(GridGraph):
     def __init__(self, celulasX, celulasY):
         GridGraph.__init__(self, celulasX, celulasY)
 
-    def cost(self, cel1, cel2):
+    """ Nome da função :        cost
+        Intenção da função :    Calcula o custo de se mover de start até goal
+        Pré-requisitos :        Nenhum
+        Efeitos colaterais :    Nenhum
+        Parâmetros :            int : Celula de Inicio
+                                int : Celula de Objetivo
+        Retorno :               int : Custo de movimentação pela grade
+    """
+    def cost(self, start, goal):
         return 1

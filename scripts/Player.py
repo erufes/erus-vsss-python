@@ -145,7 +145,7 @@ class Player(Agent):
         xr, yr = self.getxy()
         xg, yg = world.get_right_goal()
         my_inf = 1e5
-        ofensividade = world.campo_potencial(self)
+        ofensividade = self.campo_potencial(world)
 
         d_East = abs(xb - world.FIELD_RIGHT)
         d_West = abs(xb - world.FIELD_LEFT)
@@ -167,7 +167,7 @@ class Player(Agent):
             pto_inf = ((world.FIELD_RIGHT + world.FIELD_LEFT)/2, my_inf)
             d_Best = d_South
 
-        value = world.campo_potencial(self)
+        value = self.campo_potencial(world)
 
 
         grad_x = (world.campo_potencial_g(xb + 10.0, yb, self.medo_de_bater_na_parede) - value )
@@ -297,12 +297,12 @@ class Player(Agent):
 
     def campo_potencial(self, mundo):
         #return (math.tanh((xr - right_upper[0])**2/medo_de_bater_na_parede**2)* math.tanh((xr - left_upper[0])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_lower[1])**2/medo_de_bater_na_parede**2) * math.tanh((yr - right_upper[1])**2/medo_de_bater_na_parede**2))/4.0
-        xr, yr = mundo.getxy()
+        xr, yr = self.getxy()
         dx = xr - mundo.left_goal[0]
         dy = yr - mundo.left_goal[1]
 
         ro = math.sqrt(dx**2+dy**2)
-        ret = (math.tanh((xr - self.right_upper[0])**2/self.medo_de_bater_na_parede**2)* math.tanh((xr - self.left_upper[0])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_lower[1])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - self.right_upper[1])**2/player.medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
+        ret = (math.tanh((xr - mundo.right_upper[0])**2/self.medo_de_bater_na_parede**2)* math.tanh((xr - mundo.left_upper[0])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - mundo.right_lower[1])**2/self.medo_de_bater_na_parede**2) * math.tanh((yr - mundo.right_upper[1])**2/self.medo_de_bater_na_parede**2))/(1-math.exp(-(ro**2)/8000.0))/4.0
         if ro < 100:
             ret = 0
         return ret

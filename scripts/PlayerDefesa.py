@@ -61,8 +61,8 @@ class PlayerDefesa(Player):
         ym = yg - ygi#calculo do meio de campo Y
 		
         #calculo da distancia da bola pro meio : INICIO
-        vec_ball_meio_x = xb - xmeioRicardo
-        vec_ball_meio_y = yb - ymeioRicardo
+        vec_ball_meio_x = xb
+        vec_ball_meio_y = yb
         norm_vec_ball_meio = math.sqrt(vec_ball_meio_x**2 + vec_ball_meio_y**2)#distancia da bola pro meio
         #calculo da distancia da bola pro meio : FIM
 		##########

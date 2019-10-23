@@ -17,8 +17,8 @@ from .ComportamentosJogadores.IComportamento import IComportamento
 
 class Aliado(Jogador):
 
-    def __init__(self, idJ, ponto = Ponto(), comportamento = COMPORTAMENTOS.DEFESA):
-        Jogador.__init__(id = idJ, ponto = ponto)
+    def __init__(self, idJ, ponto = Ponto(), comportamento = None):
+        Jogador.__init__(self, idJ = idJ, ponto = ponto)
         self.comportamento = comportamento
     
     """ Nome da função :     comportamento (getter)
@@ -53,3 +53,6 @@ class Aliado(Jogador):
     """
     def isInimigo(self):
         return False
+
+    def definirObjetivo(self, mundo):
+        return self.__comportamento.definirObjetivo(self, mundo)
