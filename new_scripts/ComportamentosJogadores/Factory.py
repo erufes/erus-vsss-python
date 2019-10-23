@@ -12,6 +12,7 @@ from .Comportamentos import COMPORTAMENTOS
 from .ComportamentoGoleiro import ComportamentoGoleiro
 from .ComportamentoDefesa import ComportamentoDefesa
 from .ComportamentoAtacante import ComportamentoAtacante
+from .ComportamentoLissajous import ComportamentoLissajous
 
 class Factory(object):
 
@@ -28,5 +29,7 @@ class Factory(object):
             return ComportamentoGoleiro()
         elif comportamento == COMPORTAMENTOS.ATACANTE:
             return ComportamentoAtacante()
-        else:
+        elif comportamento == COMPORTAMENTOS.DEFESA:
             return ComportamentoDefesa()
+        else:
+            return ComportamentoLissajous()
