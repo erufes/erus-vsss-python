@@ -8,11 +8,13 @@
 """
 from sklearn.linear_model import LinearRegression
 from .Geometria import Ponto
+import math as m
 
 class Agente(object):
 
     def __init__(self, ponto = Ponto()):
         self.__ponto = ponto
+        self.__theta = 0
         self.__posicoesAntigas = list()
     
     @property
@@ -36,6 +38,18 @@ class Agente(object):
     @property
     def x(self):
         return self.ponto.x
+
+    @property
+    def y(self):
+        return self.ponto.y
+    
+    @property
+    def theta(self):
+        return self.__theta
+    
+    @theta.setter
+    def theta(self, value):
+        self.__theta = value
     
     @property
     def posicoesAntigas(self):

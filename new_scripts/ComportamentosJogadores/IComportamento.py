@@ -6,4 +6,5 @@
     Membros :               Lorena Bassani
 """
 class IComportamento(object):
-    pass
+    def definirObjetivo(self, jogador, mundo):
+        raise NotImplementedError

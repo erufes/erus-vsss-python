@@ -38,7 +38,7 @@ class Ball(Agent):
             cy_ball_predic = self.gety() + vy_ball * k_pred * norm_v_ball
         return cx_ball_predic, cy_ball_predic
 
-    def predict_ball_method_ofensive(self, player):
+    def predict_ball_method_ofensive(self, player, mundo):
         mx = sum(self.x_old)/5.0
         my = sum(self.y_old)/5.0
 
@@ -57,7 +57,7 @@ class Ball(Agent):
         dif_y = self.gety()-player.gety()
         ro_aux = math.sqrt(dif_x**2 + dif_y**2)
 
-        c_magic = self.predicao_adaptativa(self.x)
+        c_magic = self.predicao_adaptativa(self.x, mundo)
         k_pred = c_magic*ro_aux/85.0
 
         cx_ball_predic = self.getx() + vx_ball * k_pred * norm_v_ball
