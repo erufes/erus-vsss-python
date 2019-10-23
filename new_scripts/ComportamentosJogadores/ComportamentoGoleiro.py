@@ -1,8 +1,13 @@
 """ Nome do módulo :        ComportamentoGoleiro
     Ano de criação :        2019/10
     Descrição do módulo :   Comportamento de Goleiro para Jogadores
-    Versão :                1.0
+    Versão :                2.0
     Pré-requisitos :        IComportamento
+                            Geometria
+                            Mundo, Arena, Lado
+                            Ball
+                            Jogador
+                            math
     Membros :               Lorena Bassani
 """
 from .IComportamento import IComportamento
@@ -24,7 +29,7 @@ class ComportamentoGoleiro(IComportamento):
 		"""
         resp = Ponto()
         ball = mundo.ball
-        bx, by, bt = ball.posicao
+        bx, _, bt = ball.posicao
         """ a² = b² + c² - 2bc*cos α
 		    a² - b² - c² = -2bc* cos α
 		    (b² + c² - a²)/2bc = cos α
