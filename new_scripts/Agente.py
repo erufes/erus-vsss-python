@@ -8,6 +8,7 @@
 """
 from sklearn.linear_model import LinearRegression
 from .Geometria import Ponto
+from .Campo import Campo
 import math as m
 
 class Agente(object):
@@ -23,8 +24,10 @@ class Agente(object):
     
     @ponto.setter
     def ponto(self, value):
-        self._changePosition()
+        self.__changePosition()
         self.__ponto = value
+        c = Campo()
+        c.occupy(c.transform2Grid((value.x, value.y)), self)
     
     @property
     def posicao(self):
@@ -32,8 +35,10 @@ class Agente(object):
     
     @posicao.setter
     def posicao(self, value):
-        self._changePosition()
+        self.__changePosition()
         self.ponto.posicao = value
+        c = Campo()
+        c.occupy(c.transform2Grid(value), self)
     
     @property
     def x(self):
@@ -55,10 +60,12 @@ class Agente(object):
     def posicoesAntigas(self):
         return self.__posicoesAntigas.copy()
     
-    def _changePosition(self):
-        if(len(self.__posicoesAntigas) >= 5):
+    def __changePosition(self):
+        if len(self.__posicoesAntigas) >= 5:
             self.__posicoesAntigas.pop(0)
         self.__posicoesAntigas.append(Ponto(self.ponto.x, self.ponto.y))
+        c = Campo()
+        c.release(c.transform2Grid(self.posicao))
 
     def predicaoAdaptativa(self):
         pass

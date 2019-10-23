@@ -31,7 +31,8 @@ class Campo(WeightedGridGraph, Singleton):
 
     def transform2Grid(self, cel):
         # TODO : Redefinir trasnformação
-        pass
+        x, y = cel
+        return WeightedGridGraph.transform2Grid(self, (x//self.__h[0], y//self.__h[1]))
 
     def cost(self, start, goal):
         # TODO : Redefinir custo para variar com a proximidade a um obstáculo

@@ -16,7 +16,7 @@ import math as m
 
 class ComportamentoLissajous(IComportamento):
     __PI = 3.14159
-    def __init__(self, A = 30, B = 100, a = 3, b = 4, sig = (ComportamentoLissajous.__PI/2)):
+    def __init__(self, A = 30, B = 100, a = 3, b = 4, sig = (__PI/2)):
         IComportamento.__init__(self)
         self.A = A
         self.B = B

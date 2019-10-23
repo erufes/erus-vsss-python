@@ -23,7 +23,7 @@ class ComportamentoAtacante(IComportamento):
 
     def definirObjetivo(self, jogador : Jogador, mundo : Mundo):
         ball = mundo.ball
-        if ball.distancia(jogador) > 30:
+        if ball.ponto.distancia(jogador.ponto) > 30:
             x, y = ball.posicao
             # Se posicionar antes da bola
             if mundo.lado == Lado.DIREITO:
@@ -31,13 +31,13 @@ class ComportamentoAtacante(IComportamento):
             else:
                 x -= 3.35
             # Se a bola estiver acima do meio de campo, se posicionar acima dela
-            if y < Arena.marcacoes["Meio"][1]:
+            if y < Arena.marcacoes["Meio"].y:
                 y -= 3.35
             else:
                 y += 3.35
             return Ponto(x, y)
-        elif ball.distancia > 5:
+        elif ball.ponto.distancia(jogador.ponto) > 5:
             return ball.ponto
         else:
-            x, y = Arena.golEsquerdo["Meio"] if mundo.lado == Lado.ESQUERDO else Arena.golDireito["Meio"]
-            return Ponto(x, y)
+            resp = Arena.golEsquerdo["Meio"] if mundo.lado == Lado.ESQUERDO else Arena.golDireito["Meio"]
+            return resp

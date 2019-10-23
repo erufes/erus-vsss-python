@@ -12,12 +12,12 @@
 """
 from .Jogador import Jogador
 from .Geometria import Ponto
-from .ComportamentosJogadores.Factory import Factory, COMPORTAMENTOS
+from .ComportamentosJogadores.Factory import Factory
 from .ComportamentosJogadores.IComportamento import IComportamento
 
 class Aliado(Jogador):
 
-    def __init__(self, idJ, ponto = Ponto(), comportamento = COMPORTAMENTOS.DEFESA):
+    def __init__(self, idJ, ponto = Ponto(), comportamento = None):
         Jogador.__init__(self, idJ = idJ, ponto = ponto)
         self.comportamento = comportamento
     
