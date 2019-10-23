@@ -3,9 +3,19 @@
     Descrição do módulo :   Comportamento de Atacante para Jogadores
     Versão :                1.0
     Pré-requisitos :        IComportamento
+                            Geometria
+                            Mundo, Arena, Lado
+                            Jogador
+                            Ball
+                            math
     Membros :               Lorena Bassani
 """
 from .IComportamento import IComportamento
+from ..Geometria import Ponto
+from ..Mundo import Mundo, Arena, Lado
+from ..Jogador import Jogador
+from ..Ball import Ball
+import math as m
 
 class ComportamentoAtacante(IComportamento):
     def __init__(self):
