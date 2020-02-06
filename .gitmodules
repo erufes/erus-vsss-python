@@ -1,0 +1,12 @@
+[submodule "vss-simulator/VSS-Core"]
+	path = vss-simulator/VSS-Core
+	url = https://github.com/erufes/VSS-Core.git
+[submodule "vss-simulator/VSS-SampleCpp"]
+	path = vss-simulator/VSS-SampleCpp
+	url = https://github.com/erufes/VSS-SampleCpp.git
+[submodule "vss-simulator/VSS-Simulator"]
+	path = vss-simulator/VSS-Simulator
+	url = https://github.com/erufes/VSS-Simulator.git
+[submodule "vss-simulator/VSS-Viewer"]
+	path = vss-simulator/VSS-Viewer
+	url = https://github.com/erufes/VSS-Viewer.git
