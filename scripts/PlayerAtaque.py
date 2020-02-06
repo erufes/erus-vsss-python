@@ -1,18 +1,20 @@
-import Player
+from .Player import Player
 import math
-import World
+from .World import World
 import numpy as np
 import cv2
-from lista_marcacoes import *
+from .lista_marcacoes import *
 
-class PlayerAtaque(Player.Player):
+class PlayerAtaque(Player):
+    def __init__(self):
+        Player.__init__(self)
+
     def chuta(self, world):
 		#dados
         distancia_pra_sair_da_parede = 3.5
 
         ball = world.get_ball()
-        #xb,yb = ball.getx(),ball.gety()
-        xb, yb = ball.predict_ball_method_ofensive(self)
+        xb, yb = ball.predict_ball_method_ofensive(self, world)
         xg, yg = world.get_enemy_goal()
 
         adiciona_ponto(int(xb), int(yb), 127, 255, 60, 'bola')
@@ -41,8 +43,7 @@ class PlayerAtaque(Player.Player):
         if self.getx() > world.FIELD_RIGHT and xb < self.getx(): # nao invadir o campo do defensor
             return self.getx() - 30, self.gety()
 
-        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:
-            #print "aqui"         
+        if yb > world.FIELD_BOTTOM - distancia_pra_sair_da_parede or yb < world.FIELD_TOP + distancia_pra_sair_da_parede or xb > world.FIELD_RIGHT -distancia_pra_sair_da_parede or xb < world.FIELD_LEFT + distancia_pra_sair_da_parede:  
             if self.gety() > world.FIELD_BOTTOM - distancia_pra_sair_da_parede and (theta_robo > 30 and theta_robo < 150) :
                 return self.getx(),self.gety() -15
             elif self.gety() < world.FIELD_TOP + distancia_pra_sair_da_parede and (theta_robo > -150 and theta_robo < 30):
@@ -65,19 +66,13 @@ class PlayerAtaque(Player.Player):
             b = world.FIELD_TOP + 15
             a = self.getx()
             return a,b
-        #if self.getx() > world.FIELD_RIGHT -distancia_pra_sair_da_parede:
-            #a = world.FIELD_RIGHT - 15
-            #b = self.gety()
-            #return a,b
         if self.getx() < world.FIELD_LEFT + distancia_pra_sair_da_parede:
             a = world.FIELD_LEFT + 15
             b = self.gety()
             return a,b
-        #acaba sair da parede
-        #a = a -5
 
 		#nao pader no goleiro
-        p = world.get_def_player()
+        p = world.get_def_player()[0]
         x,y = p.getx(),p.gety()
 
         adiciona_ponto(int(xg), int(yg+20),255,255,2555,'xg+20, yg')
@@ -88,9 +83,7 @@ class PlayerAtaque(Player.Player):
             x,y = self.getx()+5,self.gety() 
             return int(x),int(y)
         return xb,yb
-		#acaba aki
 		
-        #return a,b
         #Quando o jogador se aproxima muito da bola, o setpoint deve ficar atras da bola, garantindo que ele chute a bola
         sensibility = 1.5
         distance_to_ball = math.sqrt((xb-self.getx())**2 + (yb-self.gety())**2)
@@ -106,30 +99,10 @@ class PlayerAtaque(Player.Player):
                 if(yb < self.gety() and self.gety() > yg+20 ):#parte de baixo do campo
                     if(math.atan2(self.gety() - (yg+20),(self.getx()-xg)) - math.atan2(self.gety() -(yg-20),(self.getx()-xg)) > math.atan2((self.getx() - xb),(self.gety() - yb))):
                         return (xb + sensibility*(xb-self.getx())), (yb+ sensibility*(yb - self.gety()))
-            #if(yb < yg -20 and yb < self.gety()):
-                #return a , b-15
-            #if(yb > yg +20 and yb > self.gety()):
-                #return a, b+15
-        #return a, b
-
-        '''cm = (self.getx() + 5) 
-        raio = ((self.getx() - xb)**2 + (self.gety() - yb)**2)/2
-        x_x0 = cm - (self.getx() + xb)/2
-        y0 = (self.gety() + yb)/2
-        c = x_x0**2 + y0**2-raio
-        if(yb < self.gety()):
-            y_final = y0 + (abs(y0**2 - c))**0.5
-        else:
-            y_final = y0 - (abs(y0**2 - c))**0.5
-        #return a, b
-        '''
 		#pega o teta para ir na frente da bola
         cm = math.pi/6
         raio = ((abs((self.getx() - xb)**2 + (self.gety() - yb)**2))**0.5)/2
-        #if(not(self.gety() > yb)):
-        #y_final = (self.gety() + yb)/2 + raio*math.sin(math.pi)
-        #x_final = (self.getx() + xb)/2 + raio*math.cos(math.pi) 
-        #else:
+
         if(self.gety() > yb):
             teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
         else:
@@ -147,7 +120,6 @@ class PlayerAtaque(Player.Player):
                 return x_final , y_final
         elif(self.getx() < xb and yb > self.gety() and yb > yg+20):
             teta = math.pi/2 +math.atan2((xb - self.getx()),yb - self.gety()) 
-            #teta = -math.atan2((xb - self.getx()),yb - self.gety()) -cm # roda pra cima
             y_final = (self.gety() + yb)/2 + raio*math.sin(teta)
             x_final = (self.getx() + xb)/2 + raio*math.cos(teta)
             if(y_final > world.FIELD_BOTTOM):
@@ -196,35 +168,16 @@ class PlayerAtaque(Player.Player):
 
     def controle(self, world):
 		#xb e yb e a posicao onde o jogador atacante vai tentar ir
-        pd = world.get_atk_player() #pega o atacante
+        pd = self #pega o atacante
         xfront , yfront = pd.get_front()  #unidade das coordenadas eh cm
         xback , yback = pd.get_back()  #unidade das coordenadas eh cm
         pd_x , pd_y = pd.getx() , pd.gety()  #unidade das coordenadas eh cm pega a posicao do atacante
         xb, yb = world.get_ball().getxy() #unidade das coordenadas eh cm // pego a bola // usada para ver se o atacante vai direto para a bola
-        #xb, yb = self.chuta(world) #Pega posicao para onde o atacante vai
-        '''
-		arq = open("posAtk.csv","a")
-        arq.write(str(pd_x) + ", " + str(pd_y))
-        arq.write("\n")
-        arq.close()
-        
-        arq = open("ball.csv","a")
-        arq.write(str(xb) + ", " + str(yb))
-        arq.write("\n")
-        arq.close()
-        '''
+
         adiciona_ponto(int(pd_x),int(pd_y), 128, 200, 126, 'atacante',int(xb), int(yb)) # verde escuro
-
-
-
-
-        #xb, yb = world.get_ball().predict_ball_method(self) #unidade das coordenadas eh cm
-        #adiciona_ponto(int(xb), int(yb), 35, 100, 215, '')
-
 
         theta_jog = self.get_theta()
         theta_ball = math.atan2(yb,xb) # unidade rad
-        #theta_ball = self.kalman(world)# funcao nao completa, nao chamar que da erro!
         theta_gol = math.atan2(236,515)
 
        
@@ -285,15 +238,6 @@ class PlayerAtaque(Player.Player):
         self.set_xe_old(errox_atual)
         self.set_xe_old(erroy_atual)
         self.set_xe_old(errot_atual)
-
-        '''print("Matriz de Erro\n")
-        print(Matriz_erro)
-        print("Controlador\n")
-        print(controladorPID)
-        Matriz_erro = Matriz_erro*controladorPID
-        print("Final\n")
-        print(Matriz_erro)'''
-        
 
         y = pseudoA.dot(Matriz_erro)
         vmax = max(abs(y[0][0]), abs(y[1][0])) # pega a maior velocidade
