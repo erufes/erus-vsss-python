@@ -16,10 +16,10 @@ from vsscorepy.domain.point import Point
 from vsscorepy.domain.pose import Pose
 from vsscorepy.domain.debug import Debug
 
-from new_scripts.Mundo import Mundo
-from new_scripts.Inimigo import Inimigo
-from new_scripts.Aliado import Aliado
-from new_scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
+from scripts.Mundo import Mundo
+from scripts.Inimigo import Inimigo
+from scripts.Aliado import Aliado
+from scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
 
 from enum import Enum
 import math as m
@@ -56,17 +56,3 @@ time = [Aliado(0, comportamento = COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamen
 inimigo = [Inimigo(3), Inimigo(4), Inimigo(5)]
 mundo.inimigos = inimigo
 mundo.time = time
-while True:
-    state = k.recebe_estado()
-    mundo.ball.posicao = (state.ball.x, state.ball.y)
-    mundo.ball.theta = m.atan2(state.ball.speed_y, state.ball.speed_x)
-    for i in range(0, len(time)):
-        r = state.team_yellow[i]
-        e = state.team_blue[i]
-        time[i].posicao = (r.x, r.y)
-        time[i].theta = r.angle
-        inimigo[i].posicao = (e.x, e.y)
-        inimigo[i].theta = (e.angle)
-    listaComando = mundo.control()
-    listaComando = list(map(lambda vel: WheelsCommand(vel[0], vel[1]), listaComando))
-    k.envia_comando(listaComando[0], listaComando[1], listaComando[2])    
