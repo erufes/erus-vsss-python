@@ -12,12 +12,9 @@ from .Patterns.Singleton import Singleton
 from .Geometria import Ponto
 from .Jogador import Jogador
 from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+from ControlePartida import Partida, ControladorTime
 from .Ball import Ball
 from .Campo import Campo
-from .Controle.ControleTrajeto.IControleTrajeto import IcontroleTrajeto
-from .Controle.ControleTrajeto.ControleSiegwart import ControleSiegwart
-from .PathPlanning.IPathPlanning import IPathPlanning
-from .PathPlanning.AStar import AStar
 from enum import Enum
 import math as m
 
@@ -25,7 +22,7 @@ class Lado(Enum):
     ESQUERDO = 0
     DIREITO = 1
 
-class Arena(object):
+class ArenaVSSSDK(object):
     cantoSuperior = {   "Direito"   : Ponto(170, 0),
                         "Esquerdo"  : Ponto(0, 0)
                     }
@@ -45,19 +42,21 @@ class Arena(object):
     metricas = {        "Tamanho "  : (170, 130),
                         "Gol"       : (10, 40)
                 }
+    
+    def __init__(self, campo = Campo(celulasX = 15, celulasY = 13), homeTeamSide = Lado.ESQUERDO):
+        self.campo = campo
+        self.homeTeamSide = homeTeamSide
+
 
 class Mundo(Singleton):
 
     def __init__(self, *args, **keyargs):
         pass
 
-    def inicializa(self, controladorTrajeto = ControleSiegwart(), pathPlanning = AStar, lado = Lado.DIREITO):
-        self.__jogadores = {"Team" : list(), "Enemies" : list()}
+    def inicializa(self, arena, homeTeam = list(), enemies = list()):
+        self.__jogadores = {"HomeTeam" : list(), "Enemies" : list()}
         self.ball = Ball()
-        self.campo = Campo(celulasX = 15, celulasY = 13)
-        self.pathPlanning = AStar
-        self.controladorTrajeto = controladorTrajeto
-        self.lado = lado
+        self.arena = arena
     
     """ Nome da função :     inimigos (getter)
         Intenção da função : Retorna os Inimigos
@@ -82,75 +81,17 @@ class Mundo(Singleton):
         self.__jogadores["Enemies"].clear()
         self.__jogadores["Enemies"].extend(inimigos)
     
-    """ Nome da função :     goleiro (getter)
-        Intenção da função : Retorna o Jogador Goleiro
-        Pré-requisitos :     Nenhum
-        Efeitos colaterais : Nenhum
-        Parâmetros :         Nenhum
-        Retorno :            Aliado : Jogador com Comportamento Goleiro
-    """
-    @property
-    def goleiro(self):
-        g = list(filter(lambda x: x.comportamento == COMPORTAMENTOS.GOLEIRO, self.__jogadores["Team"]))
-        if g: 
-            return g[0]
-        return None
-    
-    """ Nome da função :     goleiro (setter)
-        Intenção da função : Alterar o Goleiro
-        Pré-requisitos :     Não ter um Goleiro previamente
-        Efeitos colaterais : Define um novo goleiro
-        Parâmetros :         int : Id do Jogador para alterar
-        Retorno :            Nenhum
-    """
-    @goleiro.setter
-    def goleiro(self, jogadorId):
-        if not self.goleiro:
-            p = self.jogador(jogadorId)
-            p.comportamento = COMPORTAMENTOS.GOLEIRO
-    
-    """ Nome da função :     jogador (getter)
-        Intenção da função : Retornar um Jogador de Acordo com seu Id
-        Pré-requisitos :     Nenhum
-        Efeitos colaterais : Nenhum
-        Parâmetros :         int : Id do Jogador
-        Retorno :            Jogador : Jogador correspondente ao Id
-    """
-    def jogador(self, jogadorId):
-        p = list(filter(lambda x: x.id == jogadorId, self.__jogadores["Team"]))
-        if p:
-            return p
-        return None
-    
     @property
     def time(self):
-        return self.__jogadores["Team"]
+        return self.__jogadores["HomeTeam"]
     
     @time.setter
     def time(self, newTime):
-        self.__jogadores["Team"].clear()
-        self.__jogadores["Team"].extend(newTime)
+        self.__jogadores["HomeTeam"].clear()
+        self.__jogadores["HomeTeam"].extend(newTime)
 
     def control(self):
-        self.__defineFunction()
-        controle = list()
-        for p in self.__jogadores["Team"]:
-            # Primeiro passo: Definir Objetivo
-            goal = p.definirObjetivo(self).posicao
-            start = p.posicao
-            # Segundo passo: Planejar Caminho
-            # path = self.pathPlanning.PathPlan(self.campo, self.campo.transform2Grid(start), self.campo.transform2Grid(goal))
-            # path = self.pathPlanning.reconstructPath(path, self.campo.transform2Grid(start), self.campo.transform2Grid(goal))
-            # Terceiro passo: Seguir Caminho
-            # gx, gy = self.campo.transform2Cart(path.pop(0))
-            gx, gy = goal
-            sx, sy = start
-            gt = m.acos((gx*sx + gy*sy)/(m.sqrt(gx**2 + gy**2)*m.sqrt(sx**2 + sy**2)))
-            goal = gx, gy, gt
-            start = sx, sy, p.theta
-            vel = self.controladorTrajeto.controle(actualValue = start, objective = goal, speed = 100)
-            controle.append(vel)
-        return controle
+        pass
 
     def __defineFunction(self):
         pass
