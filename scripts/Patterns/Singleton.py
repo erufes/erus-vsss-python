@@ -17,7 +17,7 @@ class Singleton(object):
             classtype.__single = object.__new__(classtype)
             classtype.inicializa(classtype.__single, *args, **kwargs)
         return classtype.__single
-    
+
     def inicializa(self, *args, **keyargs):
         raise NotImplementedError
 

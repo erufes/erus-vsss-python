@@ -20,7 +20,7 @@ class Aliado(Jogador):
     def __init__(self, idJ, ponto = Ponto(), comportamento = None):
         Jogador.__init__(self, idJ = idJ, ponto = ponto)
         self.comportamento = comportamento
-    
+
     """ Nome da função :     comportamento (getter)
         Intenção da função : Retornar qual o comportamento atual do Jogador
         Pré-requisitos :     Nenhum
@@ -31,7 +31,7 @@ class Aliado(Jogador):
     @property
     def comportamento(self):
         return self.__comportamentoId
-    
+
     """ Nome da função :     comportamento (setter)
         Intenção da função : Modificar o comportamento atual do Jogador
         Pré-requisitos :     Nenhum

@@ -42,7 +42,7 @@ class ArenaVSSSDK(object):
     metricas = {        "Tamanho "  : (170, 130),
                         "Gol"       : (10, 40)
                 }
-    
+
     def __init__(self, campo = Campo(celulasX = 15, celulasY = 13), homeTeamSide = Lado.ESQUERDO):
         self.campo = campo
         self.homeTeamSide = homeTeamSide
@@ -57,7 +57,7 @@ class Mundo(Singleton):
         self.__jogadores = {"HomeTeam" : list(), "Enemies" : list()}
         self.ball = Ball()
         self.arena = arena
-    
+
     """ Nome da função :     inimigos (getter)
         Intenção da função : Retorna os Inimigos
         Pré-requisitos :     Nenhum
@@ -68,7 +68,7 @@ class Mundo(Singleton):
     @property
     def inimigos(self):
         return self.__jogadores["Enemies"]
-    
+
     """ Nome da função :     inimigos (setter)
         Intenção da função : Alterar a lista de inimigos
         Pré-requisitos :     Nenhum
@@ -80,11 +80,11 @@ class Mundo(Singleton):
     def inimigos(self, inimigos):
         self.__jogadores["Enemies"].clear()
         self.__jogadores["Enemies"].extend(inimigos)
-    
+
     @property
     def time(self):
         return self.__jogadores["HomeTeam"]
-    
+
     @time.setter
     def time(self, newTime):
         self.__jogadores["HomeTeam"].clear()

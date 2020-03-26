@@ -13,7 +13,7 @@ class Inimigo(Jogador):
 
     def __init__(self, idJ, ponto = Ponto()):
         Jogador.__init__(self, idJ = idJ, ponto = ponto)
-    
+
     """ Nome da função :     isInimigo
         Intenção da função : Dizer se um Jogador é Inimigo
         Pré-requisitos :     Ser uma Subclasse de Jogador

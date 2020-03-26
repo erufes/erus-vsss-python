@@ -11,9 +11,9 @@ from .Graph import WeightedGridGraph
 from .IPathPlanning import IPathPlanning
 from queue import PriorityQueue
 
-""" Instead of exploring all possible paths equally, it favors lower cost paths. 
-    We can assign lower costs to encourage moving on roads, higher costs to avoid 
-    forests, higher costs to discourage going near enemies, and more. When movement 
+""" Instead of exploring all possible paths equally, it favors lower cost paths.
+    We can assign lower costs to encourage moving on roads, higher costs to avoid
+    forests, higher costs to discourage going near enemies, and more. When movement
     costs vary, we use this instead of Breadth First Search.
 """
 class DijkstraAlgorithm(IPathPlanning):
@@ -26,9 +26,9 @@ class DijkstraAlgorithm(IPathPlanning):
         cost_so_far = {}
         came_from[start] = None
         cost_so_far[start] = 0
-        
+
         while not frontier.empty():
-            _, current = frontier.get()            
+            _, current = frontier.get()
             if current == goal:
                 break
             neighbors = graph.neighbors(current)
@@ -39,5 +39,4 @@ class DijkstraAlgorithm(IPathPlanning):
                     priority = new_cost
                     frontier.put((priority, prox))
                     came_from[prox] = current
-        
         return came_from, cost_so_far

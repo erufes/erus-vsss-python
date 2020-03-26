@@ -21,7 +21,7 @@ class Ponto(object):
     def __init__(self, x = 0, y = 0):
         self.x = x
         self.y = y
-    
+
     """ Nome da função :     Getters e Setters
         Intenção da função : Acesso de escrita e leitura as propriedades de Ponto
         Pré-requisitos :     Nenhum
@@ -33,7 +33,7 @@ class Ponto(object):
     @property
     def x(self):
         return self._x
-    
+
     @x.setter
     def x(self, value):
         self._x = value
@@ -41,21 +41,21 @@ class Ponto(object):
     @property
     def y(self):
         return self._y
-    
+
     @y.setter
     def y(self, value):
         self._y = value
-    
+
     @property
     def posicao(self):
         return (self.x, self.y)
-    
+
     @posicao.setter
     def posicao(self, value):
         x, y = value
         self.x = x
         self.y = y
-    
+
     def __eq__(self, outro):
         return self.posicao == outro.posicao
 

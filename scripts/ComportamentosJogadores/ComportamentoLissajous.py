@@ -24,7 +24,7 @@ class ComportamentoLissajous(IComportamento):
         self.b = b
         self.sigma = sig
         self.__t = 0
-    
+
     def definirObjetivo(self, jogador, Mundo):
         """ Na matemática, a curva de Lissajous (figura de Lissajous ou curva de Bowditch) 
             é o gráfico produzido por um sistema de equações paramétricas que descreve um complexo movimento harmônico.

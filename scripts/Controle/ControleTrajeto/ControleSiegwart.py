@@ -19,7 +19,7 @@ class ControleSiegwart(IcontroleTrajeto):
 
         if rho < 3:
             lamb = 0
-        
+
         alpha = to180range(lamb - ta)
         beta = to - lamb
 
@@ -33,10 +33,10 @@ class ControleSiegwart(IcontroleTrajeto):
         if rho < 3:
             linearSpeed = 0
             angularSpeed *= 0.4
-        
+
         if m.fabs(alpha) > 0.5*ControleSiegwart.__PI:
             linearSpeed = - linearSpeed
-        
+
         result = ((linearSpeed - angularSpeed*3.35)/2, (linearSpeed + angularSpeed*3.35)/2)
         maxSpeed = max(m.fabs(result[0]), m.fabs(result[1]))
 

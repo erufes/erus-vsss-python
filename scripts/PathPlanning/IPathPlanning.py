@@ -2,7 +2,7 @@
     Ano de criação :        2019/10
     Descrição do módulo :   Interface de Algoritmos de Planejamento de Trajetória
     Versão :                1.0
-    Pré-requisitos :        
+    Pré-requisitos :
     Membros :               Lorena Bassani
 """
 

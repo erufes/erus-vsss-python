@@ -4,7 +4,7 @@ class ControleTrajetoPID(IcontroleTrajeto):
     def __init__(self, P = 0.2, I = 0.0, D = 0.0, current_time=None):
         """Determines how aggressively the PID reacts to the current error with setting Proportional Gain"""
         self.Kp = P
-        """Determines how aggressively the PID reacts to the current error with setting Integral Gain"""        
+        """Determines how aggressively the PID reacts to the current error with setting Integral Gain"""
         self.Ki = I
         """Determines how aggressively the PID reacts to the current error with setting Derivative Gain"""
         self.Kd = D
@@ -81,7 +81,7 @@ class ControleTrajetoPID(IcontroleTrajeto):
 
     def setSampleTime(self, sample_time):
         """ PID that should be updated at a regular interval.
-            Based on a pre-determined sampe time, the PID decides 
+            Based on a pre-determined sampe time, the PID decides
             if it should compute or return immediately.
         """
         self.sample_time = sample_time

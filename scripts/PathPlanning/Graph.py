@@ -23,7 +23,7 @@ class GridGraph(object):
     def __init__(self, celulasX, celulasY):
         self.__grade = (celulasX, celulasY)
         self.__occupied = list()
-    
+
     """ Nome da função :     grid (getter)
         Intenção da função : Retorna as dimensões da Grade
         Pré-requisitos :     Nenhum
@@ -34,7 +34,7 @@ class GridGraph(object):
     @property
     def grid(self):
         return self.__grade
-    
+
     """ Nome da função :     occupy
         Intenção da função : Ocupar uma celula com um objeto
         Pré-requisitos :     Celula pertencente a Grade
@@ -46,7 +46,7 @@ class GridGraph(object):
     def occupy(self, cel, obj):
         if self.isInsideGrid(cel):
             self.__occupied.append((cel, obj))
-    
+
     """ Nome da função :     release
         Intenção da função : Libera a Celula
         Pré-requisitos :     Celula pertencente a Grade e ocupada
@@ -68,7 +68,7 @@ class GridGraph(object):
     """
     def isOccupied(self, cel):
         return self.getOccupier(cel) is not None
-    
+
     """ Nome da função :     getOccupier
         Intenção da função : Retornar referência ao objeto que ocupa uma celula, junto com a celula ocupada
         Pré-requisitos :     Celula pertecente a Grade
@@ -81,7 +81,7 @@ class GridGraph(object):
         if ocupador:
             return ocupador[0]
         return None
-    
+
     """ Nome da função :     isInsideGrid
         Intenção da função : Dizer se uma celula está na Grade
         Pré-requisitos :     Nenhum
@@ -91,7 +91,7 @@ class GridGraph(object):
     """
     def isInsideGrid(self, cel):
         return cel >= 0 and cel < self.__grade[0]*self.__grade[1]
-    
+
     """ Nome da função :     whatIsOccupied
         Intenção da função : Retornar todos os pontos ocupados da Grade
         Pré-requisitos :     Nenhum
@@ -101,7 +101,7 @@ class GridGraph(object):
     """
     def whatIsOccupied(self):
         return list(map(lambda x: x[0], self.__occupied))
-    
+
     """ Nome da função :     neighbors
         Intenção da função : Retornar Vizinhos da Celula
         Pré-requisitos :     Celula pertencente a Grade
@@ -115,10 +115,10 @@ class GridGraph(object):
         cels.append(cel - self.__grade[0])
         cels.append(cel + self.__grade[0])
         if cel % self.__grade[0] > 0:
-            cels.append(cel - 1) 
+            cels.append(cel - 1)
         if cel % self.__grade[0] < self.__grade[0] - 1:
             cels.append(cel + 1)
-        
+
         for c in cels:
             if self.isInsideGrid(c):
                 o = self.getOccupier(c)
@@ -126,7 +126,7 @@ class GridGraph(object):
                     o = (c, None)
                 nbs.append(o)
         return nbs
-    
+
     """ Nome da função :     transform2Cart
         Intenção da função : Transforma uma celula da Grade em um ponto cartesiano correspondente
         Pré-requisitos :     Celula pertencente a Grade
@@ -147,7 +147,7 @@ class GridGraph(object):
     def transform2Grid(self, cel):
         x, y = cel
         return y*self.__grade[0] + x
-    
+
 class WeightedGridGraph(GridGraph):
     def __init__(self, celulasX, celulasY):
         GridGraph.__init__(self, celulasX, celulasY)

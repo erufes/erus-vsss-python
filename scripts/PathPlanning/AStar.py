@@ -11,9 +11,9 @@ from .IPathPlanning import IPathPlanning
 from .Graph import WeightedGridGraph
 from queue import PriorityQueue
 
-""" A* is a modification of Dijkstra’s Algorithm that is optimized for 
-    a single destination. Dijkstra’s Algorithm can find paths to all 
-    locations; A* finds paths to one location, or the closest of several 
+""" A* is a modification of Dijkstra’s Algorithm that is optimized for
+    a single destination. Dijkstra’s Algorithm can find paths to all
+    locations; A* finds paths to one location, or the closest of several
     locations. It prioritizes paths that seem to be leading closer to a goal.
 """
 class AStar(IPathPlanning):
@@ -28,7 +28,7 @@ class AStar(IPathPlanning):
         cost_so_far[start] = 0
 
         while not frontier.empty():
-            _, current = frontier.get()               
+            _, current = frontier.get()
             if current == goal:
                 break
             neighbors = graph.neighbors(current)

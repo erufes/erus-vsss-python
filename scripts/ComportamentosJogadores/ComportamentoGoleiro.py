@@ -20,7 +20,7 @@ import math as m
 class ComportamentoGoleiro(IComportamento):
     def __init__(self):
         IComportamento.__init__(self)
-    
+
     def definirObjetivo(self, jogador : Jogador, mundo : Mundo):
         """ Ideia da implementação :
 		 	Posicionar o robô de forma que ele impessa a trajetória da bola
@@ -35,7 +35,7 @@ class ComportamentoGoleiro(IComportamento):
 		    a² - b² - c² = -2bc* cos α
 		    (b² + c² - a²)/2bc = cos α
 		    α = acos(((b² + c² - a²)/2bc))
-		        Onde : 
+		        Onde :
                     a <- lado oposto (tamanho do gol)
                     b e c <- lados adjascentes (distancia da bola até um dos limites do gol)
                     α <- angulo desejado
