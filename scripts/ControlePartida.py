@@ -25,9 +25,9 @@ class Partida(Singleton):
         self.__estadoPartida = EstadosPartida.PARADO
 
     def comecaPartida(self):
-        if self.estadoPartida == EstadosPartida.ENCERRADA
+        if self.estadoPartida == EstadosPartida.ENCERRADA:
             raise PartidaEncerradaException
-        else
+        else:
             self.estadoPartida = EstadosPartida.EMANDAMENTO
 
     def marcarGol(self, time, tempo):

@@ -8,7 +8,7 @@
 """
 
 from scripts.kernel import Kernel
-# from scripts.Mundo import Mundo
+from scripts.Mundo import Mundo
 # from scripts.Inimigo import Inimigo
 # from scripts.Aliado import Aliado
 # from scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
@@ -22,6 +22,9 @@ class Team(Enum):
 
 def main():
     print('Starting main...')
+    print('Instantiating world...')
+    mundo = Mundo()
+    print('Done instatiating world')
     k = Kernel()
     k.loop()
     print('Kernel started')

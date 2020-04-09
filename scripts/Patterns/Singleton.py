@@ -15,7 +15,8 @@ class Singleton(object):
         # that subclasses will create their own __single objects
         if classtype != type(classtype.__single):
             classtype.__single = object.__new__(classtype)
-            classtype.inicializa(classtype.__single, *args, **kwargs)
+            # classtype.__single = object.__new__(classtype, *args, **kwargs)
+            # classtype.inicializa(classtype.__single, *args, **kwargs)
         return classtype.__single
 
     def inicializa(self, *args, **keyargs):

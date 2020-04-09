@@ -6,7 +6,8 @@
                           geometria
     Membros :             Lorena Bassani
 """
-from sklearn.linear_model import LinearRegression
+# from sklearn.linear_model import LinearRegression
+
 from .Geometria import Ponto
 from .Campo import Campo
 import math as m
