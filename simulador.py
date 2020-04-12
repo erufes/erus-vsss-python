@@ -6,9 +6,10 @@
     Pré-requisitos :        vsscorepy
     Membros:                Lorena Bassani
 """
-
-from scripts.kernel import Kernel
-from scripts.Mundo import Mundo
+import sys
+sys.path.append('scripts')
+from kernel import Kernel
+from Mundo import Mundo
 # from scripts.Inimigo import Inimigo
 # from scripts.Aliado import Aliado
 # from scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS

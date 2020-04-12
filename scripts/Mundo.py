@@ -8,13 +8,13 @@
                             ComportamentosJogadores Comportamentos
     Membros :               Lorena Bassani
 """
-from .Patterns.Singleton import Singleton
-from .Geometria import Ponto
-from .Jogador import Jogador
-from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
-from .ControlePartida import Partida, ControladorTime
-from .Ball import Ball
-from .Campo import Campo
+from Patterns.Singleton import Singleton
+from Geometria import Ponto
+from Jogador import Jogador
+from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+from ControlePartida import Partida, ControladorTime
+from Ball import Ball
+from Campo import Campo
 from enum import Enum
 import math as m
 

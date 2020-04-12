@@ -6,8 +6,8 @@
                             Ponto
     Membros :               Lorena Bassani
 """
-from .Agente import Agente
-from .Geometria import Ponto
+from Agente import Agente
+from Geometria import Ponto
 
 class Jogador(Agente):
 

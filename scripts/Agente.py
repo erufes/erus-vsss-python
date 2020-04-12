@@ -8,8 +8,8 @@
 """
 # from sklearn.linear_model import LinearRegression
 
-from .Geometria import Ponto
-from .Campo import Campo
+from Geometria import Ponto
+from Campo import Campo
 import math as m
 
 class Agente(object):

@@ -6,8 +6,8 @@
                             Pattern.Singleton
     Membros :               Lorena B Bassani
 """
-from .Patterns.Singleton import Singleton
-from .PathPlanning.Graph import WeightedGridGraph
+from Patterns.Singleton import Singleton
+from PathPlanning.Graph import WeightedGridGraph
 
 
 class Campo(WeightedGridGraph, Singleton):

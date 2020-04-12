@@ -1,7 +1,7 @@
-from .Patterns.Singleton import Singleton
-from .Geometria import Ponto
-from .Jogador import Jogador
-from .ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+from Patterns.Singleton import Singleton
+from Geometria import Ponto
+from Jogador import Jogador
+from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from enum import Enum
 import math as m
 
