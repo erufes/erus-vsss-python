@@ -8,13 +8,15 @@
     Membros :               Lorena Basasani
 """
 from .IPathPlanning import IPathPlanning
-from .Graph import GridGraph
+# from .Graph import GridGraph
 from queue import Queue
 
 """ Explores equally in all directions. This is an incredibly useful algorithm,
     not only for regular path finding, but also for procedural map generation,
     flow field pathfinding, distance maps, and other types of map analysis.
 """
+
+
 class BreadthFirstSearch(IPathPlanning):
 
     @staticmethod
@@ -29,7 +31,7 @@ class BreadthFirstSearch(IPathPlanning):
                 break
             neighbors = graph.neighbors(current)
             for prox, occ in neighbors:
-                if prox not in came_from and occ == None:
+                if prox not in came_from and occ is None:
                     frontier.put(prox)
                     came_from[prox] = current
         return came_from

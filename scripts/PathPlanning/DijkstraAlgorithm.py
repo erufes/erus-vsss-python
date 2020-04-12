@@ -7,7 +7,7 @@
                             PriorityQueue
     Membros :               Lorena Bassani
 """
-from .Graph import WeightedGridGraph
+# from .Graph import WeightedGridGraph
 from .IPathPlanning import IPathPlanning
 from queue import PriorityQueue
 
@@ -16,6 +16,8 @@ from queue import PriorityQueue
     forests, higher costs to discourage going near enemies, and more. When movement
     costs vary, we use this instead of Breadth First Search.
 """
+
+
 class DijkstraAlgorithm(IPathPlanning):
 
     @staticmethod

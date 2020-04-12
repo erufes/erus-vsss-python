@@ -5,6 +5,8 @@
     Pré-requisitos :        Nenhum
     Membros :               Lorena Bassani
 """
+
+
 class SimpleGraph(object):
     def __init__(self):
         self.edges = {}
@@ -16,8 +18,10 @@ class SimpleGraph(object):
         Parâmetros :         Nó : Nó do qual se deseja saber os vizinhos
         Retorno :            list : Vizinhos do Nó
     """
+
     def neighbors(self, id):
         return self.edges[id]
+
 
 class GridGraph(object):
     def __init__(self, celulasX, celulasY):
@@ -43,6 +47,7 @@ class GridGraph(object):
                              object : Objeto que irá ocupar a célula
         Retorno :            Nenhum
     """
+
     def occupy(self, cel, obj):
         if self.isInsideGrid(cel):
             self.__occupied.append((cel, obj))
@@ -54,6 +59,7 @@ class GridGraph(object):
         Parâmetros :         int : Celula a ser liberada
         Retorno :            Nenhum
     """
+
     def release(self, cel):
         liberar = self.getOccupier(cel)
         if liberar:
@@ -66,6 +72,7 @@ class GridGraph(object):
         Parâmetros :         int : Celula que se deseja saber se está ocupada
         Retorno :            Boolean : True se estiver ocupada, False caso contrário
     """
+
     def isOccupied(self, cel):
         return self.getOccupier(cel) is not None
 
@@ -76,6 +83,7 @@ class GridGraph(object):
         Parâmetros :         int : Celula a ser retornada
         Retorno :            (int, object) : Celula e objeto que a ocupa (None se não for ocupada)
     """
+
     def getOccupier(self, cel):
         ocupador = list(filter(lambda x: x[0] == cel, self.__occupied))
         if ocupador:
@@ -89,8 +97,9 @@ class GridGraph(object):
         Parâmetros :         int : Celula que se deseja saber se pertence a Grade
         Retorno :            Boolean : True se pertencer a grade, False caso contrário
     """
+
     def isInsideGrid(self, cel):
-        return cel >= 0 and cel < self.__grade[0]*self.__grade[1]
+        return cel >= 0 and cel < self.__grade[0] * self.__grade[1]
 
     """ Nome da função :     whatIsOccupied
         Intenção da função : Retornar todos os pontos ocupados da Grade
@@ -99,6 +108,7 @@ class GridGraph(object):
         Parâmetros :         Nenhum
         Retorno :            list : Lista de Celulas ocupadas na Grade
     """
+
     def whatIsOccupied(self):
         return list(map(lambda x: x[0], self.__occupied))
 
@@ -109,6 +119,7 @@ class GridGraph(object):
         Parâmetros :         int : Celula que se deseja saber os vizinhos
         Retorno :            list : Lista com as celulas vizinhas
     """
+
     def neighbors(self, cel):
         nbs = list()
         cels = list()
@@ -134,6 +145,7 @@ class GridGraph(object):
         Parâmetros :         int : Celula que se deseja saber as coordenadas cartesianas
         Retorno :            (int, int) : Coordenadas cartesianas correrpondestes a celula
     """
+
     def transform2Cart(self, cel):
         return (cel % self.__grade[0], cel // self.__grade[0])
 
@@ -144,9 +156,11 @@ class GridGraph(object):
         Parâmetros :         (int, int) : Coordenadas cartesianas do ponto que se deseja saber a celula na Grade
         Retorno :            int : Celula correspondente ao ponto
     """
+
     def transform2Grid(self, cel):
         x, y = cel
-        return y*self.__grade[0] + x
+        return y * self.__grade[0] + x
+
 
 class WeightedGridGraph(GridGraph):
     def __init__(self, celulasX, celulasY):
@@ -160,5 +174,6 @@ class WeightedGridGraph(GridGraph):
                                 int : Celula de Objetivo
         Retorno :               int : Custo de movimentação pela grade
     """
+
     def cost(self, start, goal):
         return 1

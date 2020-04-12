@@ -15,10 +15,10 @@ class Campo(WeightedGridGraph, Singleton):
     def __init__(self, *args, **keyargs):
         pass
 
-    def inicializa(self, celulasX, celulasY, dimX = 150, dimY = 130):
+    def inicializa(self, celulasX, celulasY, dimX=150, dimY=130):
         if not hasattr(self, "grade"):
             WeightedGridGraph.__init__(self, celulasX, celulasY)
-            self.__h = (dimX/(celulasX - 1), dimY/(celulasY - 1))
+            self.__h = (dimX / (celulasX - 1), dimY / (celulasY - 1))
 
     @property
     def tamanhoCelula(self):
@@ -27,12 +27,12 @@ class Campo(WeightedGridGraph, Singleton):
     def transform2Cart(self, cel):
         # TODO : Ver Se as grades possuem as mesmas características de crescimento de coordenadas
         i, j = WeightedGridGraph.transform2Cart(self, cel)
-        return (i*self.__h[0], j*self.__h[1])
+        return (i * self.__h[0], j * self.__h[1])
 
     def transform2Grid(self, cel):
         # TODO : Redefinir trasnformação
         x, y = cel
-        return WeightedGridGraph.transform2Grid(self, (x//self.__h[0], y//self.__h[1]))
+        return WeightedGridGraph.transform2Grid(self, (x // self.__h[0], y // self.__h[1]))
 
     def cost(self, start, goal):
         # TODO : Redefinir custo para variar com a proximidade a um obstáculo

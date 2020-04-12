@@ -9,9 +9,10 @@
 from Agente import Agente
 from Geometria import Ponto
 
+
 class Jogador(Agente):
 
-    def __init__(self, idJ, ponto = Ponto()):
+    def __init__(self, idJ, ponto=Ponto()):
         Agente.__init__(self, ponto)
         self.__id = idJ
 
@@ -33,5 +34,6 @@ class Jogador(Agente):
         Parâmetros :         Nenhum
         Retorno :            Boolean : True se for um Joagdor Inimigo, False caso contrário
     """
+
     def isInimigo(self):
         return NotImplementedError

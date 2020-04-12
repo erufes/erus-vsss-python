@@ -13,12 +13,13 @@
 from .Jogador import Jogador
 from .Geometria import Ponto
 from .ComportamentosJogadores.Factory import Factory
-from .ComportamentosJogadores.IComportamento import IComportamento
+# from .ComportamentosJogadores.IComportamento import IComportamento
+
 
 class Aliado(Jogador):
 
-    def __init__(self, idJ, ponto = Ponto(), comportamento = None):
-        Jogador.__init__(self, idJ = idJ, ponto = ponto)
+    def __init__(self, idJ, ponto=Ponto(), comportamento=None):
+        Jogador.__init__(self, idJ=idJ, ponto=ponto)
         self.comportamento = comportamento
 
     """ Nome da função :     comportamento (getter)
@@ -51,6 +52,7 @@ class Aliado(Jogador):
         Parâmetros :         Nenhum
         Retorno :            Boolean : Sempre False
     """
+
     def isInimigo(self):
         return False
 

@@ -10,11 +10,12 @@
 
 from Geometria import Ponto
 from Campo import Campo
-import math as m
+# import math as m
+
 
 class Agente(object):
 
-    def __init__(self, ponto = Ponto()):
+    def __init__(self, ponto=Ponto()):
         self.__ponto = ponto
         self.__theta = 0
         self.__posicoesAntigas = list()
