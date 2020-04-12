@@ -99,7 +99,7 @@ class GridGraph(object):
     """
 
     def isInsideGrid(self, cel):
-        return cel >= 0 and cel < self.__grade[0]*self.__grade[1]
+        return cel >= 0 and cel < self.__grade[0] * self.__grade[1]
 
     """ Nome da função :     whatIsOccupied
         Intenção da função : Retornar todos os pontos ocupados da Grade
@@ -159,7 +159,7 @@ class GridGraph(object):
 
     def transform2Grid(self, cel):
         x, y = cel
-        return y*self.__grade[0] + x
+        return y * self.__grade[0] + x
 
 
 class WeightedGridGraph(GridGraph):

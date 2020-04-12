@@ -45,7 +45,7 @@ class ComportamentoGoleiro(IComportamento):
         a = Arena.metricas["Gol"][1]
         b = ball.ponto.distancia(gol["Superior"])
         c = ball.ponto.distancia(gol["Inferior"])
-        alpha = (b**2 + c**2 - a**2)/2*b*c
+        alpha = (b ** 2 + c ** 2 - a ** 2) / 2 * b * c
         if alpha > 1:
             alpha = 1.0
         elif alpha < -1:
@@ -53,11 +53,11 @@ class ComportamentoGoleiro(IComportamento):
         alpha = m.acos(alpha)
 
         # 3.75 é metade da largura do robô de 7.5x7.5
-        dx = 3.75/m.tan(alpha) if m.tan(alpha) != 0 else 0
+        dx = 3.75 / m.tan(alpha) if m.tan(alpha) != 0 else 0
         resp.x = bx + dx if mundo.lado == Lado.DIREITO else bx - dx
 
         theta = m.fabs(bt - jogador.theta)
-        resp.y = (resp.x/m.tan(theta))
+        resp.y = (resp.x / m.tan(theta))
 
         resp.y = 100 if resp.y > 100 else 30 if resp.y < 30 else resp.y
         resp.posicao = (10, 65) if mundo.lado == Lado.ESQUERDO and resp.x > 37.5 else (

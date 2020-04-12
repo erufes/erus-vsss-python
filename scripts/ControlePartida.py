@@ -1,7 +1,7 @@
 from Patterns.Singleton import Singleton
 # from Geometria import Ponto
 # from Jogador import Jogador
-# from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from enum import Enum
 
 
@@ -66,8 +66,7 @@ class ControladorTime(Singleton):
     """
     @property
     def goleiro(self):
-        g = list(filter(lambda x: x.comportamento ==
-                        COMPORTAMENTOS.GOLEIRO, self.__jogadores))
+        g = list(filter(lambda x: x.comportamento == COMPORTAMENTOS.GOLEIRO, self.__jogadores))
         if g:
             return g[0]
         return None

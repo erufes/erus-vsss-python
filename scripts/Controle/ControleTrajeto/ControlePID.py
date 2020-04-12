@@ -3,13 +3,13 @@ from .IControleTrajeto import IcontroleTrajeto
 
 
 class ControleTrajetoPID(IcontroleTrajeto):
-    def __init__(self, P=0.2, I=0.0, D=0.0, current_time=None):
+    def __init__(self, pid_P=0.2, pid_I=0.0, pid_D=0.0, current_time=None):
         """Determines how aggressively the PID reacts to the current error with setting Proportional Gain"""
-        self.Kp = P
+        self.Kp = pid_P
         """Determines how aggressively the PID reacts to the current error with setting Integral Gain"""
-        self.Ki = I
+        self.Ki = pid_I
         """Determines how aggressively the PID reacts to the current error with setting Derivative Gain"""
-        self.Kd = D
+        self.Kd = pid_D
 
         self.sample_time = 0.00
         self.current_time = current_time if current_time is not None else time.time()

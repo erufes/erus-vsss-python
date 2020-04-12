@@ -31,7 +31,7 @@ class BreadthFirstSearch(IPathPlanning):
                 break
             neighbors = graph.neighbors(current)
             for prox, occ in neighbors:
-                if prox not in came_from and occ == None:
+                if prox not in came_from and occ is None:
                     frontier.put(prox)
                     came_from[prox] = current
         return came_from
