@@ -6,6 +6,7 @@
     Membros :               Lorena Bassani
 """
 
+
 class IPathPlanning(object):
 
     @staticmethod
@@ -19,6 +20,6 @@ class IPathPlanning(object):
         while current != start:
             path.append(current)
             current = cameFrom[current]
-        path.append(start) # optional
-        path.reverse() # optional
+        path.append(start)  # optional
+        path.reverse()  # optional
         return path

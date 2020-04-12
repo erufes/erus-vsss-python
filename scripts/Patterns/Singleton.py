@@ -6,8 +6,9 @@
     Membros :               Lorena B. Bassani
 """
 
+
 class Singleton(object):
-    __single = None # the one, true Singleton
+    __single = None  # the one, true Singleton
 
     def __new__(classtype, *args, **kwargs):
         # Check to see if a __single exists already for this class
@@ -21,4 +22,3 @@ class Singleton(object):
 
     def inicializa(self, *args, **keyargs):
         raise NotImplementedError
-

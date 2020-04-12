@@ -10,40 +10,42 @@
 """
 from Patterns.Singleton import Singleton
 from Geometria import Ponto
-from Jogador import Jogador
-from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
-from ControlePartida import Partida, ControladorTime
+# from Jogador import Jogador
+# from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+# from ControlePartida import Partida, ControladorTime
 from Ball import Ball
 from Campo import Campo
 from enum import Enum
-import math as m
+# import math as m
+
 
 class Lado(Enum):
     ESQUERDO = 0
     DIREITO = 1
 
+
 class ArenaVSSSDK(object):
-    cantoSuperior = {   "Direito"   : Ponto(170, 0),
-                        "Esquerdo"  : Ponto(0, 0)
-                    }
-    cantoInferior = {   "Direito"   : Ponto(170, 130),
-                        "Esquerdo"  : Ponto(0, 130)
-                    }
-    golDireito =    {   "Superior"  : Ponto(160 ,45),
-                        "Meio"      : Ponto(160, 65),
-                        "Inferior"  : Ponto(160, 95)
-                    }
-    golEsquerdo =   {   "Superior"  : Ponto(10 ,45),
-                        "Meio"      : Ponto(10, 65),
-                        "Inferior"  : Ponto(10, 95)
-                    }
-    marcacoes = {       "Meio" : Ponto(85, 65)
-                }
-    metricas = {        "Tamanho "  : (170, 130),
-                        "Gol"       : (10, 40)
+    cantoSuperior = {"Direito": Ponto(170, 0),
+                     "Esquerdo": Ponto(0, 0)
+                     }
+    cantoInferior = {"Direito": Ponto(170, 130),
+                     "Esquerdo": Ponto(0, 130)
+                     }
+    golDireito = {"Superior": Ponto(160, 45),
+                  "Meio": Ponto(160, 65),
+                  "Inferior": Ponto(160, 95)
+                  }
+    golEsquerdo = {"Superior": Ponto(10, 45),
+                   "Meio": Ponto(10, 65),
+                   "Inferior": Ponto(10, 95)
+                   }
+    marcacoes = {"Meio": Ponto(85, 65)
+                 }
+    metricas = {"Tamanho ": (170, 130),
+                "Gol": (10, 40)
                 }
 
-    def __init__(self, campo = Campo(celulasX = 15, celulasY = 13), homeTeamSide = Lado.ESQUERDO):
+    def __init__(self, campo=Campo(celulasX=15, celulasY=13), homeTeamSide=Lado.ESQUERDO):
         self.campo = campo
         self.homeTeamSide = homeTeamSide
 
@@ -53,8 +55,8 @@ class Mundo(Singleton):
     def __init__(self, *args, **keyargs):
         pass
 
-    def inicializa(self, arena, homeTeam = list(), enemies = list()):
-        self.__jogadores = {"HomeTeam" : list(), "Enemies" : list()}
+    def inicializa(self, arena, homeTeam=list(), enemies=list()):
+        self.__jogadores = {"HomeTeam": list(), "Enemies": list()}
         self.ball = Ball()
         self.arena = arena
 

@@ -9,10 +9,11 @@
 from .Jogador import Jogador
 from .Geometria import Ponto
 
+
 class Inimigo(Jogador):
 
-    def __init__(self, idJ, ponto = Ponto()):
-        Jogador.__init__(self, idJ = idJ, ponto = ponto)
+    def __init__(self, idJ, ponto=Ponto()):
+        Jogador.__init__(self, idJ=idJ, ponto=ponto)
 
     """ Nome da função :     isInimigo
         Intenção da função : Dizer se um Jogador é Inimigo
@@ -21,5 +22,6 @@ class Inimigo(Jogador):
         Parâmetros :         Nenhum
         Retorno :            Boolean : Sempre True
     """
+
     def isInimigo(self):
         return True

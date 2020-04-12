@@ -1,9 +1,9 @@
 from Patterns.Singleton import Singleton
-from Geometria import Ponto
-from Jogador import Jogador
-from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
+# from Geometria import Ponto
+# from Jogador import Jogador
+# from ComportamentosJogadores.Comportamentos import COMPORTAMENTOS
 from enum import Enum
-import math as m
+
 
 class EstadosPartida(Enum):
     PARADO = 0
@@ -12,8 +12,10 @@ class EstadosPartida(Enum):
     PENALTI_INIMIGO = 3
     ENCERRADA = 4
 
+
 class PartidaEncerradaException(Exception):
     pass
+
 
 class Partida(Singleton):
 
@@ -21,7 +23,7 @@ class Partida(Singleton):
         pass
 
     def inicializa(self):
-        self.__gols = {"HomeTeam" : list(), "Enemies" : list()}
+        self.__gols = {"HomeTeam": list(), "Enemies": list()}
         self.__estadoPartida = EstadosPartida.PARADO
 
     def comecaPartida(self):
@@ -49,7 +51,7 @@ class ControladorTime(Singleton):
     def __init__(self, *args, **keyargs):
         pass
 
-    def inicializa(self, team = list()):
+    def inicializa(self, team=list()):
         self.__jogadores = team
 
     def substituicao(self, idPlayerIn, idPlayerOut):
@@ -64,7 +66,8 @@ class ControladorTime(Singleton):
     """
     @property
     def goleiro(self):
-        g = list(filter(lambda x: x.comportamento == COMPORTAMENTOS.GOLEIRO, self.__jogadores))
+        g = list(filter(lambda x: x.comportamento ==
+                        COMPORTAMENTOS.GOLEIRO, self.__jogadores))
         if g:
             return g[0]
         return None
@@ -89,6 +92,7 @@ class ControladorTime(Singleton):
         Parâmetros :         int : Id do Jogador
         Retorno :            Jogador : Jogador correspondente ao Id
     """
+
     def jogador(self, jogadorId):
         p = list(filter(lambda x: x.id == jogadorId, self.__jogadores))
         if p:

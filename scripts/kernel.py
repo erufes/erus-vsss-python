@@ -1,5 +1,3 @@
-import vsscorepy
-
 from vsscorepy.communications.command_sender import CommandSender
 from vsscorepy.communications.debug_sender import DebugSender
 from vsscorepy.communications.state_receiver import StateReceiver
@@ -8,6 +6,7 @@ from vsscorepy.domain.wheels_command import WheelsCommand
 from vsscorepy.domain.point import Point
 from vsscorepy.domain.pose import Pose
 from vsscorepy.domain.debug import Debug
+
 
 class Kernel(object):
     state_receiver = None
@@ -42,4 +41,5 @@ class Kernel(object):
 
         for robot in state.team_yellow:
             debug.step_points.append(Point(robot.x + 10, robot.y + 10))
-            debug.final_poses.append(Pose(state.ball.x + 10, state.ball.y + 10, 10))
+            debug.final_poses.append(
+                Pose(state.ball.x + 10, state.ball.y + 10, 10))

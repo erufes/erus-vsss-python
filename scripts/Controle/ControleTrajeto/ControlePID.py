@@ -1,7 +1,9 @@
 import time
 from .IControleTrajeto import IcontroleTrajeto
+
+
 class ControleTrajetoPID(IcontroleTrajeto):
-    def __init__(self, P = 0.2, I = 0.0, D = 0.0, current_time=None):
+    def __init__(self, P=0.2, I=0.0, D=0.0, current_time=None):
         """Determines how aggressively the PID reacts to the current error with setting Proportional Gain"""
         self.Kp = P
         """Determines how aggressively the PID reacts to the current error with setting Integral Gain"""
@@ -65,7 +67,8 @@ class ControleTrajetoPID(IcontroleTrajeto):
             self.last_time = self.current_time
             self.lastError = error
 
-            self.output = self.PTerm + (self.Ki * self.ITerm) + (self.Kd * self.DTerm)
+            self.output = self.PTerm + \
+                (self.Ki * self.ITerm) + (self.Kd * self.DTerm)
 
     def setWindup(self, windup):
         """ Integral windup, also known as integrator windup or reset windup,

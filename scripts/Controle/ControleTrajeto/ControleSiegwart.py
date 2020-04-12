@@ -2,6 +2,7 @@ from .IControleTrajeto import IcontroleTrajeto
 from ...Geometria import Ponto, to180range
 import math as m
 
+
 class ControleSiegwart(IcontroleTrajeto):
 
     __kRho = 1.85
@@ -37,10 +38,12 @@ class ControleSiegwart(IcontroleTrajeto):
         if m.fabs(alpha) > 0.5*ControleSiegwart.__PI:
             linearSpeed = - linearSpeed
 
-        result = ((linearSpeed - angularSpeed*3.35)/2, (linearSpeed + angularSpeed*3.35)/2)
+        result = ((linearSpeed - angularSpeed*3.35)/2,
+                  (linearSpeed + angularSpeed*3.35)/2)
         maxSpeed = max(m.fabs(result[0]), m.fabs(result[1]))
 
         if maxSpeed > 100:
-            result = (result[0]*100/m.fabs(maxSpeed), result[1]*100/m.fabs(maxSpeed))
+            result = (result[0]*100/m.fabs(maxSpeed),
+                      result[1]*100/m.fabs(maxSpeed))
 
         return result

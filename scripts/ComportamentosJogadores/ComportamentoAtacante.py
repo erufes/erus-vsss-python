@@ -14,14 +14,15 @@ from .IComportamento import IComportamento
 from ..Geometria import Ponto
 from ..Mundo import Mundo, Arena, Lado
 from ..Jogador import Jogador
-from ..Ball import Ball
-import math as m
+# from ..Ball import Ball
+# import math as m
+
 
 class ComportamentoAtacante(IComportamento):
     def __init__(self):
         IComportamento.__init__(self)
 
-    def definirObjetivo(self, jogador : Jogador, mundo : Mundo):
+    def definirObjetivo(self, jogador: Jogador, mundo: Mundo):
         ball = mundo.ball
         if ball.ponto.distancia(jogador.ponto) > 30:
             x, y = ball.posicao

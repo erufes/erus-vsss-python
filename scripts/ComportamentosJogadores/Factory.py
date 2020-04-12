@@ -14,6 +14,7 @@ from .ComportamentoDefesa import ComportamentoDefesa
 from .ComportamentoAtacante import ComportamentoAtacante
 from .ComportamentoLissajous import ComportamentoLissajous
 
+
 class Factory(object):
 
     """ Nome da função :     create

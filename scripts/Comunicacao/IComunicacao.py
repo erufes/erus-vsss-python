@@ -6,9 +6,10 @@
     Membros :               Lorena Bassani
 """
 
+
 class IComunicacao(object):
 
-    def enviaMensagem(self, Mensagem, Receptor, Remetente = None):
+    def enviaMensagem(self, Mensagem, Receptor, Remetente=None):
         raise NotImplementedError
 
     def recebeMensagem(self):

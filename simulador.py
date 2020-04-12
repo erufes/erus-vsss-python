@@ -7,24 +7,26 @@
     Membros:                Lorena Bassani
 """
 import sys
-sys.path.append('scripts')
+sys.path.append('scripts')  # noqa: E402
 from kernel import Kernel
 from Mundo import Mundo
+from enum import Enum
+
+
 # from scripts.Inimigo import Inimigo
 # from scripts.Aliado import Aliado
 # from scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
 
-from enum import Enum
-import math as m
 
 class Team(Enum):
     BLUE = 1
     YELLOW = 1
 
+
 def main():
     print('Starting main...')
     print('Instantiating world...')
-    mundo = Mundo()
+    mundo = Mundo()  # noqa: F841
     print('Done instatiating world')
     k = Kernel()
     k.loop()
@@ -35,6 +37,7 @@ def main():
 # inimigo = [Inimigo(3), Inimigo(4), Inimigo(5)]
 # mundo.inimigos = inimigo
 # mundo.time = time
+
 
 if __name__ == '__main__':
     main()

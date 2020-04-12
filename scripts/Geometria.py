@@ -1,11 +1,12 @@
 """ Nome do módulo :      Geometria
-    Ano de criação :      2019/10 
+    Ano de criação :      2019/10
     Descrição do módulo : Módulo de auxílio para calculos geometricos
     Versão :              1.0
     Pré-requisitos :      math
     Membros :             Lorena Bassani
 """
 import math as m
+
 
 class Ponto(object):
 
@@ -18,7 +19,8 @@ class Ponto(object):
                              float : Coordenada y
         Retorno :            Objeto tipo ponto criado
     """
-    def __init__(self, x = 0, y = 0):
+
+    def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
 
@@ -66,8 +68,10 @@ class Ponto(object):
         Parâmetros :         Ponto : ponto para calcular a distância a partir deste
         Retorno :            float : distância entre os pontos
     """
+
     def distancia(self, outro):
         return m.sqrt((self.x - outro.x)**2 + (self.y - outro.y)**2)
+
 
 def to180range(angle):
     M_PI = 3.14159
