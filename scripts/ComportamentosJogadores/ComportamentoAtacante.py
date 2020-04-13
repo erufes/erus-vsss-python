@@ -11,9 +11,9 @@
     Membros :               Lorena Bassani
 """
 from .IComportamento import IComportamento
-from ..Geometria import Ponto
-from ..Mundo import Mundo, ArenaVSSSDK, Lado
-from ..Jogador import Jogador
+from Geometria import Ponto
+from Mundo import Mundo, ArenaVSSSDK, Lado
+from Jogador import Jogador
 # from ..Ball import Ball
 # import math as m
 

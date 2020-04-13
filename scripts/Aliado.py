@@ -10,10 +10,10 @@
                                 IComportamento
     Membros :               Lorena Bassani
 """
-from .Jogador import Jogador
-from .Geometria import Ponto
-from .ComportamentosJogadores.Factory import Factory
-# from .ComportamentosJogadores.IComportamento import IComportamento
+from Jogador import Jogador
+from Geometria import Ponto
+from ComportamentosJogadores.Factory import Factory
+# from ComportamentosJogadores.IComportamento import IComportamento
 
 
 class Aliado(Jogador):

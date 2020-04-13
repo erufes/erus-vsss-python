@@ -6,8 +6,8 @@
                             Ponto
     Membros :               Lorena Bassani
 """
-from .Jogador import Jogador
-from .Geometria import Ponto
+from Jogador import Jogador
+from Geometria import Ponto
 
 
 class Inimigo(Jogador):

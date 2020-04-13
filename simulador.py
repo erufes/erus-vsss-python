@@ -13,9 +13,9 @@ import Mundo
 from enum import Enum
 
 
-# from scripts.Inimigo import Inimigo
-# from scripts.Aliado import Aliado
-# from scripts.ComportamentosJogadores.Factory import COMPORTAMENTOS
+import Inimigo
+from Aliado import Aliado
+from ComportamentosJogadores.Factory import COMPORTAMENTOS
 
 
 class Team(Enum):
@@ -27,16 +27,14 @@ def main():
     print('Starting main...')
     print('Instantiating world...')
     mundo = Mundo.Mundo()  # noqa: F841
+    time = [Aliado(0, comportamento=COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamento=COMPORTAMENTOS.ATACANTE), Aliado(2)]
+    inimigo = [Inimigo.Inimigo(3), Inimigo.Inimigo(4), Inimigo.Inimigo(5)]
+    mundo.inimigos = inimigo
+    mundo.time = time
     print('Done instatiating world')
     k = Kernel.Kernel()
     k.loop()
     print('Kernel started')
-
-# mundo = Mundo()
-# time = [Aliado(0, comportamento = COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamento = COMPORTAMENTOS.ATACANTE), Aliado(2)]
-# inimigo = [Inimigo(3), Inimigo(4), Inimigo(5)]
-# mundo.inimigos = inimigo
-# mundo.time = time
 
 
 if __name__ == '__main__':

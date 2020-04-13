@@ -11,10 +11,10 @@
     Membros :               Lorena Bassani
 """
 from .IComportamento import IComportamento
-from ..Geometria import Ponto
-from ..Mundo import Mundo, ArenaVSSSDK, Lado
+from Geometria import Ponto
+from Mundo import Mundo, ArenaVSSSDK, Lado
 # from ..Ball import Ball
-from ..Jogador import Jogador
+from Jogador import Jogador
 import math as m
 
 

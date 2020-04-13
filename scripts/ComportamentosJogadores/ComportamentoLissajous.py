@@ -8,10 +8,10 @@
     Membros :               Lorena B Bassani
 """
 from .IComportamento import IComportamento
-from ..Geometria import Ponto
-# from ..Mundo import Mundo, Arena, Lado
-# from ..Jogador import Jogador
-# from ..Ball import Ball
+from Geometria import Ponto
+# from Mundo import Mundo, Arena, Lado
+# from Jogador import Jogador
+# from Ball import Ball
 import math as m
 
 
