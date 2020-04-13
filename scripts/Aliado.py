@@ -33,13 +33,13 @@ class Aliado(Jogador):
     def comportamento(self):
         return self.__comportamentoId
 
-    """ Nome da função :     comportamento (setter)
-        Intenção da função : Modificar o comportamento atual do Jogador
-        Pré-requisitos :     Nenhum
-        Efeitos colaterais : Modifica o comportamento atual do Joagdor
-        Parâmetros :         COMPORTAMENTOS : Constante da Enumeração COMPORTAMENTOS
-        Retorno :            Nenhum
-    """
+    # Comentários multi block quebram o código abaixo!
+    #    Nome da função :     comportamento (setter)
+    #    Intenção da função : Modificar o comportamento atual do Jogador
+    #    Pré-requisitos :     Nenhum
+    #    Efeitos colaterais : Modifica o comportamento atual do Joagdor
+    #    Parâmetros :         COMPORTAMENTOS : Constante da Enumeração COMPORTAMENTOS
+    #    Retorno :            Nenhum
     @comportamento.setter
     def comportamento(self, comportamento):
         self.__comportamentoId = comportamento

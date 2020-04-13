@@ -71,13 +71,14 @@ class ControladorTime(Singleton):
             return g[0]
         return None
 
-    """ Nome da função :     goleiro (setter)
-        Intenção da função : Alterar o Goleiro
-        Pré-requisitos :     Não ter um Goleiro previamente
-        Efeitos colaterais : Define um novo goleiro
-        Parâmetros :         int : Id do Jogador para alterar
-        Retorno :            Nenhum
-    """
+    # Comentário em bloco aqui quebra a definição do setter
+    # Nome da função :     goleiro (setter)
+    #    Intenção da função : Alterar o Goleiro
+    #    Pré-requisitos :     Não ter um Goleiro previamente
+    #    Efeitos colaterais : Define um novo goleiro
+    #    Parâmetros :         int : Id do Jogador para alterar
+    #    Retorno :            Nenhum
+
     @goleiro.setter
     def goleiro(self, jogadorId):
         if not self.goleiro:

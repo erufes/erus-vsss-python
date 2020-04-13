@@ -52,10 +52,7 @@ class ArenaVSSSDK(object):
 
 class Mundo(Singleton):
 
-    def __init__(self, *args, **keyargs):
-        pass
-
-    def inicializa(self, arena, homeTeam=list(), enemies=list()):
+    def __init__(self, arena=None, homeTeam=list(), enemies=list()):
         self.__jogadores = {"HomeTeam": list(), "Enemies": list()}
         self.ball = Ball()
         self.arena = arena
@@ -71,17 +68,19 @@ class Mundo(Singleton):
     def inimigos(self):
         return self.__jogadores["Enemies"]
 
-    """ Nome da função :     inimigos (setter)
-        Intenção da função : Alterar a lista de inimigos
-        Pré-requisitos :     Nenhum
-        Efeitos colaterais : Altera todo o time de inimigos
-        Parâmetros :         Novo time de Inimigos
-        Retorno :            Nenhum
-    """
+    # Comentários em bloco por algum motivo quebram a definição do setter ali embaixo
+    #    Nome da função :     inimigos (setter)
+    #    Intenção da função : Alterar a lista de inimigos
+    #    Pré-requisitos :     Nenhum
+    #    Efeitos colaterais : Altera todo o time de inimigos
+    #    Parâmetros :         Novo time de Inimigos
+    #    Retorno :            Nenhum
+    #
+
     @inimigos.setter
-    def inimigos(self, inimigos):
+    def inimigos(self, pepo):
         self.__jogadores["Enemies"].clear()
-        self.__jogadores["Enemies"].extend(inimigos)
+        self.__jogadores["Enemies"].extend(pepo)
 
     @property
     def time(self):

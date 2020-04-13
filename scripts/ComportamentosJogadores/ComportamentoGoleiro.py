@@ -12,7 +12,7 @@
 """
 from .IComportamento import IComportamento
 from ..Geometria import Ponto
-from ..Mundo import Mundo, Arena, Lado
+from ..Mundo import Mundo, ArenaVSSSDK, Lado
 # from ..Ball import Ball
 from ..Jogador import Jogador
 import math as m
@@ -41,8 +41,8 @@ class ComportamentoGoleiro(IComportamento):
                     b e c <- lados adjascentes (distancia da bola até um dos limites do gol)
                     α <- angulo desejado
         """
-        gol = Arena.golDireito if mundo.lado == Lado.DIREITO else Arena.golEsquerdo
-        a = Arena.metricas["Gol"][1]
+        gol = ArenaVSSSDK.golDireito if mundo.lado == Lado.DIREITO else ArenaVSSSDK.golEsquerdo
+        a = ArenaVSSSDK.metricas["Gol"][1]
         b = ball.ponto.distancia(gol["Superior"])
         c = ball.ponto.distancia(gol["Inferior"])
         alpha = (b ** 2 + c ** 2 - a ** 2) / 2 * b * c

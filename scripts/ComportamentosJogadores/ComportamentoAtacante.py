@@ -12,7 +12,7 @@
 """
 from .IComportamento import IComportamento
 from ..Geometria import Ponto
-from ..Mundo import Mundo, Arena, Lado
+from ..Mundo import Mundo, ArenaVSSSDK, Lado
 from ..Jogador import Jogador
 # from ..Ball import Ball
 # import math as m
@@ -32,7 +32,7 @@ class ComportamentoAtacante(IComportamento):
             else:
                 x -= 3.35
             # Se a bola estiver acima do meio de campo, se posicionar acima dela
-            if y < Arena.marcacoes["Meio"].y:
+            if y < ArenaVSSSDK.marcacoes["Meio"].y:
                 y -= 3.35
             else:
                 y += 3.35
@@ -40,5 +40,5 @@ class ComportamentoAtacante(IComportamento):
         elif ball.ponto.distancia(jogador.ponto) > 5:
             return ball.ponto
         else:
-            resp = Arena.golEsquerdo["Meio"] if mundo.lado == Lado.ESQUERDO else Arena.golDireito["Meio"]
+            resp = ArenaVSSSDK.golEsquerdo["Meio"] if mundo.lado == Lado.ESQUERDO else ArenaVSSSDK.golDireito["Meio"]
             return resp

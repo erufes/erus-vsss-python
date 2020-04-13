@@ -8,8 +8,8 @@
 """
 import sys
 sys.path.append('scripts')  # noqa: E402
-from kernel import Kernel
-from Mundo import Mundo
+import Kernel
+import Mundo
 from enum import Enum
 
 
@@ -26,9 +26,9 @@ class Team(Enum):
 def main():
     print('Starting main...')
     print('Instantiating world...')
-    mundo = Mundo()  # noqa: F841
+    mundo = Mundo.Mundo()  # noqa: F841
     print('Done instatiating world')
-    k = Kernel()
+    k = Kernel.Kernel()
     k.loop()
     print('Kernel started')
 
