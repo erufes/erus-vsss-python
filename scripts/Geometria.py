@@ -20,9 +20,9 @@ class Ponto(object):
         Retorno :            Objeto tipo ponto criado
     """
 
-    def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
+    def __init__(self, x: float = 0, y: float = 0):
+        self._x = x
+        self._y = y
 
     """ Nome da função :     Getters e Setters
         Intenção da função : Acesso de escrita e leitura as propriedades de Ponto
@@ -40,6 +40,10 @@ class Ponto(object):
     def x(self, value):
         self._x = value
 
+    @x.deleter
+    def x(self):
+        del self._x
+
     @property
     def y(self):
         return self._y
@@ -48,18 +52,32 @@ class Ponto(object):
     def y(self, value):
         self._y = value
 
+    @y.deleter
+    def y(self):
+        del self._y
+
     @property
     def posicao(self):
-        return (self.x, self.y)
+        return (self._x, self._y)
 
     @posicao.setter
     def posicao(self, value):
         x, y = value
-        self.x = x
-        self.y = y
+        self._x = x
+        self._y = y
+
+    @posicao.deleter
+    def posicao(self):
+        del x
+        del y
+
+    # Overloads de classe
 
     def __eq__(self, outro):
         return self.posicao == outro.posicao
+
+    def __str__(self):
+        return '(' + str(self.x) + ', ' + str(self.y) + ')'
 
     """ Nome da função :     distancia
         Intenção da função : Calcular a distância entre dois pontos

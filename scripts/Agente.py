@@ -16,58 +16,61 @@ from Campo import Campo
 class Agente(object):
 
     def __init__(self, ponto=Ponto()):
-        self.__ponto = ponto
-        self.__theta = 0
-        self.__posicoesAntigas = list()
+        self._ponto: Ponto = ponto
+        self._theta: float = 0
+        self._posicoesAntigas: list = list()
 
     @property
     def ponto(self):
-        return self.__ponto
+        return self._ponto
 
     @ponto.setter
     def ponto(self, value):
-        self.__changePosition()
-        self.__ponto = value
+        self._changePosition()
+        self._ponto = value
         c = Campo()
         c.occupy(c.transform2Grid((value.x, value.y)), self)
 
     @property
     def posicao(self):
-        return self.ponto.posicao
+        return self._ponto.posicao
 
     @posicao.setter
     def posicao(self, value):
-        self.__changePosition()
-        self.ponto.posicao = value
+        self._changePosition()
+        self._ponto.posicao = value
         c = Campo()
         c.occupy(c.transform2Grid(value), self)
 
     @property
     def x(self):
-        return self.ponto.x
+        return self._ponto.x
 
     @property
     def y(self):
-        return self.ponto.y
+        return self._ponto.y
 
     @property
     def theta(self):
-        return self.__theta
+        return self._theta
 
     @theta.setter
     def theta(self, value):
-        self.__theta = value
+        self._theta = value
 
     @property
     def posicoesAntigas(self):
-        return self.__posicoesAntigas.copy()
+        return self._posicoesAntigas.copy()
 
     def __changePosition(self):
-        if len(self.__posicoesAntigas) >= 5:
-            self.__posicoesAntigas.pop(0)
-        self.__posicoesAntigas.append(Ponto(self.ponto.x, self.ponto.y))
+        if len(self._posicoesAntigas) >= 5:
+            self._posicoesAntigas.pop(0)
+        self._posicoesAntigas.append(Ponto(self._ponto.x, self._ponto.y))
         c = Campo()
         c.release(c.transform2Grid(self.posicao))
 
     def predicaoAdaptativa(self):
         pass
+
+    def __str__(self):
+        return 'Agente\nPosição: ' + str(self.posicao) + '\nTheta: ' + str(self.theta) + '\nPosicoes antigas: ' + str(self.posicoesAntigas)

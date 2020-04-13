@@ -26,7 +26,7 @@ class Team(Enum):
 def main():
     print('Starting main...')
     print('Instantiating world...')
-    mundo = Mundo.Mundo()  # noqa: F841
+    mundo = Mundo.Mundo()
     time = [Aliado(0, comportamento=COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamento=COMPORTAMENTOS.ATACANTE), Aliado(2)]
     inimigo = [Inimigo.Inimigo(3), Inimigo.Inimigo(4), Inimigo.Inimigo(5)]
     mundo.inimigos = inimigo

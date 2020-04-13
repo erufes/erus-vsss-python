@@ -14,7 +14,11 @@ from Patterns.Singleton import Singleton
 class Ball(Agente, Singleton):
 
     def __init__(self, *args, **keyargs):
+        super().__init__()
         pass
 
     def inicializa(self, ponto=Ponto()):
         Agente.__init__(self, ponto)
+
+    def __str__(self):
+        return '[Ball] ' + super().__str__()

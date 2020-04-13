@@ -12,7 +12,7 @@ from Geometria import Ponto
 
 class Inimigo(Jogador):
 
-    def __init__(self, idJ, ponto=Ponto()):
+    def __init__(self, idJ=None, ponto=Ponto()):
         Jogador.__init__(self, idJ=idJ, ponto=ponto)
 
     """ Nome da função :     isInimigo

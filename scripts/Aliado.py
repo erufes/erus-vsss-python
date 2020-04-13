@@ -18,7 +18,7 @@ from ComportamentosJogadores.Factory import Factory
 
 class Aliado(Jogador):
 
-    def __init__(self, idJ, ponto=Ponto(), comportamento=None):
+    def __init__(self, idJ=None, ponto=Ponto(), comportamento=None):
         Jogador.__init__(self, idJ=idJ, ponto=ponto)
         self.comportamento = comportamento
 
@@ -58,3 +58,6 @@ class Aliado(Jogador):
 
     def definirObjetivo(self, mundo):
         return self.__comportamento.definirObjetivo(self, mundo)
+
+    def __str__(self):
+        return '[Aliado] ' + super().__str__()

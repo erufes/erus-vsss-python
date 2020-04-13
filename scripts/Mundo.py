@@ -54,7 +54,7 @@ class Mundo(Singleton):
 
     def __init__(self, arena=None, homeTeam=list(), enemies=list()):
         self.__jogadores = {"HomeTeam": list(), "Enemies": list()}
-        self.ball = Ball()
+        self.ball: Ball = Ball()
         self.arena = arena
 
     """ Nome da função :     inimigos (getter)
@@ -78,9 +78,9 @@ class Mundo(Singleton):
     #
 
     @inimigos.setter
-    def inimigos(self, pepo):
+    def inimigos(self, inimigos):
         self.__jogadores["Enemies"].clear()
-        self.__jogadores["Enemies"].extend(pepo)
+        self.__jogadores["Enemies"].extend(inimigos)
 
     @property
     def time(self):
