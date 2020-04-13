@@ -54,3 +54,6 @@ Simulador
 __pycache__/
 *.pyc
 *.teste.pyc
+
+# Cache do linter
+.mypycache
