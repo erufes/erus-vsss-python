@@ -25,3 +25,6 @@ class Inimigo(Jogador):
 
     def isInimigo(self):
         return True
+
+    def __str__(self):
+        return '[Inimigo] ' + super().__str__()

@@ -45,15 +45,15 @@ class ArenaVSSSDK(object):
                 "Gol": (10, 40)
                 }
 
-    def __init__(self, campo=Campo(celulasX=15, celulasY=13), homeTeamSide=Lado.ESQUERDO):
+    def __init__(self, campo=Campo(celulasX=15, celulasY=13), alliesSide=Lado.ESQUERDO):
         self.campo = campo
-        self.homeTeamSide = homeTeamSide
+        self.alliesSide = alliesSide
 
 
 class Mundo(Singleton):
 
-    def __init__(self, arena=None, homeTeam=list(), enemies=list()):
-        self.__jogadores = {"HomeTeam": list(), "Enemies": list()}
+    def __init__(self, arena=None, allies=list(), enemies=list()):
+        self.__jogadores = {"allies": list(), "enemies": list()}
         self.ball: Ball = Ball()
         self.arena = arena
 
@@ -66,7 +66,7 @@ class Mundo(Singleton):
     """
     @property
     def inimigos(self):
-        return self.__jogadores["Enemies"]
+        return self.__jogadores["enemies"]
 
     # Comentários em bloco por algum motivo quebram a definição do setter ali embaixo
     #    Nome da função :     inimigos (setter)
@@ -79,20 +79,27 @@ class Mundo(Singleton):
 
     @inimigos.setter
     def inimigos(self, inimigos):
-        self.__jogadores["Enemies"].clear()
-        self.__jogadores["Enemies"].extend(inimigos)
+        self.__jogadores["enemies"].clear()
+        self.__jogadores["enemies"].extend(inimigos)
 
     @property
     def time(self):
-        return self.__jogadores["HomeTeam"]
+        return self.__jogadores["allies"]
 
     @time.setter
     def time(self, newTime):
-        self.__jogadores["HomeTeam"].clear()
-        self.__jogadores["HomeTeam"].extend(newTime)
+        self.__jogadores["allies"].clear()
+        self.__jogadores["allies"].extend(newTime)
 
     def control(self):
         pass
 
     def __defineFunction(self):
         pass
+
+    def __str__(self):
+        out_string = ''
+        out_string += '[Modelo de Mundo]\n'
+        out_string += 'Possui %d aliados registrados:\n %s\n' % (len(self.__jogadores['allies']), str(self.__jogadores['allies']))
+        out_string += 'Possui %d inimigos registrados:\n %s\n' % (len(self.__jogadores['enemies']), str(self.__jogadores['enemies']))
+        return out_string

@@ -37,3 +37,6 @@ class Jogador(Agente):
 
     def isInimigo(self):
         return NotImplementedError
+
+    def __str__(self):
+        return '[Jogador] ' + super().__str__()
