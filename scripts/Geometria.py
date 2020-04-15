@@ -6,6 +6,7 @@
     Membros :             Lorena Bassani
 """
 import math as m
+from typing import Tuple
 
 
 class Ponto(object):
@@ -61,23 +62,23 @@ class Ponto(object):
         return (self._x, self._y)
 
     @posicao.setter
-    def posicao(self, value):
+    def posicao(self, value: Tuple[float, float]):
         x, y = value
         self._x = x
         self._y = y
 
     @posicao.deleter
     def posicao(self):
-        del x
-        del y
+        del self._x
+        del self._y
 
     # Overloads de classe
 
     def __eq__(self, outro):
-        return self.posicao == outro.posicao
+        return self._posicao == outro.posicao
 
     def __str__(self):
-        return '(' + str(self.x) + ', ' + str(self.y) + ')'
+        return '(' + str(self._x) + ', ' + str(self._y) + ')'
 
     """ Nome da função :     distancia
         Intenção da função : Calcular a distância entre dois pontos
@@ -88,7 +89,7 @@ class Ponto(object):
     """
 
     def distancia(self, outro):
-        return m.sqrt((self.x - outro.x)**2 + (self.y - outro.y)**2)
+        return m.sqrt((self._x - outro.x)**2 + (self._y - outro.y)**2)
 
 
 def to180range(angle):

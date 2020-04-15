@@ -45,17 +45,17 @@ class ArenaVSSSDK(object):
                 "Gol": (10, 40)
                 }
 
-    def __init__(self, campo=Campo(celulasX=15, celulasY=13), alliesSide=Lado.ESQUERDO):
-        self.campo = campo
-        self.alliesSide = alliesSide
+    def __init__(self, campo: Campo = Campo(celulasX=15, celulasY=13), alliesSide: Lado = Lado.ESQUERDO):
+        self._campo: Campo = campo
+        self._alliesSide: Lado = alliesSide
 
 
 class Mundo(Singleton):
 
     def __init__(self, arena=None, allies=list(), enemies=list()):
-        self.__jogadores = {"allies": list(), "enemies": list()}
-        self.ball: Ball = Ball()
-        self.arena = arena
+        self._jogadores: dict = {"allies": list(), "enemies": list()}
+        self._ball: Ball = Ball()
+        self._arena: ArenaVSSSDK = arena
 
     """ Nome da função :     inimigos (getter)
         Intenção da função : Retorna os Inimigos
@@ -66,7 +66,7 @@ class Mundo(Singleton):
     """
     @property
     def inimigos(self):
-        return self.__jogadores["enemies"]
+        return self._jogadores["enemies"]
 
     # Comentários em bloco por algum motivo quebram a definição do setter ali embaixo
     #    Nome da função :     inimigos (setter)
@@ -78,18 +78,18 @@ class Mundo(Singleton):
     #
 
     @inimigos.setter
-    def inimigos(self, inimigos):
-        self.__jogadores["enemies"].clear()
-        self.__jogadores["enemies"].extend(inimigos)
+    def inimigos(self, inimigos: list):
+        self._jogadores["enemies"].clear()
+        self._jogadores["enemies"].extend(inimigos)
 
     @property
     def time(self):
-        return self.__jogadores["allies"]
+        return self._jogadores["allies"]
 
     @time.setter
     def time(self, newTime):
-        self.__jogadores["allies"].clear()
-        self.__jogadores["allies"].extend(newTime)
+        self._jogadores["allies"].clear()
+        self._jogadores["allies"].extend(newTime)
 
     def control(self):
         pass
@@ -100,6 +100,6 @@ class Mundo(Singleton):
     def __str__(self):
         out_string = ''
         out_string += '[Modelo de Mundo]\n'
-        out_string += 'Possui %d aliados registrados:\n %s\n' % (len(self.__jogadores['allies']), str(self.__jogadores['allies']))
-        out_string += 'Possui %d inimigos registrados:\n %s\n' % (len(self.__jogadores['enemies']), str(self.__jogadores['enemies']))
+        out_string += 'Possui %d aliados registrados:\n %s\n' % (len(self._jogadores['allies']), str(self._jogadores['allies']))
+        out_string += 'Possui %d inimigos registrados:\n %s\n' % (len(self._jogadores['enemies']), str(self._jogadores['enemies']))
         return out_string

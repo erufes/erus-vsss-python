@@ -12,9 +12,9 @@ from Geometria import Ponto
 
 class Jogador(Agente):
 
-    def __init__(self, idJ=None, ponto=Ponto()):
-        Agente.__init__(self, ponto)
-        self.__id = idJ
+    def __init__(self, idJ: int, ponto: Ponto = Ponto()):
+        super().__init__(self, ponto)
+        self._id: int = idJ
 
     """ Nome da função :     id (getter)
         Intenção da função : Retorna o Id de um Jogador
@@ -25,7 +25,7 @@ class Jogador(Agente):
     """
     @property
     def id(self):
-        return self.__id
+        return self._id
 
     """ Nome da função :     isInimigo
         Intenção da função : Dizer se o Jogador é Inimigo

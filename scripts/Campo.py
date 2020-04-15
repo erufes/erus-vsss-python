@@ -12,10 +12,8 @@ from PathPlanning.Graph import WeightedGridGraph
 
 class Campo(WeightedGridGraph, Singleton):
 
-    def __init__(self, *args, **keyargs):
-        pass
-
-    def inicializa(self, celulasX, celulasY, dimX=150, dimY=130):
+    def __init__(self, celulasX: int, celulasY: int, dimX: int = 150, dimY: int = 130):
+        # ??????
         if not hasattr(self, "grade"):
             WeightedGridGraph.__init__(self, celulasX, celulasY)
             self.__h = (dimX / (celulasX - 1), dimY / (celulasY - 1))
