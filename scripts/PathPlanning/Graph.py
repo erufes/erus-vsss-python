@@ -5,6 +5,9 @@
     Pré-requisitos :        Nenhum
     Membros :               Lorena Bassani
 """
+from typing import Tuple, Dict
+
+# TODO: Revisar os comentários de tipagem desse arquivo
 
 
 class SimpleGraph(object):
@@ -22,11 +25,17 @@ class SimpleGraph(object):
     def neighbors(self, id):
         return self.edges[id]
 
+    def __str__(self):
+        return '[SimpleGraph]\n' + str(self.edges)
+
 
 class GridGraph(object):
-    def __init__(self, celulasX, celulasY):
-        self.__grade = (celulasX, celulasY)
-        self.__occupied = list()
+    def __init__(self, dim_x: int, dim_y: int) -> None:
+        self._sizex: int = dim_x
+        self._sizey: int = dim_y
+        self._dimensions: Dict[str, int] = {'x': dim_x,'y': dim_y}
+        self._data: Dict = dict()
+        self._maxSize = dim_x * dim_y
 
     """ Nome da função :     grid (getter)
         Intenção da função : Retorna as dimensões da Grade
@@ -36,21 +45,28 @@ class GridGraph(object):
         Retorno :            (nx, ny) : Dimensão da Grade
     """
     @property
-    def grid(self):
-        return self.__grade
+    def dimensions(self) -> Dict:
+        return self._dimensions
 
     """ Nome da função :     occupy
         Intenção da função : Ocupar uma celula com um objeto
         Pré-requisitos :     Celula pertencente a Grade
         Efeitos colaterais : A Celula informada passa a ser ocupada pelo objeto
-        Parâmetros :         int : Celula a ser ocupada
-                             object : Objeto que irá ocupar a célula
+        Parâmetros :         Tuple(int, int) : Celula a ser ocupada
+                             object          : Objeto que irá ocupar a célula
         Retorno :            Nenhum
     """
+    def occupy(self, cel: Tuple[int, int], obj) -> None:
+        if not self.is_inside_grid(cel):
+            raise IndexError('Célula inexistente')
+        # Check if _data already has a key
+        grid = self.transform2grid(cel)
+        if cel in self._data:
+            self._data[cel].append(obj[1])
+        else:
+            print('Debug! eeo')
+            self._data[cel] = [obj]
 
-    def occupy(self, cel, obj):
-        if self.isInsideGrid(cel):
-            self.__occupied.append((cel, obj))
 
     """ Nome da função :     release
         Intenção da função : Libera a Celula
@@ -60,12 +76,12 @@ class GridGraph(object):
         Retorno :            Nenhum
     """
 
-    def release(self, cel):
-        liberar = self.getOccupier(cel)
-        if liberar:
-            self.__occupied.remove(liberar)
+    def release(self, cel: Tuple[int, int]) -> None:
+        cellContent = self.get_occuppier(cel)
+        if cellContent:
+            self._data.remove(cellContent)
 
-    """ Nome da função :     isOccupied
+    """ Nome da função :     is_occupied
         Intenção da função : Dizer se a celula está ocupada
         Pré-requisitos :     Celula pertencente a Grade
         Efeitos colaterais : Nenhum
@@ -73,10 +89,10 @@ class GridGraph(object):
         Retorno :            Boolean : True se estiver ocupada, False caso contrário
     """
 
-    def isOccupied(self, cel):
-        return self.getOccupier(cel) is not None
+    def is_occupied(self, cel: Tuple[int, int]) -> bool:
+        return self.get_occuppier(cel) is not None
 
-    """ Nome da função :     getOccupier
+    """ Nome da função :     get_occuppier
         Intenção da função : Retornar referência ao objeto que ocupa uma celula, junto com a celula ocupada
         Pré-requisitos :     Celula pertecente a Grade
         Efeitos colaterais : Nenhum
@@ -84,13 +100,13 @@ class GridGraph(object):
         Retorno :            (int, object) : Celula e objeto que a ocupa (None se não for ocupada)
     """
 
-    def getOccupier(self, cel):
-        ocupador = list(filter(lambda x: x[0] == cel, self.__occupied))
+    def get_occuppier(self, cel):
+        ocupador = list(filter(lambda x: x[0] == cel, self._data))
         if ocupador:
             return ocupador[0]
-        return None
+        return ((0, 0), None)
 
-    """ Nome da função :     isInsideGrid
+    """ Nome da função :     is_inside_grid
         Intenção da função : Dizer se uma celula está na Grade
         Pré-requisitos :     Nenhum
         Efeitos colaterais : Nenhum
@@ -98,10 +114,11 @@ class GridGraph(object):
         Retorno :            Boolean : True se pertencer a grade, False caso contrário
     """
 
-    def isInsideGrid(self, cel):
-        return cel >= 0 and cel < self.__grade[0] * self.__grade[1]
+    def is_inside_grid(self, cel: Tuple[int, int]) -> bool:
+        size = cel[0] * cel[1]
+        return 0 <= size < self._maxSize
 
-    """ Nome da função :     whatIsOccupied
+    """ Nome da função :     whatis_occupied
         Intenção da função : Retornar todos os pontos ocupados da Grade
         Pré-requisitos :     Nenhum
         Efeitos colaterais : Nenhum
@@ -109,8 +126,8 @@ class GridGraph(object):
         Retorno :            list : Lista de Celulas ocupadas na Grade
     """
 
-    def whatIsOccupied(self):
-        return list(map(lambda x: x[0], self.__occupied))
+    def whatis_occupied(self):
+        return list(map(lambda x: x[0], self._data))
 
     """ Nome da função :     neighbors
         Intenção da função : Retornar Vizinhos da Celula
@@ -123,22 +140,22 @@ class GridGraph(object):
     def neighbors(self, cel):
         nbs = list()
         cels = list()
-        cels.append(cel - self.__grade[0])
-        cels.append(cel + self.__grade[0])
-        if cel % self.__grade[0] > 0:
+        cels.append(cel - self._dimensions[0])
+        cels.append(cel + self._dimensions[0])
+        if cel % self._dimensions[0] > 0:
             cels.append(cel - 1)
-        if cel % self.__grade[0] < self.__grade[0] - 1:
+        if cel % self._dimensions[0] < self._dimensions[0] - 1:
             cels.append(cel + 1)
 
         for c in cels:
-            if self.isInsideGrid(c):
-                o = self.getOccupier(c)
+            if self.is_inside_grid(c):
+                o = self.get_occuppier(c)
                 if o is None:
                     o = (c, None)
                 nbs.append(o)
         return nbs
 
-    """ Nome da função :     transform2Cart
+    """ Nome da função :     transform2cart
         Intenção da função : Transforma uma celula da Grade em um ponto cartesiano correspondente
         Pré-requisitos :     Celula pertencente a Grade
         Efeitos colaterais : Nenhum
@@ -146,10 +163,10 @@ class GridGraph(object):
         Retorno :            (int, int) : Coordenadas cartesianas correrpondestes a celula
     """
 
-    def transform2Cart(self, cel):
-        return (cel % self.__grade[0], cel // self.__grade[0])
+    def transform2cart(self, cel: int) -> Tuple[int, int]:
+        return cel % self._dimensions['x'], cel // self._dimensions['y']
 
-    """ Nome da função :     transform2Grid
+    """ Nome da função :     transform2grid
         Intenção da função : Transformar um ponto cartesiano em um ponto da grade
         Pré-requisitos :     Ponto pertencente ao dominio [0, 0]x[nx, ny]
         Efeitos colaterais : Nenhum
@@ -157,9 +174,18 @@ class GridGraph(object):
         Retorno :            int : Celula correspondente ao ponto
     """
 
-    def transform2Grid(self, cel):
+    def transform2grid(self, cel: Tuple[int, int]) -> int:
         x, y = cel
-        return y * self.__grade[0] + x
+        return y * self._dimensions['x'] + x
+
+    def __str__(self):
+        out_str = '[Grid Graph]\n'
+        out_str += 'Dimensões: %d x %d\n' % (self._sizex, self._sizey)
+        out_str += 'Conteúdo: \n'
+        out_str += str(self._data)
+        for i in self._data:
+            print(i)
+        return out_str
 
 
 class WeightedGridGraph(GridGraph):
@@ -177,3 +203,8 @@ class WeightedGridGraph(GridGraph):
 
     def cost(self, start, goal):
         return 1
+
+    # def __str__(self):
+    #     out_str = '[Weighted Grid Graph]\n'
+    #     # out_str += 'Dimensões do grafo: %d x %d' % (celulasX, celulasY)
+    #     return out_str

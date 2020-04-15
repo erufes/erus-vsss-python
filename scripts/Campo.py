@@ -37,3 +37,8 @@ class Campo(WeightedGridGraph, Singleton):
     def cost(self, start, goal):
         # TODO : Redefinir custo para variar com a proximidade a um obstáculo
         return WeightedGridGraph.cost(self, start, goal)
+
+    # def __str__(self):
+    #     out_string = '[Campo]'
+    #     out_string = 'Possui dimensões: %d x %d' % ()
+    #     return '[Campo]'
