@@ -33,7 +33,7 @@ class GridGraph(object):
     def __init__(self, dim_x: int, dim_y: int) -> None:
         self._sizex: int = dim_x
         self._sizey: int = dim_y
-        self._dimensions: Dict[str, int] = {'x': dim_x,'y': dim_y}
+        self._dimensions: Dict[str, int] = {'x': dim_x, 'y': dim_y}
         self._data: Dict = dict()
         self._maxSize = dim_x * dim_y
 
@@ -59,14 +59,11 @@ class GridGraph(object):
     def occupy(self, cel: Tuple[int, int], obj) -> None:
         if not self.is_inside_grid(cel):
             raise IndexError('Célula inexistente')
-        # Check if _data already has a key
-        grid = self.transform2grid(cel)
+        # Check if _data already has an object inside
         if cel in self._data:
             self._data[cel].append(obj[1])
         else:
-            print('Debug! eeo')
             self._data[cel] = [obj]
-
 
     """ Nome da função :     release
         Intenção da função : Libera a Celula
@@ -77,9 +74,8 @@ class GridGraph(object):
     """
 
     def release(self, cel: Tuple[int, int]) -> None:
-        cellContent = self.get_occuppier(cel)
-        if cellContent:
-            self._data.remove(cellContent)
+        if self.get_occuppier(cel) is not None:
+            del self._data[cel]
 
     """ Nome da função :     is_occupied
         Intenção da função : Dizer se a celula está ocupada
@@ -100,11 +96,10 @@ class GridGraph(object):
         Retorno :            (int, object) : Celula e objeto que a ocupa (None se não for ocupada)
     """
 
-    def get_occuppier(self, cel):
-        ocupador = list(filter(lambda x: x[0] == cel, self._data))
-        if ocupador:
-            return ocupador[0]
-        return ((0, 0), None)
+    def get_occuppier(self, cel: Tuple[int, int]) -> list:
+        if cel in self._data:
+            return self._data[cel]
+        return []
 
     """ Nome da função :     is_inside_grid
         Intenção da função : Dizer se uma celula está na Grade
@@ -115,8 +110,7 @@ class GridGraph(object):
     """
 
     def is_inside_grid(self, cel: Tuple[int, int]) -> bool:
-        size = cel[0] * cel[1]
-        return 0 <= size < self._maxSize
+        return 0 <= cel[0] * cel[1] < self._maxSize
 
     """ Nome da função :     whatis_occupied
         Intenção da função : Retornar todos os pontos ocupados da Grade
@@ -127,7 +121,8 @@ class GridGraph(object):
     """
 
     def whatis_occupied(self):
-        return list(map(lambda x: x[0], self._data))
+        lst = [k for k in self._data]
+        return lst
 
     """ Nome da função :     neighbors
         Intenção da função : Retornar Vizinhos da Celula
@@ -137,22 +132,20 @@ class GridGraph(object):
         Retorno :            list : Lista com as celulas vizinhas
     """
 
-    def neighbors(self, cel):
-        nbs = list()
-        cels = list()
-        cels.append(cel - self._dimensions[0])
-        cels.append(cel + self._dimensions[0])
-        if cel % self._dimensions[0] > 0:
-            cels.append(cel - 1)
-        if cel % self._dimensions[0] < self._dimensions[0] - 1:
-            cels.append(cel + 1)
-
+    def neighbors(self, cel: Tuple[int, int]) -> list:
+        nbs = []
+        cels = []
+        idx = self.transform2grid(cel)
+        cels.append(idx - self._dimensions['x'])
+        cels.append(idx + self._dimensions['x'])
+        if idx % self._dimensions['x'] > 0:
+            cels.append(idx - 1)
+        if idx % self._dimensions['x'] < self._dimensions['x'] - 1:
+            cels.append(idx + 1)
         for c in cels:
-            if self.is_inside_grid(c):
-                o = self.get_occuppier(c)
-                if o is None:
-                    o = (c, None)
-                nbs.append(o)
+            conv = self.transform2cart(c)
+            if self.is_inside_grid(conv):
+                nbs.append(conv)
         return nbs
 
     """ Nome da função :     transform2cart
@@ -183,8 +176,6 @@ class GridGraph(object):
         out_str += 'Dimensões: %d x %d\n' % (self._sizex, self._sizey)
         out_str += 'Conteúdo: \n'
         out_str += str(self._data)
-        for i in self._data:
-            print(i)
         return out_str
 
 
@@ -202,6 +193,7 @@ class WeightedGridGraph(GridGraph):
     """
 
     def cost(self, start, goal):
+        raise NotImplementedError
         return 1
 
     # def __str__(self):
