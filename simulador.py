@@ -12,7 +12,6 @@ import Kernel
 import Mundo
 from enum import Enum
 
-
 import Inimigo
 from Aliado import Aliado
 from ComportamentosJogadores.Factory import COMPORTAMENTOS
@@ -27,7 +26,7 @@ def main():
     print('Starting main...')
     print('Instantiating world...')
     mundo = Mundo.Mundo()
-    time = [Aliado(0, comportamento=COMPORTAMENTOS.GOLEIRO), Aliado(1, comportamento=COMPORTAMENTOS.ATACANTE), Aliado(2)]
+    time = [Aliado(idj=0, ponto=(0, 0), comportamento=COMPORTAMENTOS.GOLEIRO), Aliado(idj=1, ponto=(0, 0), comportamento=COMPORTAMENTOS.ATACANTE), Aliado(idj=2, ponto=(0, 0), comportamento=COMPORTAMENTOS.ATACANTE)]
     inimigo = [Inimigo.Inimigo(3), Inimigo.Inimigo(4), Inimigo.Inimigo(5)]
     mundo.inimigos = inimigo
     mundo.time = time

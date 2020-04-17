@@ -1,19 +1,19 @@
 import time
-from .IControleTrajeto import IcontroleTrajeto
+from IControleTrajeto import IcontroleTrajeto
 
 
 class ControleTrajetoPID(IcontroleTrajeto):
-    def __init__(self, pid_P=0.2, pid_I=0.0, pid_D=0.0, current_time=None):
+    def __init__(self, pid_P: float = 0.2, pid_I: float = 0.0, pid_D: float = 0.0, current_time: float = None):
         """Determines how aggressively the PID reacts to the current error with setting Proportional Gain"""
-        self.Kp = pid_P
+        self._kp = pid_P
         """Determines how aggressively the PID reacts to the current error with setting Integral Gain"""
-        self.Ki = pid_I
+        self._ki = pid_I
         """Determines how aggressively the PID reacts to the current error with setting Derivative Gain"""
-        self.Kd = pid_D
+        self._kd = pid_D
 
-        self.sample_time = 0.00
-        self.current_time = current_time if current_time is not None else time.time()
-        self.last_time = self.current_time
+        self._sample_time = 0.00
+        self._current_time = current_time if current_time is not None else time.time()
+        self._last_time = self.current_time
 
         self.clear()
 
@@ -42,7 +42,7 @@ class ControleTrajetoPID(IcontroleTrajeto):
 
     def update(self, feedback_value, current_time=None):
         """ Calculates PID value for given reference feedback
-            Test PID with Kp=1.2, Ki=1, Kd=0.001 (test_pid.py)
+            Test PID with kp=1.2, ki=1, kd=0.001 (test_pid.py)
         """
         error = self.SetPoint - feedback_value
 
@@ -51,7 +51,7 @@ class ControleTrajetoPID(IcontroleTrajeto):
         deltaError = error - self.lastError
 
         if (delta_time >= self.sample_time):
-            self.PTerm = self.Kp * error
+            self.PTerm = self.kp * error
             self.ITerm += error * delta_time
 
             if (self.ITerm < -self.windupGuard):
@@ -68,7 +68,7 @@ class ControleTrajetoPID(IcontroleTrajeto):
             self.lastError = error
 
             self.output = self.PTerm + \
-                (self.Ki * self.ITerm) + (self.Kd * self.DTerm)
+                (self._ki * self.ITerm) + (self.kd * self.DTerm)
 
     def setWindup(self, windup):
         """ Integral windup, also known as integrator windup or reset windup,

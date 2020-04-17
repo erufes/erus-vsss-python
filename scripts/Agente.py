@@ -15,7 +15,7 @@ from Campo import Campo
 
 class Agente(object):
 
-    def __init__(self, ponto=Ponto()):
+    def __init__(self, ponto: Ponto = Ponto()):
         self._ponto: Ponto = ponto
         self._theta: float = 0
         self._posicoesAntigas: list = list()

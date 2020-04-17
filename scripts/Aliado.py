@@ -13,13 +13,15 @@
 from Jogador import Jogador
 from Geometria import Ponto
 from ComportamentosJogadores.Factory import Factory
+from ComportamentosJogadores import Comportamentos
+from typing import Optional
 # from ComportamentosJogadores.IComportamento import IComportamento
 
 
 class Aliado(Jogador):
 
-    def __init__(self, idJ=None, ponto=Ponto(), comportamento=None):
-        Jogador.__init__(self, idJ=idJ, ponto=ponto)
+    def __init__(self, idj: int, ponto: Ponto = Ponto(0, 0), comportamento: Optional[Comportamentos.COMPORTAMENTOS] = None):
+        super().__init__(idj, ponto)
         self.comportamento = comportamento
 
     """ Nome da função :     comportamento (getter)
