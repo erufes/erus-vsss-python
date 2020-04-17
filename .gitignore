@@ -56,4 +56,4 @@ __pycache__/
 *.teste.pyc
 
 # Cache do linter
-.mypycache
+.mypy_cache
