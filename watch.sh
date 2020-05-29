@@ -1,2 +1,2 @@
 #!/bin/zsh
-while inotifywait -e close_write scripts simulador.py; do clear && mypy --ignore-missing-imports scripts simulador.py && flake8 --ignore=E501 scripts simulador.py; done
+while inotifywait -e close_write scripts simulador.py; do clear && mypy --ignore-missing-imports scripts simulador.py && flake8 --ignore=E501,E402 scripts simulador.py; done

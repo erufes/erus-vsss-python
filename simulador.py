@@ -7,7 +7,7 @@
     Membros:                Lorena Bassani
 """
 import sys
-sys.path.append('scripts')  # noqa: E402
+sys.path.append('scripts')
 import Kernel
 import Mundo
 from enum import Enum
