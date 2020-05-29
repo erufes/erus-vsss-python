@@ -10,6 +10,7 @@
 
 from Geometria import Ponto
 from Campo import Campo
+from typing import List
 # import math as m
 
 
@@ -18,16 +19,17 @@ class Agente(object):
     def __init__(self, ponto: Ponto = Ponto()):
         self._ponto: Ponto = ponto
         self._theta: float = 0
-        self._posicoesAntigas: list = list()
+        self._posicoesAntigas: List[Ponto] = list()
 
     @property
     def ponto(self):
         return self._ponto
 
     @ponto.setter
-    def ponto(self, value):
-        self._changePosition()
+    def ponto(self, value: Ponto):
+        self.__changePosition(value)
         self._ponto = value
+        # ?????
         c = Campo()
         c.occupy(c.transform2Grid((value.x, value.y)), self)
 
@@ -39,6 +41,7 @@ class Agente(object):
     def posicao(self, value):
         self._changePosition()
         self._ponto.posicao = value
+        # ?????
         c = Campo()
         c.occupy(c.transform2Grid(value), self)
 
@@ -62,10 +65,12 @@ class Agente(object):
     def posicoesAntigas(self):
         return self._posicoesAntigas.copy()
 
-    def __changePosition(self):
+    def __changePosition(self, target: Ponto):
+        # TODO: Magic number
         if len(self._posicoesAntigas) >= 5:
             self._posicoesAntigas.pop(0)
         self._posicoesAntigas.append(Ponto(self._ponto.x, self._ponto.y))
+        # ?????
         c = Campo()
         c.release(c.transform2Grid(self.posicao))
 

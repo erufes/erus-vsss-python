@@ -13,11 +13,11 @@ from Patterns.Singleton import Singleton
 
 class Ball(Agente, Singleton):
 
-    def __init__(self, *args, **keyargs):
+    def __init__(self):
         super().__init__()
         pass
 
-    def inicializa(self, ponto=Ponto()):
+    def inicializa(self, ponto: Ponto = Ponto()):
         Agente.__init__(self, ponto)
 
     def __str__(self):

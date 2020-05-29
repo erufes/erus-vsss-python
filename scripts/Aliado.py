@@ -22,7 +22,7 @@ class Aliado(Jogador):
 
     def __init__(self, idj: int, ponto: Ponto = Ponto(0, 0), comportamento: Optional[Comportamentos.COMPORTAMENTOS] = None):
         super().__init__(idj, ponto)
-        self.comportamento = comportamento
+        self.comportamento: Optional[Comportamentos.COMPORTAMENTOS] = comportamento
 
     """ Nome da função :     comportamento (getter)
         Intenção da função : Retornar qual o comportamento atual do Jogador
@@ -44,8 +44,8 @@ class Aliado(Jogador):
     #    Retorno :            Nenhum
     @comportamento.setter
     def comportamento(self, comportamento):
-        self.__comportamentoId = comportamento
-        self.__comportamento = Factory.create(comportamento)
+        self.__comportamentoId: Comportamentos.COMPORTAMENTOS = comportamento
+        self.__comportamento: Comportamentos.COMPORTAMENTOS = Factory.create(comportamento)
 
     """ Nome da função :     isInimigo
         Intenção da função : Dizer se o Jogador é Inimigo
@@ -54,8 +54,7 @@ class Aliado(Jogador):
         Parâmetros :         Nenhum
         Retorno :            Boolean : Sempre False
     """
-
-    def isInimigo(self):
+    def isInimigo(self) -> bool:
         return False
 
     def definirObjetivo(self, mundo):

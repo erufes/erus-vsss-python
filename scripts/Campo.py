@@ -22,19 +22,22 @@ class Campo(WeightedGridGraph, Singleton):
     def tamanhoCelula(self):
         return self.__h
 
-    def transform2Cart(self, cel):
-        # TODO : Ver Se as grades possuem as mesmas características de crescimento de coordenadas
-        i, j = WeightedGridGraph.transform2Cart(self, cel)
-        return (i * self.__h[0], j * self.__h[1])
+    # pietroluongo: Essas funções definidas e comentadas abaixo não são uma
+    #               redefinição das funções da superclasse?
 
-    def transform2Grid(self, cel):
-        # TODO : Redefinir trasnformação
-        x, y = cel
-        return WeightedGridGraph.transform2Grid(self, (x // self.__h[0], y // self.__h[1]))
+    # def transform2Cart(self, cel: int) -> Tuple[int, int]:
+    #     # TODO : Ver Se as grades possuem as mesmas características de crescimento de coordenadas
+    #     i, j = WeightedGridGraph.transform2Cart(self, cel)
+    #     return (i * self.__h[0], j * self.__h[1])
 
-    def cost(self, start, goal):
-        # TODO : Redefinir custo para variar com a proximidade a um obstáculo
-        return WeightedGridGraph.cost(self, start, goal)
+    # def transform2Grid(self, cel: Tuple(int, int)):
+    #     # TODO : Redefinir transformação
+    #     x, y = cel
+    #     return WeightedGridGraph.transform2Grid(self, (x // self.__h[0], y // self.__h[1]))
+
+    # def cost(self, start, goal):
+    #     # TODO : Redefinir custo para variar com a proximidade a um obstáculo
+    #     return WeightedGridGraph.cost(self, start, goal)
 
     # def __str__(self):
     #     out_string = '[Campo]'
