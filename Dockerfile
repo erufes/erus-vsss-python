@@ -22,6 +22,6 @@ WORKDIR /erus-vss-python
 
 RUN pip3 install zmq protobuf
 
-ENTRYPOINT "python3 ./simulador.py"
+ENTRYPOINT "python3 /erus-vss-python/simulador.py"
 
 
