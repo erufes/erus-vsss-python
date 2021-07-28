@@ -306,3 +306,6 @@ class Player(Agent):
         if ro < 100:
             ret = 0
         return ret
+
+    def check_type(self):
+        pass

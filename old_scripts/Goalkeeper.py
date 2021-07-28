@@ -77,3 +77,6 @@ class Goalkeeper(Player):
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
       
         return int(vr), int(vl)
+
+    def check_type(self):
+        return "goalkeeper"

@@ -8,6 +8,7 @@
 """
 
 import requests
+from math import sqrt, pi, acos
 
 from old_scripts.World import World
 from old_scripts.PlayerAtaque import PlayerAtaque
@@ -106,9 +107,14 @@ def main():
         mensagens['Yellow'] = list()
         for i in range(0,3):
             p = world_yellow.get_teammate(i)
-            vr, vl = p.controle(world_yellow)
+            x, y = p.chuta(world_yellow)
+            ro = sqrt((x-p.x)**2) + ((y-p.y)**2)
+            alfa = angle_clockwise((x,y), (p.x, p.y))
+            vr, vl = p.lyapunov(ro, alfa, 255, 40, 40)
+
             vr = remap(vr, -255, 255, 0, 10)
             vl = remap(vl, -255, 255, 0, 10)
+
             mensagens['Yellow'].append({
                     'method'  : 'move',
                     'params'  : [vr, vl],
@@ -121,7 +127,24 @@ def main():
             for i in range(0,3):
                 url = local + ":" + str(ports[team][i])
                 requests.post(url, json=mensagens[team][i])
-            
+
+def length(v):
+    return sqrt(v[0]**2+v[1]**2)
+def dot_product(v,w):
+   return v[0]*w[0]+v[1]*w[1]
+def determinant(v,w):
+   return v[0]*w[1]-v[1]*w[0]
+def inner_angle(v,w):
+   cosx=dot_product(v,w)/(length(v)*length(w))
+   rad=acos(cosx) # in radians
+   return rad*180/pi # returns degrees
+def angle_clockwise(A, B):
+    inner=inner_angle(A,B)
+    det = determinant(A,B)
+    if det<0: #this is a property of the det. If the det < 0 then B is clockwise of A
+        return inner
+    else: # if the det > 0 then A is immediately clockwise of B
+        return 360-inner            
 
 def remap( x, oMin, oMax, nMin, nMax ):
 

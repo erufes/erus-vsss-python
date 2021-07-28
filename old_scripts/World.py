@@ -1,3 +1,4 @@
+from requests import NullHandler
 from .Ball import *
 
 class World:
@@ -55,13 +56,25 @@ class World:
         self.jogadores["Team"].append( p )
 
     def get_def_player(self):
-        return self.jogadores["Team"]["DF"] 
+        p = None
+        for j in self.jogadores["team"]:
+            if j.check_type() == 'defesa':
+                p = j
+        return p 
 
     def get_atk_player(self):
-        return self.jogadores["Team"]["FW"] 
+        p = None
+        for j in self.jogadores["team"]:
+            if  j.check_type() == 'ataque':
+                p = j
+        return p 
 
     def get_goalkeeper(self):
-        return self.jogadores["Team"]["GK"] 
+        p = None
+        for j in self.jogadores["team"]:
+            if  j.check_type() == 'goalkeeper':
+                p = j
+        return p 
 
     def get_teammate(self, n):
         return self.jogadores["Team"][n]

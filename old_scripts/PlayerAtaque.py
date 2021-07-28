@@ -9,7 +9,7 @@ class PlayerAtaque(Player):
     def __init__(self):
         Player.__init__(self)
 
-    def chuta(self, world):
+    """     def chuta(self, world):
 		#dados
         distancia_pra_sair_da_parede = 3.5
 
@@ -72,7 +72,7 @@ class PlayerAtaque(Player):
             return a,b
 
 		#nao pader no goleiro
-        p = world.get_def_player()[0]
+        p = world.get_def_player()
         x,y = p.getx(),p.gety()
 
         adiciona_ponto(int(xg), int(yg+20),255,255,2555,'xg+20, yg')
@@ -138,7 +138,8 @@ class PlayerAtaque(Player):
                 return x_final , world.FIELD_BOTTOM +7
             else:
                 return x_final , y_final    
-        return a , b
+        return a , b 
+    """
 
     def kalman(self,world):
         meas=[]
@@ -247,3 +248,6 @@ class PlayerAtaque(Player):
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  
 
         return int(vr), int(vl)
+
+    def check_type(self):
+        return "ataque"

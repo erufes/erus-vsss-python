@@ -8,7 +8,7 @@ class PlayerDefesa(Player):
     def __init__(self):
         Player.__init__(self)
 
-    def chuta(self, world):
+    """ def chuta(self, world):
 
         distancia_pra_sair_da_parede = 3.5
 
@@ -44,7 +44,7 @@ class PlayerDefesa(Player):
         #Calculo da distancia da defesa para o gol : FIM
 		
         #para impedir colicoes com o goleiro : INICIO
-        p = world.get_goalkeeper()[0]
+        p = world.get_goalkeeper()
         x,y = p.getx(),p.gety()
         theta_robo = self.get_theta()
 
@@ -112,7 +112,7 @@ class PlayerDefesa(Player):
             b = self.gety()
             return a,b
         
-        #Codigo para sair da parede!! : FIM
+        #Codigo para sair da parede!! : FIM """
 
     def controle(self, world):
 
@@ -160,3 +160,6 @@ class PlayerDefesa(Player):
         vr, vl = y[0][0]*K/vmax, y[1][0]*K/vmax  #mudei a constante para 255 antes era 100
 
         return int(vr), int(vl)
+
+    def check_type(self):
+        return "defesa"
