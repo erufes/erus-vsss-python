@@ -33,7 +33,7 @@ class World:
         # Frendly goal: 0 to left and 1 to right
         self.goal = 0
 
-        self.jogadores = {"Team" : {"GK" : list(), "DF" : list(), "FW" : list()}, "Enemies" : list()}
+        self.jogadores = {"Team" : list(), "Enemies" : list()}
         self.ball = Ball()
     
     def remove_def_player(self, p):
@@ -46,13 +46,13 @@ class World:
         self.jogadores["Team"]["GK"].remove(p)
 
     def add_def_player(self, p):
-        self.jogadores["Team"]["DF"].append(p)
+        self.jogadores["Team"].append(p)
     
     def add_atk_player(self, p):
-        self.jogadores["Team"]["FW"].append(p)
+        self.jogadores["Team"].append(p)
 
     def add_gk_player(self, p):
-        self.jogadores["Team"]["GK"].append(p)
+        self.jogadores["Team"].append( p )
 
     def get_def_player(self):
         return self.jogadores["Team"]["DF"] 
